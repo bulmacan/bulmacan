@@ -8,18 +8,18 @@ export async function onRequest(context) {
   }
 
   // Allow static assets
-  if (
-    path.startsWith('/css_js/') ||
-    path.startsWith('/icons/') ||
-    path.endsWith('.css') ||
-    path.endsWith('.js') ||
-    path.endsWith('.png') ||
-    path.endsWith('.jpg') ||
-    path.endsWith('.webp') ||
-    path.endsWith('.ico')
-  ) {
-    return context.next();
-  }
+if (
+  path.includes('/css_js/') ||
+  path.includes('/icons/') ||
+  path.endsWith('.css') ||
+  path.endsWith('.js') ||
+  path.endsWith('.png') ||
+  path.endsWith('.jpg') ||
+  path.endsWith('.webp') ||
+  path.endsWith('.ico')
+) {
+  return context.next();
+}
 
   const parts = path.split('/').filter(Boolean);
   const last = parts[parts.length - 1];
