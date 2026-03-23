@@ -1,3 +1,7 @@
+if (context.request.method !== "GET") {
+  return context.next();
+}
+
 export async function onRequest(context) {
   const url = new URL(context.request.url);
   const path = url.pathname;
@@ -9,8 +13,12 @@ export async function onRequest(context) {
 
   // Allow static assets
 if (
+  path.startsWith('/css_js/') ||
+  path.startsWith('/icons/') ||
+  path.startsWith('/images/') ||
   path.includes('/css_js/') ||
   path.includes('/icons/') ||
+  path.includes('/images/') ||
   path.endsWith('.css') ||
   path.endsWith('.js') ||
   path.endsWith('.png') ||
