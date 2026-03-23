@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>bulmacan – Kümelemece</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Kümelemece – Günlük ve haftalık bulmacalar. Grupları doğru şekilde eşleştir, zekanı sınırla!">
+  <link rel="stylesheet" href="https://www.bulmacan.com/kumelemece/css_js/kumelemece_css.css">
+
+  <!-- Favicons -->
+  <link rel="icon" href="../icons/favicon.ico" type="image/x-icon">
+  <link rel="icon" type="image/png" sizes="32x32" href="../icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../icons/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../icons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="../icons/android-chrome-192x192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="../icons/android-chrome-512x512.png">
+  <link rel="manifest" href="/icons/site.webmanifest">
+
+  <!-- Social sharing -->
+  <meta property="og:title" content="bulmacan – Kümelemece">
+  <meta property="og:description" content="Kümelemece bulmacası: Grupları doğru şekilde eşleştir!">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.bulmacan.com/kumelemece">
+  <meta property="og:image" content="https://www.bulmacan.com/icons/kumelemece.png">
+  <meta name="twitter:card" content="summary_large_image">
+</head>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js"
+data-cf-beacon='{"token": "6ed43d34957a49fcb90ec8e43f7db523"}'></script><body>
+
+<body>
+
+  <!-- 🔺 External Smart Header -->
+<div id="smart-header"></div>
+<script src="https://www.bulmacan.com/header/load_header.js" defer></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    loadHeader("home");
+  });
+
+</script>
+
+  <!-- ⌛ Timeout Message -->
+  <div class="reminder">
+    <h1>⌛ Süre doldu!</h1>
+    <h3>Bugün tam olmadı ama, Yarının kumelemecesi'ne deneyimli gidiyorsunuz.</h3>
+  </div>
+
+  <!-- 🧩 Group Reveal -->
+  <div class="group-info" id="group-results"></div>
+
+  <!-- 🧠 Load Group Data from JSON -->
+
+<div id="smart-footer"></div>
+<link rel="stylesheet" href="https://www.bulmacan.com/footer/footer.css">
+<script src="https://www.bulmacan.com/footer/load_footer.js" defer></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    loadFooter();
+  });
+</script>
+
+
+<script>
+/********************************************
+ *  KUMELEMECÉ RESULT PAGE LOADER
+ *  Works with /kumelemece/data/YYYY-MM-DD.json
+ ********************************************/
+
+const urlParams = new URLSearchParams(window.location.search);
+
+// Try to read ?date=YYYY-MM-DD
+const selectedDate = urlParams.get("date");
+
+console.log("Result page selected date:", selectedDate);
+
+async function loadPuzzle() {
+
+  const today = new Date();
+  let puzzle = null;
+
+  /* 1️⃣ Try to load the requested puzzle date */
+  if (selectedDate) {
+    try {
+
+      const res = await fetch(`/kumelemece/data/${selectedDate}.json`);
+
+      if (res.ok) {
+        puzzle = await res.json();
+        console.log("Loaded puzzle:", selectedDate);
+      }
+
+    } catch (e) {
+      console.warn("Requested puzzle not found:", selectedDate);
+    }
+  }
+
+  /* 2️⃣ Fallback: search backwards for latest puzzle */
+  if (!puzzle) {
+
+    for (let i = 0; i < 3650; i++) {
+
+      const d = new Date(today);
+      d.setDate(today.getDate() - i);
+
+      const dateStr = d.toISOString().split("T")[0];
+
+      try {
+
+        const res = await fetch(`/kumelemece/data/${dateStr}.json`);
+
+        if (res.ok) {
+
+          puzzle = await res.json();
+          console.log("Loaded fallback puzzle:", dateStr);
+          break;
+
+        }
+
+      } catch (e) {}
+
+    }
+  }
+
+  /* 3️⃣ If still nothing found */
+  if (!puzzle || !puzzle.groups) {
+
+    document.getElementById("group-results").innerHTML =
+      "<p>Bugüne ait grup verileri bulunamadı.</p>";
+
+    return;
+
+  }
+
+  /* 4️⃣ Render puzzle groups */
+
+  const container = document.getElementById("group-results");
+
+  puzzle.groups.forEach((group, index) => {
+
+    const colorClass = group.class || `highlight-${index + 1}`;
+
+    const wordBoxes = group.words
+      .map(word => `<span class="word-highlight ${colorClass}">${word}</span>`)
+      .join("");
+
+    const html = `
+      <div class="group-block">
+        <div class="group-line">
+          <div class="group-row">${wordBoxes}</div>
+          <div class="group-label">→ ${group.label}</div>
+        </div>
+      </div>
+    `;
+
+    container.innerHTML += html;
+
+  });
+
+}
+
+loadPuzzle().catch(err => {
+  console.error("Puzzle load error:", err);
+  document.getElementById("group-results").innerHTML =
+    "<p>Grup verileri yüklenemedi.</p>";
+});
+
+</script>
+</body>
+</html>

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>bulmacan – Kümelemece</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Kümelemece – Günlük ve haftalık bulmacalar. Grupları doğru şekilde eşleştir, zekanı sınırla!">
+  <link rel="stylesheet" href="https://www.bulmacan.com/kumelemece/css_js/kumelemece_css.css">
+
+  <!-- Favicons -->
+  <link rel="icon" href="../../icons/favicon.ico" type="image/x-icon">
+  <link rel="icon" type="image/png" sizes="32x32" href="../../icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../../icons/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../../icons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="../../icons/android-chrome-192x192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="../../icons/android-chrome-512x512.png">
+  <link rel="manifest" href="../../icons/site.webmanifest">
+
+  <!-- Social sharing -->
+  <meta property="og:title" content="bulmacan – Kümelemece">
+  <meta property="og:description" content="Kümelemece bulmacası: Grupları doğru şekilde eşleştir!">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.bulmacan.com/kumelemece">
+  <meta property="og:image" content="https://www.bulmacan.com/icons/kumelemece.png">
+  <meta name="twitter:card" content="summary_large_image">
+</head>
+
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js"
+data-cf-beacon='{"token": "6ed43d34957a49fcb90ec8e43f7db523"}'></script><body>
+
+<body>
+
+  <!-- 🔺 Smart Header -->
+  <div id="smart-header"></div>
+  <script src="https://www.bulmacan.com/header/load_header.js" defer></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      loadHeader("home");
+    });
+  </script>
+
+  <!-- ⏱️ Timer and Progress -->
+  <div id="timer">⏱️ Süre: 10:00</div>
+  <div class="countdown-container">
+    <div class="count-box filled"></div>
+    <div class="count-box filled"></div>
+    <div class="count-box filled"></div>
+    <div class="count-box filled"></div>
+    <div class="count-box filled"></div>
+  </div>
+
+  <!-- 🧩 Puzzle Grid -->
+  <div id="puzzle-grid"></div>
+  <button id="restart-btn" style="display: none;">🔄 Oyunu Yeniden Başlat</button>
+  <div id="feedback"></div>
+
+  <!-- ❓ İpucu Göster Hint Boxes -->
+  <div id="hint-boxes">
+    <div class="hint-box">❓İpucu Göster</div>
+    <div class="hint-box">❓İpucu Göster</div>
+    <div class="hint-box">❓İpucu Göster</div>
+    <div class="hint-box">❓İpucu Göster</div>
+  </div>
+
+  <!-- Result screen (used by renderKumelemeResult in kumelemece_js.js) -->
+  <div id="result-screen" style="display:none;"></div>
+
+  <!-- 🔻 Smart Footer -->
+  <div id="smart-footer"></div>
+  <link rel="stylesheet" href="https://www.bulmacan.com/footer/footer.css">
+  <script src="https://www.bulmacan.com/footer/load_footer.js" defer></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      loadFooter();
+    });
+  </script>
+
+  <!-- 📜 Dynamic Puzzle Loader -->
+  <script>
+  /********************************************
+   *  KUMELEMECÉ PRELOADER — ARCHIVE-SAFE VERSION
+   ********************************************/
+
+  let activePuzzle = null;
+
+  const params = new URLSearchParams(window.location.search);
+  const selectedDate = params.get("date") || new Date().toISOString().split("T")[0];
+
+  console.log("📅 Selected date:", selectedDate);
+
+  // ✅ Use absolute path so it works from /past-puzzles/
+  const jsonPath = "/kumelemece/kumelemece_json.json?cb=" + Date.now();
+
+  fetch(jsonPath)
+    .then(res => {
+      if (!res.ok) throw new Error("JSON fetch failed: " + res.status);
+      return res.json();
+    })
+    .then(data => {
+      console.log("📦 Loaded puzzle data:", data);
+
+      if (!data.puzzles || !Array.isArray(data.puzzles)) {
+        throw new Error("Invalid JSON structure: puzzles[] missing");
+      }
+
+      // ✅ Try to find selected puzzle
+      activePuzzle = data.puzzles.find(p => p.date === selectedDate);
+
+      // ✅ If not found, fallback to latest available
+      if (!activePuzzle) {
+        console.warn("⚠️ Puzzle not found for selected date. Loading latest available.");
+        const sorted = [...data.puzzles].sort((a, b) => b.date.localeCompare(a.date));
+        activePuzzle = sorted[0];
+
+        const intro = document.getElementById("intro-text");
+        if (intro) {
+          intro.innerHTML = `<p style="color:orange;">
+            Bugünün bulmacası bulunamadı.<br>
+            En son eklenen bulmaca yüklendi (${activePuzzle.date}).
+          </p>`;
+        }
+      }
+
+      console.log("🎯 Active puzzle:", activePuzzle);
+
+      // ✅ Save index for result pages (if needed elsewhere)
+      const puzzleIndex = data.puzzles.indexOf(activePuzzle);
+      localStorage.setItem("puzzleIndex", puzzleIndex);
+
+      // ✅ Prepare global data for game engine
+      window.correctGroups = activePuzzle.groups.map(g => ({
+        words: g.words,
+        label: g.label,
+        class: g.class
+      }));
+
+      window.hintMessages = activePuzzle.groups.map(g => ({
+        text: `${g.label} grubu`,
+        label: g.label
+      }));
+
+      // ✅ Hook for result rendering (implemented in kumelemece_js.js)
+      window.showResults = function(result) {
+        if (typeof renderKumelemeceResult === "function") {
+          renderKumelemeceResult(result);
+        } else {
+          console.error("renderKumelemeceResult not found");
+        }
+      };
+
+      // ✅ Load game logic AFTER puzzle is ready
+      const script = document.createElement("script");
+      script.src = "/kumelemece/css_js/kumelemece_js.js";
+      script.onload = () => {
+        if (typeof initGame === "function") {
+          initGame();
+        } else {
+          console.error("initGame not defined");
+        }
+      };
+      document.body.appendChild(script);
+    })
+    .catch(error => {
+      console.error("❌ Puzzle load error:", error);
+      const target =
+        document.getElementById("puzzle-grid") ||
+        document.getElementById("feedback") ||
+        document.body;
+      target.innerHTML = "<p style='color:red;'>Bulmaca yüklenemedi.</p>";
+    });
+  </script>
+
+</body>
+</html>

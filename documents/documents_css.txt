@@ -1,0 +1,212 @@
+/* === Base Layout === */
+body {
+  font-family: Arial, "Comic Sans MS", "Trebuchet MS", sans-serif;
+  color: #333;
+  text-align: center;
+  margin: 0;
+  background-color: white;
+  padding: 20px;
+max-width: 900px;
+}
+
+
+/* === Title Styling === */
+h2 {
+  font-size: 1.25em;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  color: #E30B17;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+/* === Paragraph Styling === */
+p {
+  font-size: 1em;
+  line-height: 1.6;
+  max-width: 800px;
+  margin: 0 auto 20px;
+  padding: 0 10px;
+  text-align: justify;
+}
+
+.accordion {
+  max-width: 800px;
+  margin: 30px auto;
+  padding: 0 10px;
+}
+
+.accordion-toggle {
+  width: 100%;
+  text-align: left;
+  background: #30D5C8;
+  color: white;
+  border: none;
+  padding: 14px 18px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 12px;
+  transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.accordion-toggle:hover {
+  background: #26b8ad;
+}
+
+.accordion-toggle:active {
+  transform: scale(0.98);
+}
+
+.accordion-content {
+  display: none;
+  background: white;
+  border-left: 4px solid #30D5C8;
+  padding: 15px 18px;
+  margin-top: 6px;
+  border-radius: 4px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+  animation: accordionFade 0.25s ease;
+}
+
+@keyframes accordionFade {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.accordion-content p {
+  margin-bottom: 12px;
+  line-height: 1.6;
+}
+/* -----------------------------------------------------
+   GLOBAL RESET & BASE
+----------------------------------------------------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: #fafafa;
+  color: #222;
+  line-height: 1.5;
+  padding-bottom: 60px;
+}
+
+
+/* -----------------------------------------------------
+   PAGE WRAPPER
+----------------------------------------------------- */
+.contact-wrapper {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+/* -----------------------------------------------------
+   PAGE TITLE
+----------------------------------------------------- */
+.contact-header {
+  margin-bottom: 25px;
+}
+
+.contact-header h3 {
+  font-size: 1.8rem;
+  margin-bottom: 8px;
+  color: #111;
+}
+
+/* -----------------------------------------------------
+   FORM
+----------------------------------------------------- */
+.contact-form form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+label {
+  font-weight: 600;
+  margin-top: 10px;
+}
+
+input[type="email"],
+textarea {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: border-color 0.2s ease;
+}
+
+input[type="email"]:focus,
+textarea:focus {
+  border-color: #30D5C8;
+  outline: none;
+}
+
+/* -----------------------------------------------------
+   TABLE (Puzzle Type Selector)
+----------------------------------------------------- */
+.suggestion-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  font-size: 0.95rem;
+}
+
+.suggestion-table th,
+.suggestion-table td {
+  border: 1px dashed #bbb;
+  padding: 1px;
+  vertical-align: middle;
+}
+
+.suggestion-table th {
+  background: #30D5C8;
+  color: white;
+  text-align: left;
+  font-size: 1rem;
+}
+
+.suggestion-table tr:hover {
+  background: #f0fdfd;
+}
+
+.suggestion-table input[type="radio"] {
+  transform: scale(1.3);
+  cursor: pointer;
+}
+
+/* Make table scrollable on mobile */
+@media (max-width: 600px) {
+  .suggestion-table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+}
+
+/* -----------------------------------------------------
+   SUBMIT BUTTON
+----------------------------------------------------- */
+button[type="submit"] {
+  background: #30D5C8;
+  color: white;
+  border: none;
+  padding: 14px 20px;
+  font-size: 1.1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  margin-top: 10px;
+}
+
+button[type="submit"]:hover {
+  background: #26b8ad;
+}

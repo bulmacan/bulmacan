@@ -1,0 +1,18 @@
+ {
+      "id": "k-2026-03-18",
+      "date": "2026-03-18",
+      "title": "8 Şehir'imizi bulun",
+      "matrix": [
+        ["V","A","T","E","R","K","Y","B","A","B"],
+        ["C","D","E","F","G","H","K","U","K","A"],
+        ["M","A","O","P","U","O","S","R","U","L"],
+        ["V","N","Y","Z","N","R","C","S","E","I"],
+        ["G","A","I","Y","K","L","F","A","M","K"],
+        ["O","R","A","L","I","G","H","A","E","E"],
+        ["A","E","D","I","R","N","E","H","R","S"],
+        ["K","L","M","S","T","O","N","E","S","I"],
+        ["U","E","R","Z","U","R","U","M","I","R"],
+        ["E","F","G","H","I","J","K","L","N","N"]
+      ],
+      "words": ["ADANA", "URFA", "BALIKESIR", "ERZURUM", "BURSA", "EDIRNE", "KONYA", "MERSIN"]
+    }

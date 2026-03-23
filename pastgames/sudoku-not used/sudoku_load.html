@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4815717211529031"
+     crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="css_js/sudoku_css.css">
+  <title>Destek İçin Teşekkürler!</title>
+<!-- Standard favicon -->
+<link rel="icon" type="image/x-icon" href="../../icons/favicon.ico" />
+
+<!-- PNG fav../icons -->
+<link rel="icon" type="image/png" sizes="32x32" href="../../icons/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="../../icons/favicon-16x16.png" />
+
+<!-- Apple Touch Icon -->
+<link rel="apple-touch-icon" href="../../icons/apple-touch-icon.png" />
+
+<!-- Android Chrome ../icons -->
+<link rel="icon" type="image/png" sizes="192x192" href="../../icons/android-chrome-192x192.png" />
+<link rel="icon" type="image/png" sizes="512x512" href="../../icons/android-chrome-512x512.png" />
+
+<!-- Web App Manifest -->
+<link rel="manifest" href="../../icons/site.webmanifest" />
+</head>
+<body>
+
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js"
+data-cf-beacon='{"token": "6ed43d34957a49fcb90ec8e43f7db523"}'></script><body>
+
+
+  <!-- 🔺 External Smart Header -->
+<div id="smart-header"></div>
+<script src="https://www.bulmacan.com/header/load_header.js" defer></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    loadHeader("back");
+  });
+</script>
+
+  <div id="countdown">Sudoku Yükleniyor: 10 saniye</div>
+
+
+<BR><BR><BR>
+<div id="smart-footer"></div>
+<link rel="stylesheet" href="https://www.bulmacan.com/footer/footer.css">
+<script src="https://www.bulmacan.com/footer/load_footer.js" defer></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    loadFooter();
+  });
+</script>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const next = params.get('next') || 'index.html';
+    const date = params.get('date') || 'today';
+    const nextPage = "/sudoku/sudoku.html?date=" + encodeURIComponent(date);
+
+    let seconds = 10;
+    let redirected = false;
+    const countdownEl = document.getElementById('countdown');
+
+    function redirect() {
+      if (!redirected) {
+        redirected = true;
+        window.location.href = nextPage;
+      }
+    }
+
+    const timer = setInterval(() => {
+      seconds--;
+      countdownEl.textContent = `Sudoku Yükleniyor: ${seconds} saniye`;
+      if (seconds <= 0) {
+        clearInterval(timer);
+        redirect();
+      }
+    }, 1000);
+
+    document.getElementById('adVideo').addEventListener('ended', () => {
+      clearInterval(timer);
+      redirect();
+    });
+
+    // Fallback in case video doesn't play or countdown fails
+    setTimeout(() => {
+      redirect();
+    }, 11000);
+  </script>
+</body>
+</html>

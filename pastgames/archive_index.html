@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Bulmacan – Bulmaca Arşivi</title>
+<meta name="description" content="Bulmacan arşivinde geçmiş kelime avı, sudoku ve diğer bulmacaları keşfedin.">
+
+<link rel="icon" href="/icons/favicon.ico">
+
+<style>
+
+body{
+margin:0;
+font-family:Arial, Helvetica, sans-serif;
+background:#f8f9fb;
+}
+
+.container{
+max-width:1100px;
+margin:auto;
+padding:30px 16px;
+}
+
+.archive-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+gap:20px;
+}
+
+.archive-box{
+background:white;
+padding:16px;
+border-radius:10px;
+box-shadow:0 2px 10px rgba(0,0,0,0.08);
+}
+
+.archive-box h2{
+margin-top:0;
+}
+
+.archive-box ul{
+list-style:none;
+padding:0;
+margin:0;
+}
+
+.archive-box li{
+margin-bottom:8px;
+}
+
+.archive-box a{
+text-decoration:none;
+color:#2c5cff;
+font-size:14px;
+}
+
+.archive-box a:hover{
+text-decoration:underline;
+}
+
+.ad-container{
+max-width:720px;
+margin:40px auto 20px auto;
+padding:16px;
+text-align:center;
+border:1px solid #eee;
+background:#fafafa;
+border-radius:8px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- HEADER -->
+<div id="smart-header"></div>
+<script src="/header/load_header.js" defer></script>
+
+<div class="ad-container">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1329536784333556"
+crossorigin="anonymous"></script>
+</div>
+
+<div class="container">
+
+<h1>Bulmaca Arşivi</h1>
+<p>Geçmiş bulmacaları keşfedin ve çözmeye devam edin.</p>
+
+<div class="archive-grid">
+
+<div class="archive-box">
+<h2>Kümelemece</h2>
+<ul id="archive-kumelemece"></ul>
+</div>
+
+<div class="archive-box">
+<h2>Sudoku</h2>
+<ul id="archive-sudoku"></ul>
+</div>
+
+<div class="archive-box">
+<h2>Sembollemece</h2>
+<ul id="archive-sembol"></ul>
+</div>
+
+<div class="archive-box">
+<h2>Kelime Avı</h2>
+<ul id="archive-kelime"></ul>
+</div>
+
+</div>
+
+</div>
+
+<!-- FOOTER -->
+<div id="smart-footer"></div>
+<script src="/footer/load_footer.js" defer></script>
+
+<script>
+
+/* Format helpers */
+
+function formatTurkishDate(dateStr){
+
+const months=[
+"Ocak","Şubat","Mart","Nisan","Mayıs","Haziran",
+"Temmuz","Ağustos","Eylül","Ekim","Kasım","Aralık"
+];
+
+const d=new Date(dateStr);
+return d.getDate()+" "+months[d.getMonth()]+" "+d.getFullYear();
+}
+
+function formatDate(d){
+return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+}
+
+/* Load archive */
+
+async function loadArchive(folder,listId){
+
+const list=document.getElementById(listId);
+const today=new Date();
+
+const MAX_RESULTS=8;
+const SEARCH_DAYS=30;
+
+let found=[];
+
+for(let i=1;i<SEARCH_DAYS;i++){
+
+const d=new Date(today);
+d.setDate(today.getDate()-i);
+
+const dateStr=formatDate(d);
+
+try{
+
+const res=await fetch(`/${folder}/data/${dateStr}.json`);
+
+if(res.ok){
+
+found.push(dateStr);
+
+}
+
+}catch(e){}
+
+if(found.length>=MAX_RESULTS) break;
+
+}
+
+if(found.length===0){
+list.innerHTML="<li>Henüz bulmaca yok.</li>";
+return;
+}
+
+found.forEach(date => {
+
+const li=document.createElement("li");
+const a=document.createElement("a");
+
+/* CLEAN URL */
+a.href=`/${folder}/${date}`;
+a.textContent=formatTurkishDate(date);
+
+li.appendChild(a);
+list.appendChild(li);
+
+});
+
+}
+
+/* Load all */
+
+loadArchive("kumelemece","archive-kumelemece");
+loadArchive("sudoku","archive-sudoku");
+loadArchive("atasozu","archive-sembol");
+loadArchive("kelimeavi","archive-kelime");
+
+</script>
+
+</body>
+</html>

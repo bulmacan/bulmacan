@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Önerileriniz – bulmacan</title>
+  <link rel="stylesheet" href="documents_css.css" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="bulmacan">
+  <meta property="og:description" content="Günlük ve haftalık bulmacalar: Kümelemece, Detektiflemece, Sembollemece, Kelime Avi.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.bulmacan.com">
+  <meta property="og:image" content="https://www.bulmacan.com/header.png">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="bulmacan">
+  <meta name="twitter:description" content="Günlük ve haftalık bulmacalar: Kümelemece, Detektiflemece, Sembollemece, Kelime Avi.">
+  <meta name="twitter:image" content="https://www.bulmacan.com/header.png">
+
+  <!-- Favicons -->
+  <link rel="icon" href="../icons/favicon.ico" type="image/x-icon">
+  <link rel="apple-touch-icon" sizes="180x180" href="../icons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../icons/favicon-16x16.png">
+  <link rel="manifest" href="site.webmanifest">
+</head>
+
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js"
+data-cf-beacon='{"token": "6ed43d34957a49fcb90ec8e43f7db523"}'></script><body>
+
+
+<body>
+
+  <!-- 🔺 Smart Header -->
+<div id="smart-header"></div>
+<script src="https://www.bulmacan.com/header/load_header.js" defer></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    loadHeader("docs");
+  });
+</script>
+
+<main class="contact-wrapper">
+
+  <!-- PAGE TITLE -->
+  <section class="contact-header">
+    <h3>Önerileriniz</h3>
+    Görüşleriniz bizim için çok değerli. Lütfen aşağıdaki formu doldurun.
+  </section>
+
+  <!-- FORM -->
+  <section class="contact-form">
+    <form id="poeticForm" action="https://formspree.io/f/xwpwykld" method="POST">
+
+
+<table class="suggestion-table">
+  <thead>
+    <tr>
+      <th>Öneri Konusu:</th>
+      <th></th>
+      </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Kelimelememece</td>
+      <td><input type="radio" name="bulmaca" value="kelimelememece"></td>
+    </tr>
+    <tr>
+      <td>Sembollemece</td>
+      <td><input type="radio" name="bulmaca" value="sembollemece"></td>
+    </tr>
+       <tr>
+      <td>Detektiflemece</td>
+      <td><input type="radio" name="bulmaca" value="detektiflemece"></td>
+    </tr>
+    <tr>
+      <td>Kelime Avı</td>
+      <td><input type="radio" name="bulmaca" value="kelimeavi"></td>
+    </tr>
+ <tr>
+      <td>Yeni Bir Bulmaca Türü</td>
+      <td><input type="radio" name="bulmaca" value="yeni"></td>
+    </tr>   
+ <tr>
+      <td>Site Geneli Hakkında</td>
+      <td><input type="radio" name="bulmaca" value="sitegeneli"></td>
+    </tr>
+  </tbody>
+</table>
+
+      <!-- EMAIL -->
+      <label for="email">E‑posta Adresiniz</label>
+      <input type="email" id="email" name="_replyto" required />
+
+      <!-- DETAILS -->
+      <label for="details">Önerinizin Detayları</label>
+      <textarea id="details" name="oneri_detaylari" rows="6" required></textarea>
+
+      <!-- SUBJECT -->
+      <input type="hidden" name="_subject" value="Yeni Öneri – bulmacan" />
+
+      <!-- SUBMIT -->
+      <button type="submit">Gönder</button>
+    </form>
+  </section>
+
+  <!-- FOOTER -->
+<div id="smart-footer"></div>
+<link rel="stylesheet" href="https://www.bulmacan.com/footer/footer.css">
+<script src="https://www.bulmacan.com/footer/load_footer.js" defer></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    loadFooter();
+  });
+</script>
+
+</main>
+
+<!-- FORM SUBMISSION SCRIPT -->
+<script>
+  document.getElementById('poeticForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const form = event.target;
+    const data = new FormData(form);
+
+    fetch(form.action, {
+      method: 'POST',
+      body: data,
+      headers: { 'Accept': 'application/json' }
+    }).then(response => {
+      if (response.ok) {
+
+        const header = document.querySelector('.contact-header');
+        if (header) {
+          header.style.transition = 'opacity 0.5s ease';
+          header.style.opacity = '0';
+          setTimeout(() => { header.style.display = 'none'; }, 500);
+        }
+
+        form.innerHTML = `
+          <p style="font-size: 1.2em; color: #333; text-align: center;">
+            Teşekkürler! Öneriniz bize ulaştı.<br>
+            Genellikle 24 saat içinde yanıt veriyoruz.<br>
+          </p>
+        `;
+
+      } else {
+        alert('Bir şeyler yanlış gitti. Lütfen tekrar deneyin.');
+      }
+    });
+  });
+</script>
+
+</body>
+</html>

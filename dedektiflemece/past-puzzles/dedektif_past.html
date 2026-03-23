@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+<title>Dedektiflemece - Kelime Tabanlı</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="dedektif_css.css">
+  <!-- Favicons -->
+  <link rel="icon" href="../icons/favicon.ico" type="image/x-icon">
+  <link rel="icon" type="image/png" sizes="32x32" href="../icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../icons/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../icons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="../icons/android-chrome-192x192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="../icons/android-chrome-512x512.png">
+  <link rel="manifest" href="../icons/site.webmanifest">
+
+  <!-- Social sharing -->
+  <meta property="og:title" content="bulmacan – Dedektiflemece">
+  <meta property="og:description" content="dedektiflemece bulmacası: Grupları doğru şekilde eşleştir!">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.bulmacan.com/kumelemece">
+  <meta property="og:image" content="https://www.bulmacan.com/icons/kumelemece.png">
+  <meta name="twitter:card" content="summary_large_image">
+</head>
+
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js"
+data-cf-beacon='{"token": "6ed43d34957a49fcb90ec8e43f7db523"}'></script><body>
+
+<body>
+
+<div id="smart-header"></div>
+<script src="https://www.bulmacan.com/header/load_header.js" defer></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    loadHeader("back");
+  });
+</script>
+
+<div class="content-wrapper">
+
+<section class="clue-section">
+  <div id="intro-text"></div>
+  <div class="container" id="clue-box"></div>
+</section>
+
+<h3>Olası Suç Mahalleri ve Silahlar</h3>
+<div class="row" id="location-weapon-row"></div>
+
+<br><strong>Zanlılar</strong>
+<div id="suspect-matrix"></div>
+
+<form id="guess-form">
+  <h3>Sırrı Çözdüm!</h3>
+  <label><b>Suçlu?</b>
+    <select name="person" id="person-select"></select>
+  </label>
+
+  <label><b>Yöntem?</b>
+    <select name="place" id="place-select"></select>
+  </label>
+
+  <label><b>Alet?</b>
+    <select name="method" id="method-select"></select>
+  </label>
+
+  <div class="submit-row">
+    <button type="submit">✅ Cevabı Kontrol Et</button>
+    <div id="hearts">
+      <span class="heart">❤️</span>
+      <span class="heart">❤️</span>
+      <span class="heart">❤️</span>
+    </div>
+  </div>
+  <div id="feedback"></div>
+</form>
+
+</div>
+
+<div id="smart-footer"></div>
+<link rel="stylesheet" href="https://www.bulmacan.com/footer/footer.css">
+<script src="https://www.bulmacan.com/footer/load_footer.js" defer></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    loadFooter();
+  });
+</script>
+
+
+<script>
+  let selectedItem = null;
+  let activePuzzle = null;
+  let errors = 0;
+
+  const params = new URLSearchParams(window.location.search);
+  const selectedDate = params.get("date");
+
+  fetch('../dedektiflemece_json.json')
+    .then(res => {
+      if (!res.ok) throw new Error("JSON fetch failed");
+      return res.json();
+    })
+    .then(data => {
+      activePuzzle = data.puzzles.find(p => p.date === selectedDate);
+
+      if (!activePuzzle) {
+        document.body.innerHTML += `<p style="color:red;">${selectedDate} tarihli bulmaca bulunamadı.</p>`;
+        return;
+      }
+
+      const puzzleIndex = data.puzzles.indexOf(activePuzzle);
+      localStorage.setItem("puzzleIndex", puzzleIndex);
+      renderPuzzle(activePuzzle);
+    })
+    .catch(err => {
+      console.error("❌ Puzzle data load error:", err);
+      document.body.innerHTML += `<p style="color:red;">Bulmaca verisi yüklenemedi.</p>`;
+    });
+
+  function renderPuzzle(puzzle) {
+    document.getElementById('intro-text').innerHTML = `<p>${puzzle.intro}</p>`;
+    document.getElementById('clue-box').innerHTML =
+      `<strong>İpuçları:</strong><br>` + puzzle.clues.map(c => ` ${c}<br>`).join('');
+
+    const row = document.getElementById('location-weapon-row');
+    puzzle.locations.forEach((loc, i) => {
+      row.innerHTML += `<div class="drop-zone" id="home-person${i+1}">
+        <div class="draggable" draggable="true" id="mahal${i+1}" data-type="location">${loc}</div>
+      </div>`;
+    });
+    puzzle.weapons.forEach((wpn, i) => {
+      row.innerHTML += `<div class="drop-zone" id="home-weapon${i+1}">
+        <div class="draggable" draggable="true" id="weapon${i+1}" data-type="weapon">${wpn}</div>
+      </div>`;
+    });
+
+    const matrix = document.getElementById('suspect-matrix');
+    matrix.innerHTML = `
+      <table class="matrix-table">
+        <thead>
+          <tr>
+            <th>Şüpheli</th>
+            <th>Olay Yeri</th>
+            <th>Silah</th>
+            <th>Fırsat</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${puzzle.suspects.map((suspect, i) => `
+            <tr>
+              <td>${suspect}</td>
+              <td><div class="drop-zone" id="zanli${i+1}-mahal"></div></td>
+              <td><div class="drop-zone" id="zanli${i+1}-silah"></div></td>
+              <td><input type="checkbox" name="opportunity"></td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
+    `;
+
+    document.getElementById('person-select').innerHTML =
+      puzzle.suspects.map(s => `<option>${s}</option>`).join('');
+    document.getElementById('place-select').innerHTML =
+      puzzle.locations.map(l => `<option>${l}</option>`).join('');
+    document.getElementById('method-select').innerHTML =
+      puzzle.weapons.map(w => `<option>${w}</option>`).join('');
+  }
+
+  document.addEventListener('click', e => {
+    if (e.target.classList.contains('draggable')) {
+      if (selectedItem) selectedItem.classList.remove('selected');
+      selectedItem = e.target;
+      selectedItem.classList.add('selected');
+    }
+
+    if (e.target.classList.contains('drop-zone') && selectedItem && e.target.children.length === 0) {
+      selectedItem.parentNode.removeChild(selectedItem);
+      e.target.appendChild(selectedItem);
+      selectedItem.classList.remove('selected');
+      selectedItem = null;
+    }
+  });
+
+  document.querySelectorAll('input[name="opportunity"]').forEach(cb => {
+    cb.addEventListener('change', function() {
+      if (this.checked) {
+        document.querySelectorAll('input[name="opportunity"]').forEach(other => {
+          if (other !== this) other.checked = false;
+        });
+      }
+    });
+  });
+
+  document.getElementById("guess-form").addEventListener("submit", function(e) {
+    e.preventDefault();
+    const person = e.target.person.value.trim();
+    const place = e.target.place.value.trim();
+    const method = e.target.method.value.trim();
+
+    const correct = activePuzzle.solution;
+    const isPersonCorrect = person === correct.person;
+    const isPlaceCorrect = place === correct.place;
+    const isMethodCorrect = method === correct.method;
+
+    if (isPersonCorrect && isPlaceCorrect && isMethodCorrect) {
+      localStorage.setItem("result", "success");
+      window.location.href = "dedektif_result.html";
+    } else {
+      const feedback = document.getElementById("feedback");
+      feedback.innerHTML = `😟 Yalnızca bazı parçaları doğru bulabildiniz:
+        - <strong>Suçlu:</strong> ${person} ${isPersonCorrect ? "✅" : "❌"}<br>
+        - <strong>Olay Yeri:</strong> ${place} ${isPlaceCorrect ? "✅" : "❌"}<br>
+        - <strong>Yöntem:</strong> ${method} ${isMethodCorrect ? "✅" : "❌"}<br>
+        İpuçlarını tekrar inceleyiniz.`;
+
+      const hearts = document.querySelectorAll('.heart');
+      if (errors < hearts.length) {
+        hearts[errors].style.opacity = '0.2';
+        errors++;
+      }
+
+      if (errors === hearts.length) {
+        localStorage.setItem("result", "fail");
+        window.location.href = "dedektif_result.html";
+      }
+    }
+  });
+</script>
+</body>
+</html>

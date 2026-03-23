@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Emoji Word Puzzle</title>
+<link rel="stylesheet" href="css_js/atasozu_css.css">
+  <!-- Favicons -->
+  <link rel="icon" href="../icons/favicon.ico" type="image/x-icon">
+  <link rel="icon" type="image/png" sizes="32x32" href="../icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../icons/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../icons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="../icons/android-chrome-192x192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="../icons/android-chrome-512x512.png">
+  <link rel="manifest" href="../icons/site.webmanifest">
+
+  <!-- Social sharing -->
+  <meta property="og:title" content="bulmacan – Dedektiflemece">
+  <meta property="og:description" content="dedektiflemece bulmacası: Grupları doğru şekilde eşleştir!">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.bulmacan.com/kumelemece">
+  <meta property="og:image" content="https://www.bulmacan.com/icons/kumelemece.png">
+  <meta name="twitter:card" content="summary_large_image">
+</head>
+
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js"
+data-cf-beacon='{"token": "6ed43d34957a49fcb90ec8e43f7db523"}'></script><body>
+
+<body>
+
+<div id="smart-header"></div>
+<script src="https://www.bulmacan.com/header/load_header.js" defer></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    loadHeader("home");
+  });
+</script>
+ 
+  <!-- 🧩 Puzzle Clue and Solution -->
+  <div class="emoji-clue" id="emojiClue">Yükleniyor...</div>
+  <div class="selected-words" id="selectedWords">Çözüm: </div>
+
+  <!-- 🟩 Legend -->
+  <div class="legend">
+    <div class="legend-item">
+      <div class="legend-box" style="background-color:#4caf50;"></div> Doğru kelime
+    </div>
+    <div class="legend-item">
+      <div class="legend-box" style="background-color:#ffb300;"></div> Yanlış konum
+    </div>
+    <div class="legend-item">
+      <div class="legend-box" style="background-color:#f44336;"></div> Yanlış kelime
+    </div>
+  </div>
+
+  <!-- 🔡 Word Grid -->
+  <div class="grid" id="wordGrid"></div>
+
+  <!-- 🎉 Success Message (Initially Hidden) -->
+  <div id="successMessage" style="display: none; margin-top: 20px;">
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https://yourwebsite.com"
+       target="_blank"
+       class="share-button">
+      📣 Bulmacaları beğendiniz mi?<br>
+      Facebook’da bizi önermek için tıklayın<br>
+      daha çok oyuncu, daha çok bulmaca! 😊
+    </a>
+  </div>
+
+<BR><BR><BR>
+<div id="smart-footer"></div>
+<link rel="stylesheet" href="https://www.bulmacan.com/footer/footer.css">
+<script src="https://www.bulmacan.com/footer/load_footer.js" defer></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    loadFooter();
+  });
+</script>
+
+
+<script>
+
+let correctSequence = [];
+let selected = [];
+
+const urlParams = new URLSearchParams(window.location.search);
+const selectedDate = urlParams.get("date");
+
+async function loadAtasozu() {
+
+  const today = new Date();
+  let puzzle = null;
+
+  /* 1️⃣ Try requested date first */
+  if (selectedDate) {
+
+    try {
+
+      const res = await fetch(`/atasozu/data/${selectedDate}.json`);
+
+      if (res.ok) {
+        puzzle = await res.json();
+        console.log("Loaded atasozu:", selectedDate);
+      }
+
+    } catch(e){}
+
+  }
+
+  /* 2️⃣ Otherwise search backwards for latest puzzle */
+  if (!puzzle) {
+
+    for (let i = 0; i < 3650; i++) {
+
+      const d = new Date(today);
+      d.setDate(today.getDate() - i);
+
+      const dateStr = d.toISOString().split("T")[0];
+
+      try {
+
+        const res = await fetch(`/atasozu/data/${dateStr}.json`);
+
+        if (res.ok) {
+
+          puzzle = await res.json();
+          console.log("Loaded fallback atasozu:", dateStr);
+          break;
+
+        }
+
+      } catch(e){}
+
+    }
+
+  }
+
+  if (!puzzle) {
+
+    document.getElementById("emojiClue").textContent = "Bulmaca bulunamadı.";
+    return;
+
+  }
+
+  correctSequence = puzzle.correctSequence;
+  document.getElementById("emojiClue").textContent = puzzle.emojiClue;
+
+  const grid = document.getElementById("wordGrid");
+  grid.innerHTML = "";
+
+  puzzle.wordGrid.forEach(word => {
+
+    const div = document.createElement("div");
+    div.className = "word";
+    div.textContent = word;
+
+    grid.appendChild(div);
+
+  });
+
+}
+
+loadAtasozu();
+
+/* ===============================
+   Game logic
+================================ */
+
+const grid = document.getElementById("wordGrid");
+
+grid.addEventListener("click", function (e) {
+
+  if (e.target.classList.contains("word")) {
+
+    const wordElement = e.target;
+
+    if (wordElement.classList.contains("selected")) {
+
+      wordElement.classList.remove("selected", "wrong-red", "wrong-amber");
+      selected = selected.filter(el => el !== wordElement);
+
+    } else {
+
+      if (selected.length >= correctSequence.length) {
+
+        selected.forEach(el => el.classList.remove("selected", "wrong-red", "wrong-amber"));
+        selected = [];
+
+      }
+
+      wordElement.classList.add("selected");
+      selected.push(wordElement);
+
+    }
+
+    const selectedWords = selected.map(el => el.textContent.trim());
+
+    document.getElementById("selectedWords").textContent =
+      "Çözüm: " + selectedWords.join(" ");
+
+    selected.forEach(el => el.classList.remove("wrong-red", "wrong-amber"));
+
+    selected.forEach((el, i) => {
+
+      const word = el.textContent.trim();
+
+      if (correctSequence[i] === word) {
+
+      } else if (correctSequence.includes(word)) {
+
+        el.classList.add("wrong-amber");
+
+      } else {
+
+        el.classList.add("wrong-red");
+
+      }
+
+    });
+
+    if (selectedWords.join(" ") === correctSequence.join(" ")) {
+
+      grid.style.display = "none";
+      document.getElementById("successMessage").style.display = "block";
+
+    }
+
+  }
+
+});
+
+</script>
+</body>
+</html>

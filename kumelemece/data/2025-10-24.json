@@ -1,0 +1,33 @@
+    {
+      "id": "g-2025-10-24",
+      "date": "2025-10-24",
+      "groups": [
+       		 {
+          	"label": "Zeytin çeşitleri",
+          	"class": "group-1",
+          	"words": ["Sele", "Salamura", "Çizik", "Kırma"],
+          	"clue": "Zeytin"
+        	},
+        	{
+          	"label": "Attila İlhan şiirlerinde geçen kadın isimleri",
+          	"class": "group-2",
+          	"words": ["Aysel", "Ayten", "Cezabel", "Müjde"],
+          	"clue": "Attila İlhan şiirleri"
+        	},
+        	{
+          	"label": "Çay çeşitleri",
+          	"class": "group-3",
+          	"words": ["Siyah", "Yeşil", "Oolong", "Seylan"],
+          	"clue": "Çay"
+        	},
+        	{
+          	"label": "Anne anlamına gelen kelimeler",
+          	"class": "group-4",
+          	"words": ["Valide", "Anne", "Ana", "Mama"],
+          	"clue": "Anneler"
+        	}
+      		]
+    }
+
+]
+}

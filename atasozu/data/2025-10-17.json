@@ -1,0 +1,15 @@
+    {
+      "id": "a-2025-10-17",
+      "date": "2025-10-17",
+      "emojiClue": "🐦🌅➡️🥇",
+      "correctSequence": ["sabah", "erken", "kalkan", "yol", "alır"],
+      "wordGrid": ["gülmek", "sabah", "gece", "yol", "kuş", "telefon", "çiçek", "renk", "yaz", "kış",
+        "bahar", "sonbahar", "sıcak", "soğuk", "çalışmak", "okul", "öğrenci", "öğretmen",
+        "şehir", "köy", "su", "süt", "ekmek", "peynir", "gül", "alır", "defter",
+        "kalabalık", "sabah", "sesli", "kalkan", "fakir", "uzun", "kısa", "ağır", "hafif",
+        "doğru", "yanlış", "yeni", "eski", "mutlu", "üzgün", "yol", "tok", "kırmızı", "yeşil",
+        "sarı", "siyah", "üzüm", "erken", "gri", "mor", "portakal", "muz", "baka", "kiraz",
+        "armut", "domates", "kararır", "baka", "sarımsak", "yağmur", "kar", "rüzgar",
+        "fırtına", "yıldız", "ay", "güneş", "saat", "dakika", "saniye", "gün", "hafta",
+        "üzüme", "çorap", "pantolon", "gömlek", "pantolon", "gömlek"]
+    }

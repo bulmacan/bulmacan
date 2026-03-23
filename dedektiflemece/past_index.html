@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Dedektiflemece – Geçmiş Vakalar</title>
+
+<link rel="icon" href="../icons/favicon.ico">
+
+<style>
+
+body{
+margin:0;
+font-family:Arial, Helvetica, sans-serif;
+background:#f8f9fb;
+}
+
+.container{
+max-width:900px;
+margin:auto;
+padding:30px 16px;
+}
+
+h1{
+text-align:center;
+margin-bottom:10px;
+}
+
+.subtitle{
+text-align:center;
+color:#666;
+margin-bottom:30px;
+}
+
+.archive-box{
+background:white;
+padding:20px;
+border-radius:10px;
+box-shadow:0 2px 10px rgba(0,0,0,0.08);
+}
+
+.archive-box ul{
+list-style:none;
+padding:0;
+margin:0;
+}
+
+.archive-box li{
+margin-bottom:10px;
+}
+
+.archive-box a{
+text-decoration:none;
+color:#2c5cff;
+font-size:16px;
+}
+
+.archive-box a:hover{
+text-decoration:underline;
+}
+
+/* loader */
+
+#archive-loader{
+display:none;
+text-align:center;
+padding:80px 0;
+}
+
+#loader-count{
+font-size:26px;
+margin-top:10px;
+color:#2c5cff;
+}
+
+</style>
+
+</head>
+
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js"
+data-cf-beacon='{"token": "6ed43d34957a49fcb90ec8e43f7db523"}'></script><body>
+
+<body>
+
+
+<!-- HEADER -->
+
+<div id="smart-header"></div>
+
+<script src="https://www.bulmacan.com/header/load_header.js" defer></script>
+<script>
+document.addEventListener("DOMContentLoaded",()=>{loadHeader("docs");});
+</script>
+
+<div class="ad-container">
+<div class="ad-slot">
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1329536784333556"
+crossorigin="anonymous"></script>
+
+</div>
+</div>
+
+
+
+<div class="container">
+
+<h1>Dedektiflemece</h1>
+<div class="subtitle">Geçmiş Vakalar</div>
+
+
+<!-- loader -->
+
+<div id="archive-loader">
+
+<h2>Arşivdeki bulmaca yüklenmekte</h2>
+<div id="loader-count">10</div>
+
+</div>
+
+
+<!-- archive content -->
+
+<div id="archive-content">
+
+<div class="archive-box">
+
+<ul id="archive-dedektif"></ul>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<!-- FOOTER -->
+
+<div id="smart-footer"></div>
+
+<link rel="stylesheet" href="https://www.bulmacan.com/footer/footer.css">
+
+<script src="https://www.bulmacan.com/footer/load_footer.js" defer></script>
+
+<script>
+document.addEventListener("DOMContentLoaded",()=>{loadFooter("docs");});
+</script>
+
+
+<script>
+
+/* Turkish date */
+
+function formatTurkishDate(dateStr){
+
+const months=[
+"Ocak","Şubat","Mart","Nisan","Mayıs","Haziran",
+"Temmuz","Ağustos","Eylül","Ekim","Kasım","Aralık"
+];
+
+const d=new Date(dateStr);
+
+return d.getDate()+" "+months[d.getMonth()]+" "+d.getFullYear();
+
+}
+
+
+/* Format YYYY-MM-DD */
+
+function formatDate(d){
+
+return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+
+}
+
+
+/* Load detective cases */
+
+async function loadDedektifArchive(){
+
+const list=document.getElementById("archive-dedektif");
+const today=new Date();
+
+const MAX_RESULTS=20;
+const SEARCH_DAYS=60;
+
+let found=[];
+
+for(let i=0;i<SEARCH_DAYS;i++){
+
+const d=new Date(today);
+d.setDate(today.getDate()-i);
+
+const dateStr=formatDate(d);
+
+try{
+
+const res=await fetch(`/dedektiflemece/data/${dateStr}.json`);
+
+if(res.ok){
+
+const data=await res.json();
+
+found.push({
+date:dateStr,
+title:data.title || "Vaka"
+});
+
+}
+
+}catch(e){}
+
+if(found.length>=MAX_RESULTS) break;
+
+}
+
+
+if(found.length===0){
+
+list.innerHTML="<li>Henüz vaka bulunamadı.</li>";
+return;
+
+}
+
+
+found.forEach(item=>{
+
+const li=document.createElement("li");
+
+const a=document.createElement("a");
+
+a.href=`/dedektiflemece/dedektif?date=${item.date}`;
+
+a.textContent=item.title+" – "+formatTurkishDate(item.date);
+
+li.appendChild(a);
+
+list.appendChild(li);
+
+});
+
+}
+
+
+loadDedektifArchive();
+
+
+
+/* countdown loader */
+
+let targetURL=null;
+
+document.addEventListener("click",function(e){
+
+const link=e.target.closest("a");
+
+if(!link) return;
+
+if(link.href.includes("?date=")){
+
+e.preventDefault();
+
+targetURL=link.href;
+
+startLoader();
+
+}
+
+});
+
+
+function startLoader(){
+
+const loader=document.getElementById("archive-loader");
+const archive=document.getElementById("archive-content");
+const counter=document.getElementById("loader-count");
+
+archive.style.display="none";
+loader.style.display="block";
+
+let seconds=10;
+
+counter.textContent=seconds;
+
+const timer=setInterval(()=>{
+
+seconds--;
+counter.textContent=seconds;
+
+if(seconds<=0){
+
+clearInterval(timer);
+window.location.href=targetURL;
+
+}
+
+},1000);
+
+}
+
+</script>
+
+
+</body>
+</html>

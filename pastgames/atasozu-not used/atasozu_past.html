@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Emoji Word Puzzle</title>
+<link rel="stylesheet" href="css_js/atasozu_css.css">
+ <!-- Favicons -->
+  <link rel="icon" href="../icons/favicon.ico" type="image/x-icon">
+  <link rel="icon" type="image/png" sizes="32x32" href="../icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../icons/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../icons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="../icons/android-chrome-192x192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="../icons/android-chrome-512x512.png">
+  <link rel="manifest" href="../icons/site.webmanifest">
+
+  <!-- Social sharing -->
+  <meta property="og:title" content="bulmacan – Dedektiflemece">
+  <meta property="og:description" content="dedektiflemece bulmacası: Grupları doğru şekilde eşleştir!">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.bulmacan.com/kumelemece">
+  <meta property="og:image" content="https://www.bulmacan.com/icons/kumelemece.png">
+  <meta name="twitter:card" content="summary_large_image">
+</head>
+
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js"
+data-cf-beacon='{"token": "6ed43d34957a49fcb90ec8e43f7db523"}'></script><body>
+
+
+<body>
+
+<div id="smart-header"></div>
+<script src="https://www.bulmacan.com/header/load_header.js" defer></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    loadHeader("home");
+  });
+</script>
+
+  <!-- 🧩 Puzzle Clue and Solution -->
+  <div class="emoji-clue" id="emojiClue">Yükleniyor...</div>
+  <div class="selected-words" id="selectedWords">Çözüm: </div>
+
+  <!-- 🟩 Legend -->
+  <div class="legend">
+    <div class="legend-item">
+      <div class="legend-box" style="background-color:#4caf50;"></div> Doğru kelime
+    </div>
+    <div class="legend-item">
+      <div class="legend-box" style="background-color:#ffb300;"></div> Yanlış konum
+    </div>
+    <div class="legend-item">
+      <div class="legend-box" style="background-color:#f44336;"></div> Yanlış kelime
+    </div>
+  </div>
+
+  <!-- 🔡 Word Grid -->
+  <div class="grid" id="wordGrid"></div>
+
+  <!-- 🎉 Success Message (Initially Hidden) -->
+  <div id="successMessage" style="display: none; margin-top: 20px;">
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https://bulmacan.com"
+       target="_blank"
+       class="share-button">
+      📣 Bulmacaları beğendiniz mi?<br>
+      Facebook’da bizi önermek için tıklayın<br>
+      daha çok oyuncu, daha çok bulmaca! 😊
+    </a>
+  </div>
+
+<BR><BR><BR>
+<div id="smart-footer"></div>
+<link rel="stylesheet" href="https://www.bulmacan.com/footer/footer.css">
+<script src="https://www.bulmacan.com/footer/load_footer.js" defer></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    loadFooter();
+  });
+</script>
+
+
+  <script>
+    let correctSequence = [];
+    let selected = [];
+
+    const params = new URLSearchParams(window.location.search);
+    const requestedDate = params.get("date") || "today";
+    console.log("Requested date:", requestedDate);
+
+    fetch("/atasozu/atasozu_data.json")
+      .then(res => {
+        if (!res.ok) throw new Error("JSON file not found or inaccessible");
+        return res.json();
+      })
+      .then(data => {
+        const puzzle = data.puzzles.find(p => p.date.trim() === requestedDate.trim());
+
+        if (!puzzle) {
+          document.getElementById("emojiClue").textContent = `Bulmaca bulunamadı: ${requestedDate}`;
+          return;
+        }
+
+        correctSequence = puzzle.correctSequence;
+        document.getElementById("emojiClue").textContent = puzzle.emojiClue;
+
+        const grid = document.getElementById("wordGrid");
+        grid.innerHTML = "";
+
+        puzzle.wordGrid.forEach(word => {
+          const div = document.createElement("div");
+          div.className = "word";
+          div.textContent = word;
+          grid.appendChild(div);
+        });
+
+        grid.addEventListener("click", function (e) {
+          if (e.target.classList.contains("word")) {
+            const wordElement = e.target;
+
+            if (wordElement.classList.contains("selected")) {
+              wordElement.classList.remove("selected", "wrong-red", "wrong-amber");
+              selected = selected.filter(el => el !== wordElement);
+            } else {
+              if (selected.length >= correctSequence.length) {
+                selected.forEach(el => el.classList.remove("selected", "wrong-red", "wrong-amber"));
+                selected = [];
+              }
+
+              wordElement.classList.add("selected");
+              selected.push(wordElement);
+            }
+
+            const selectedWords = selected.map(el => el.textContent.trim());
+            document.getElementById("selectedWords").textContent = "Çözüm: " + selectedWords.join(" ");
+
+            selected.forEach(el => el.classList.remove("wrong-red", "wrong-amber"));
+
+            selected.forEach((el, i) => {
+              const word = el.textContent.trim();
+              if (correctSequence[i] === word) {
+                // Correct word and position — green by default
+              } else if (correctSequence.includes(word)) {
+                el.classList.add("wrong-amber");
+              } else {
+                el.classList.add("wrong-red");
+              }
+            });
+
+            if (selectedWords.join(" ") === correctSequence.join(" ")) {
+              // 🎉 Show success message and hide grid
+              grid.style.display = "none";
+              document.getElementById("successMessage").style.display = "block";
+            }
+          }
+        });
+      })
+      .catch(err => {
+        document.getElementById("emojiClue").textContent = "Veri yüklenemedi: " + err.message;
+        console.error("Fetch error:", err);
+      });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Kelime Avı</title>
+
+  <meta name="description" content="Günlük kelime avı bulmacasını çözün ve tüm kelimeleri bulun!">
+
+  <link rel="icon" href="/icons/favicon.ico" type="image/x-icon">
+  <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png">
+  <link rel="manifest" href="/icons/site.webmanifest">
+
+  <meta property="og:title" content="Bulmacan – Kelime Avı">
+  <meta property="og:description" content="Günlük kelime avı bulmacasını çöz!">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://bulmacan.com/kelimeavi">
+  <meta property="og:image" content="https://bulmacan.com/icons/kelimeavi.png">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="stylesheet" href="/css_js/kelimeavi_css.css" />
+</head>
+
+<body>
+
+<div id="smart-header"></div>
+<script src="/header/load_header.js" defer></script>
+
+<h1 id="pageTitle">Kelime Avı</h1>
+
+<p id="pageDescription">
+  Günlük kelime avı bulmacasında gizli kelimeleri bulun.
+</p>
+
+<div id="subject">
+  🧩 Konu: <strong id="puzzleTitle">Yükleniyor...</strong>
+</div>
+
+<div id="progress">0 / 0 bulundu</div>
+
+<div id="game-container">
+  <div id="grid"></div>
+</div>
+
+<div id="success-screen" style="display: none;">
+  <div class="success-message">
+    <span style="font-size: 2em;">🎉</span> Tüm kelimeleri buldunuz!
+  </div>
+
+  <div class="group-info">
+    <p><strong>Bulduğunuz kelimeler:</strong></p>
+    <ul id="word-list"></ul>
+  </div>
+
+  <div style="margin-top: 20px;">
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https://bulmacan.com"
+       target="_blank"
+       class="share-button"
+       style="display:inline-block;padding:10px 15px;background:#2e7d32;color:white;border-radius:5px;text-decoration:none;">
+      📣 Bulmacaları beğendiniz mi?<br>
+      Facebook’da bizi önermek için tıklayın
+    </a>
+  </div>
+</div>
+
+<div id="smart-footer"></div>
+<script src="/footer/load_footer.js" defer></script>
+
+<script>
+function getDateFromURL() {
+  const pathParts = window.location.pathname.split("/").filter(Boolean);
+  const last = pathParts[pathParts.length - 1];
+
+  if (/^\d{4}-\d{2}-\d{2}$/.test(last)) return last;
+
+  const params = new URLSearchParams(window.location.search);
+  return params.get("date");
+}
+
+let selectedDate = getDateFromURL();
+
+if (!selectedDate) {
+  const today = new Date();
+  selectedDate = today.toISOString().split("T")[0];
+}
+
+async function loadPuzzle() {
+  const today = new Date();
+  let data = null;
+  let usedDate = selectedDate;
+
+  if (selectedDate) {
+    try {
+      const res = await fetch(`/kelimeavi/data/${selectedDate}.json`);
+      if (res.ok) data = await res.json();
+    } catch (e) {}
+  }
+
+  if (!data) {
+    for (let i = 0; i < 365; i++) {
+      const d = new Date(today);
+      d.setDate(today.getDate() - i);
+      const dateStr = d.toISOString().split("T")[0];
+
+      try {
+        const res = await fetch(`/kelimeavi/data/${dateStr}.json`);
+        if (res.ok) {
+          data = await res.json();
+          usedDate = dateStr;
+          break;
+        }
+      } catch (e) {}
+    }
+  }
+
+  if (!data) {
+    document.getElementById("puzzleTitle").textContent = "Bulmaca bulunamadı";
+    return;
+  }
+
+  document.title = `Kelime Avı – ${data.title} (${usedDate})`;
+  document.getElementById("pageTitle").textContent = `Kelime Avı – ${data.title}`;
+  document.getElementById("pageDescription").textContent = `${data.title} konulu kelime avı bulmacasını çözün.`;
+  document.getElementById("puzzleTitle").textContent = data.title;
+
+  initializePuzzle(data.matrix, data.words);
+}
+
+loadPuzzle();
+
+function initializePuzzle(matrix, words) {
+  const grid = document.getElementById("grid");
+  const size = matrix.length;
+
+  let selected = [];
+  let found = new Set();
+
+  document.getElementById("progress").textContent = `0 / ${words.length} bulundu`;
+  document.getElementById("word-list").innerHTML = "";
+  grid.innerHTML = "";
+
+  matrix.forEach((row, r) => {
+    row.forEach((letter, c) => {
+      const cell = document.createElement("div");
+      cell.className = "cell";
+      cell.textContent = letter;
+
+      cell.onclick = () => {
+        const key = `${r},${c}`;
+
+        if (selected.includes(key)) {
+          selected = selected.filter(k => k !== key);
+          cell.classList.remove("selected");
+        } else {
+          selected.push(key);
+          cell.classList.add("selected");
+        }
+
+        const word = selected.map(k => {
+          const [rr, cc] = k.split(",").map(Number);
+          return matrix[rr][cc];
+        }).join("");
+
+        if (words.includes(word) && !found.has(word)) {
+          selected.forEach(k => {
+            const [rr, cc] = k.split(",").map(Number);
+            grid.children[rr * size + cc].classList.add("found");
+            grid.children[rr * size + cc].classList.remove("selected");
+          });
+
+          const li = document.createElement("li");
+          li.textContent = word;
+          document.getElementById("word-list").appendChild(li);
+
+          found.add(word);
+          selected = [];
+
+          document.getElementById("progress").textContent = `${found.size} / ${words.length} bulundu`;
+
+          if (found.size === words.length) {
+            document.getElementById("game-container").style.display = "none";
+            document.getElementById("success-screen").style.display = "block";
+          }
+        }
+      };
+
+      grid.appendChild(cell);
+    });
+  });
+}
+</script>
+
+</body>
+</html>

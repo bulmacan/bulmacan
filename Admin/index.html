@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Bulmaca Ritual</title>
+  <style>
+    body {
+      font-family: 'Georgia', serif;
+      background: #fdf6e3;
+      padding: 2em;
+    }
+    button {
+      font-size: 1.2em;
+      padding: 0.5em 1em;
+      background: #ffe;
+      border: 1px solid #ccc;
+      cursor: pointer;
+    }
+    #confirmation {
+      margin-top: 1em;
+      font-style: italic;
+      color: #555;
+    }
+  </style>
+</head>
+
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js"
+data-cf-beacon='{"token": "6ed43d34957a49fcb90ec8e43f7db523"}'></script><body>
+
+<body>
+  <h1>✨ Notify Guests</h1>
+  <button onclick="sendNotification()">Whisper the Mystery</button>
+  <p id="confirmation"></p>
+
+  <script>
+  function sendNotification() {
+    fetch("https://fcm.googleapis.com/fcm/send", {
+      method: "POST",
+      headers: {
+        "Authorization": "key=BCFEO_Ci-ehCPlaH_Gp-R3d5ra0TcwpVnbzvzTwktJaLEM6bh5b4VauI-4QEaSD-OD64WrhLcGXei2ggE9wEF_M", // Replace with your actual FCM server key
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        to: "GUEST_DEVICE_TOKEN", // Replace with the guest's device token
+        notification: {
+          title: "Bugünkü Bulmacalar Hazır!",
+          body: "Bugünkü gizemi çözmeye hazır mısın?",
+          icon: "../brain_red.png",
+          badge: "../icons/android-chrome-192x192.png",
+          click_action: "https://your-site.com" // Replace with your puzzle page URL
+        }
+      })
+    })
+    .then(response => {
+      if (response.ok) {
+        document.getElementById("confirmation").textContent =
+          "Your mystery has been whispered to the wind…";
+      } else {
+        document.getElementById("confirmation").textContent =
+          "The wind hesitated… something went wrong.";
+      }
+    })
+    .catch(error => {
+      console.error("Notification error:", error);
+      document.getElementById("confirmation").textContent =
+        "The whisper was lost in the mist…";
+    });
+  }
+</script>
+</body>
+</html>

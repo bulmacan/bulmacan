@@ -1,0 +1,172 @@
+/* ===============================
+   GLOBAL BASE
+================================ */
+
+body {
+  font-family: Arial, "Trebuchet MS", sans-serif;
+  color: #333;
+  margin: 0;
+  background-color: #ffffff;
+  padding: 8px;
+}
+
+.layout-wrapper {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 8px;
+}
+
+/* ===============================
+   HEADINGS & TEXT
+================================ */
+
+h1, h2, h3 {
+  color: #222;
+}
+
+p {
+  font-size: 1em;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* ===============================
+   BLOG INDEX (COMPACT DESIGN)
+================================ */
+
+.blog-index {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;               /* tighter gap between rows */
+  margin-top: 4px;
+}
+
+.blog-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 6px 12px;      /* tighter vertical padding */
+  text-decoration: none;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+.blog-row:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 5px 14px rgba(0, 0, 0, 0.07);
+}
+
+.blog-text {
+  max-width: 82%;
+}
+
+.blog-title {
+  font-size: 17px;
+  font-weight: 600;
+  color: #222;
+  margin-bottom: 2px;
+  line-height: 1.25;      /* tighter line height */
+}
+
+.blog-desc {
+  font-size: 13px;
+  line-height: 1.2;
+  color: #666;
+}
+
+/* Hide empty descriptions automatically */
+.blog-desc:empty {
+  display: none;
+}
+
+.blog-arrow {
+  flex-shrink: 0;
+}
+
+.blog-arrow img {
+  width: 30px;            /* slightly smaller arrow */
+  height: 30px;
+}
+
+/* ===============================
+   MOBILE OPTIMIZATION
+================================ */
+
+@media (max-width: 600px) {
+  .blog-title {
+    font-size: 16px;
+  }
+
+  .blog-desc {
+    font-size: 12.5px;
+  }
+
+  .blog-arrow img {
+    width: 28px;
+    height: 28px;
+  }
+}
+
+/* ===============================
+   CONTACT FORM (UNCHANGED)
+================================ */
+
+.contact-wrapper {
+  align-items: center;
+  text-align: center;
+  margin: 2rem auto;
+  padding: 1rem;
+}
+
+.contact-form form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.contact-form label {
+  font-weight: bold;
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 80%;
+  padding: 0.6rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.contact-form button {
+  width: 25%;
+  padding: 0.6rem;
+  font-size: 1rem;
+  border-radius: 4px;
+  background-color: #e63946;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.contact-form button:hover {
+  background-color: #d62828;
+}
+
+/* ===============================
+   SOCIAL ICONS
+================================ */
+
+.social-links a {
+  margin: 0 8px;
+  display: inline-block;
+}
+
+.social-links i {
+  transition: transform 0.2s ease;
+}
+
+.social-links i:hover {
+  transform: scale(1.1);
+}

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Önceki Dedektiflemeceler</title>
+   <link rel="stylesheet" href="dedektif_css.css">
+   <link rel="stylesheet" href="https://www.bulmacan.com/footer/footer.css">
+  <!-- Favicons -->
+  <link rel="icon" href="../../icons/favicon.ico" type="image/x-icon">
+  <link rel="icon" type="image/png" sizes="32x32" href="../../icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../../icons/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../../icons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="../../icons/android-chrome-192x192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="../../icons/android-chrome-512x512.png">
+  <link rel="manifest" href="../../icons/site.webmanifest">
+
+  <!-- Social sharing -->
+  <meta property="og:title" content="bulmacan – Dedektiflemece">
+  <meta property="og:description" content="dedektiflemece bulmacası: Grupları doğru şekilde eşleştir!">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.bulmacan.com/kumelemece">
+  <meta property="og:image" content="https://www.bulmacan.com/icons/kumelemece.png">
+  <meta name="twitter:card" content="summary_large_image">
+</head>
+
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js"
+data-cf-beacon='{"token": "6ed43d34957a49fcb90ec8e43f7db523"}'></script><body>
+
+
+<body>
+
+<div id="smart-header"></div>
+<script src="https://www.bulmacan.com/header/load_header.js" defer></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    loadHeader("back");
+  });
+</script>
+
+<! -- Önceki Dedektiflemeceler />
+<ul id="puzzle-links" class="puzzle-list">
+</ul>
+
+
+<div id="smart-footer"></div>
+<script src="https://www.bulmacan.com/footer/load_footer.js" defer></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    loadFooter();
+  });
+</script>
+
+
+<script>
+  const today = new Date().toISOString().split("T")[0];
+
+  fetch('https://www.bulmacan.com/dedektiflemece/dedektiflemece_json.json')
+    .then(response => response.json())
+    .then(data => {
+      const container = document.getElementById('puzzle-links');
+      container.innerHTML = '';
+
+      const puzzles = data.puzzles.filter(p => p.date < today);
+      puzzles.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+      puzzles.forEach(puzzle => {
+        const li = document.createElement('li');
+        const a = document.createElement('a');
+
+        a.href = `past-puzzles_load.html?next=dedektif_past.html&date=${puzzle.date}`;
+        a.textContent = `${puzzle.date} tarihli Dedektiflemece`;
+        a.className = 'puzzle-link';
+
+        li.appendChild(a);
+        container.appendChild(li);
+      });
+
+      if (puzzles.length === 0) {
+        container.innerHTML = '<li>Henüz önceki bulmaca bulunamadı.</li>';
+      }
+    })
+    .catch(error => {
+      document.getElementById('puzzle-links').innerHTML =
+        '<li>Bulmacalar yüklenemedi.</li>';
+      console.error('JSON yüklenemedi:', error);
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Günlük Sudoku</title>
+
+  <!-- Sudoku CSS -->
+  <link rel="stylesheet" href="css_js/sudoku_css.css">
+
+  <!-- Favicons -->
+  <link rel="icon" href="../icons/favicon.ico" type="image/x-icon">
+</head>
+
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js"
+data-cf-beacon='{"token": "6ed43d34957a49fcb90ec8e43f7db523"}'></script><body>
+
+<body>
+
+<!-- Dynamic header -->
+<div id="smart-header"></div>
+<script src="https://www.bulmacan.com/header/load_header.js" defer></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    if (typeof loadHeader === "function") {
+      loadHeader("home");
+    }
+  });
+</script>
+
+<!-- Sudoku -->
+<div class="sudoku-wrapper">
+  <div class="sudoku">
+
+    <table id="grid"></table>
+
+    <!-- Number keypad -->
+    <div class="keypad">
+      <button data-num="1" onclick="enterNumber(1)">1</button>
+      <button data-num="2" onclick="enterNumber(2)">2</button>
+      <button data-num="3" onclick="enterNumber(3)">3</button>
+      <button data-num="4" onclick="enterNumber(4)">4</button>
+      <button data-num="5" onclick="enterNumber(5)">5</button>
+      <button data-num="6" onclick="enterNumber(6)">6</button>
+      <button data-num="7" onclick="enterNumber(7)">7</button>
+      <button data-num="8" onclick="enterNumber(8)">8</button>
+      <button data-num="9" onclick="enterNumber(9)">9</button>
+    </div>
+
+    <!-- Action buttons -->
+    <div class="buttons">
+      <button onclick="checkSudoku()">Kontrol Et</button>
+      <button class="danger" onclick="clearCell()">Sil</button>
+    </div>
+
+  </div>
+</div>
+
+<BR><BR><BR>
+<div id="smart-footer"></div>
+<link rel="stylesheet" href="https://www.bulmacan.com/footer/footer.css">
+<script src="https://www.bulmacan.com/footer/load_footer.js" defer></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    loadFooter();
+  });
+</script>
+
+<script>
+/* ===============================
+   Global state
+================================ */
+let puzzle = [];
+let solution = [];
+let activeCell = null;
+let activeNumber = null;
+
+const grid = document.getElementById("grid");
+
+/* ===============================
+   Read URL date
+================================ */
+const urlParams = new URLSearchParams(window.location.search);
+const selectedDate = urlParams.get("date");
+
+/* ===============================
+   Load Sudoku JSON
+================================ */
+async function loadSudoku() {
+
+  const today = new Date();
+  let data = null;
+
+  /* 1️⃣ Try requested date first */
+  if (selectedDate) {
+    try {
+      const res = await fetch(`/sudoku/data/${selectedDate}.json`);
+      if (res.ok) {
+        data = await res.json();
+        console.log("Loaded sudoku:", selectedDate);
+      }
+    } catch(e){}
+  }
+
+  /* 2️⃣ Otherwise search backwards for latest puzzle */
+  if (!data) {
+
+    for (let i = 0; i < 3650; i++) {
+
+      const d = new Date(today);
+      d.setDate(today.getDate() - i);
+
+      const dateStr = d.toISOString().split("T")[0];
+
+      try {
+
+        const res = await fetch(`/sudoku/data/${dateStr}.json`);
+
+        if (res.ok) {
+          data = await res.json();
+          console.log("Loaded fallback sudoku:", dateStr);
+          break;
+        }
+
+      } catch(e){}
+    }
+
+  }
+
+  if (!data) {
+    console.error("Sudoku JSON yüklenemedi.");
+    return;
+  }
+
+  puzzle = data.puzzle;
+  solution = data.solution;
+
+  createGrid();
+}
+
+loadSudoku();
+
+/* ===============================
+   Create grid
+================================ */
+function createGrid() {
+
+  grid.innerHTML = "";
+  activeCell = null;
+  activeNumber = null;
+
+  document
+    .querySelectorAll(".keypad button")
+    .forEach(b => b.classList.remove("active-num"));
+
+  for (let r = 0; r < 9; r++) {
+
+    const row = document.createElement("tr");
+
+    for (let c = 0; c < 9; c++) {
+
+      const cell = document.createElement("td");
+      const input = document.createElement("input");
+
+      input.readOnly = true;
+      input.dataset.row = r;
+      input.dataset.col = c;
+
+      if (puzzle[r][c] !== "") {
+        input.value = puzzle[r][c];
+        input.disabled = true;
+      }
+
+      input.addEventListener("click", () => {
+
+        if (input.disabled) return;
+
+        document
+          .querySelectorAll(".sudoku input")
+          .forEach(i => i.classList.remove("active"));
+
+        input.classList.add("active");
+        activeCell = input;
+
+      });
+
+      cell.appendChild(input);
+      row.appendChild(cell);
+
+    }
+
+    grid.appendChild(row);
+
+  }
+
+}
+
+/* ===============================
+   Validation
+================================ */
+function validateGrid() {
+
+  const inputs = document.querySelectorAll(".sudoku input");
+  inputs.forEach(i => i.classList.remove("wrong"));
+
+  const values = Array.from({ length: 9 }, () => Array(9).fill(""));
+
+  inputs.forEach(input => {
+    values[input.dataset.row][input.dataset.col] = input.value;
+  });
+
+  for (let i = 0; i < 9; i++) {
+    checkDuplicates(values[i].map((v, c) => ({ v, r: i, c })));
+    checkDuplicates(values.map((row, r) => ({ v: row[i], r, c: i })));
+  }
+
+  for (let br = 0; br < 3; br++) {
+    for (let bc = 0; bc < 3; bc++) {
+
+      const box = [];
+
+      for (let r = br * 3; r < br * 3 + 3; r++) {
+        for (let c = bc * 3; c < bc * 3 + 3; c++) {
+          box.push({ v: values[r][c], r, c });
+        }
+      }
+
+      checkDuplicates(box);
+
+    }
+  }
+
+}
+
+function checkDuplicates(cells) {
+
+  const seen = {};
+
+  cells.forEach(({ v, r, c }) => {
+
+    if (!v) return;
+
+    if (seen[v]) {
+      markWrong(seen[v]);
+      markWrong({ r, c });
+    } else {
+      seen[v] = { r, c };
+    }
+
+  });
+
+}
+
+function markWrong({ r, c }) {
+
+  const el = document.querySelector(
+    `.sudoku input[data-row='${r}'][data-col='${c}']`
+  );
+
+  if (el) el.classList.add("wrong");
+
+}
+
+/* ===============================
+   Keypad
+================================ */
+function enterNumber(num) {
+
+  activeNumber = num;
+
+  document
+    .querySelectorAll(".keypad button")
+    .forEach(b => b.classList.remove("active-num"));
+
+  const btn = document.querySelector(
+    `.keypad button[data-num='${num}']`
+  );
+
+  if (btn) btn.classList.add("active-num");
+
+  if (!activeCell || activeCell.disabled) return;
+
+  activeCell.value = num;
+
+  validateGrid();
+
+}
+
+function clearCell() {
+
+  if (!activeCell || activeCell.disabled) return;
+
+  activeCell.value = "";
+
+  validateGrid();
+
+}
+
+/* ===============================
+   Check & success
+================================ */
+function checkSudoku() {
+
+  validateGrid();
+
+  const inputs = document.querySelectorAll(".sudoku input");
+
+  let allFilled = true;
+  let anyWrong = false;
+
+  inputs.forEach(input => {
+
+    if (!input.value) allFilled = false;
+    if (input.classList.contains("wrong")) anyWrong = true;
+
+  });
+
+  if (!allFilled) {
+    alert("Henüz tüm hücreler doldurulmadı.");
+    return;
+  }
+
+  if (anyWrong) {
+    alert("Bazı hücreler Sudoku kurallarını ihlal ediyor.");
+    return;
+  }
+
+  let correct = true;
+
+  inputs.forEach(input => {
+
+    const r = input.dataset.row;
+    const c = input.dataset.col;
+
+    if (Number(input.value) !== solution[r][c]) correct = false;
+
+  });
+
+  if (correct) {
+    window.location.href = "sudoku_success.html";
+  } else {
+    alert("Kurallar doğru ama çözüm hatalı.");
+  }
+
+}
+</script>
+
+</body>
+</html>

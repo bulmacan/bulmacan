@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KELIME AVI</title>
+  <link rel="stylesheet" href="css_js/kelimeavi_css.css" />
+    <!-- Favicons -->
+  <link rel="icon" href="../icons/favicon.ico" type="image/x-icon">
+  <link rel="icon" type="image/png" sizes="32x32" href="../icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../icons/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../icons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="../icons/android-chrome-192x192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="../icons/android-chrome-512x512.png">
+  <link rel="manifest" href="../icons/site.webmanifest">
+
+  <!-- Social sharing -->
+  <meta property="og:title" content="bulmacan – Dedektiflemece">
+  <meta property="og:description" content="dedektiflemece bulmacası: Grupları doğru şekilde eşleştir!">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.bulmacan.com/kumelemece">
+  <meta property="og:image" content="https://www.bulmacan.com/icons/kumelemece.png">
+  <meta name="twitter:card" content="summary_large_image">
+</head>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js"
+data-cf-beacon='{"token": "6ed43d34957a49fcb90ec8e43f7db523"}'></script><body>
+
+<body>
+
+<div id="smart-header"></div>
+<script src="https://www.bulmacan.com/header/load_header.js" defer></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    loadHeader("home");
+  });
+</script>
+
+
+
+  <!-- 🧩 Puzzle Info -->
+  <div id="subject">🗺️ Bugünkü konu: <strong id="puzzleTitle">Yükleniyor...</strong></div>
+  <div id="progress" style="font-size: 1.2em; font-weight: bold; margin-top: 10px; color: #2e7d32;">
+    0 bulundu
+  </div>
+
+  <!-- 🔡 Puzzle Grid -->
+  <div id="game-container">
+    <div id="grid"></div>
+    <svg id="overlay"></svg>
+  </div>
+
+  <!-- 💬 Feedback -->
+  <div id="feedback"></div>
+
+<!-- 🎉 Success Screen -->
+<div id="success-screen" style="display: none;">
+  <div class="success-message">
+    <span style="font-size: 2em;">🎉</span> Tüm kelimeleri buldunuz!
+  </div>
+  <div class="group-info">
+    <p><strong>Bulduğunuz kelimeler:</strong></p>
+    <ul id="word-list"></ul>
+  </div>
+
+  <!-- 📣 Share Button -->
+  <div style="margin-top: 20px;">
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https://bulmacan.com"
+       target="_blank"
+       class="share-button"
+       style="display: inline-block; padding: 10px 15px; background-color: #2e7d32; color: white; text-decoration: none; border-radius: 5px;">
+      📣 Bulmacaları beğendiniz mi?<br>
+      Facebook’da bizi önermek için tıklayın<br>
+      daha çok oyuncu, daha çok bulmaca! 😊
+    </a>
+  </div>
+</div>
+
+<div id="smart-footer"></div>
+<link rel="stylesheet" href="https://www.bulmacan.com/footer/footer.css">
+<script src="https://www.bulmacan.com/footer/load_footer.js" defer></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    loadFooter();
+  });
+</script>
+
+
+  <!-- 🧠 Puzzle Logic -->
+<script>
+
+/* ===============================
+   Global state
+================================ */
+
+let foundWords = 0;
+let totalWords = 0;
+let puzzle = null;
+
+const urlParams = new URLSearchParams(window.location.search);
+const selectedDate = urlParams.get("date");
+
+/* ===============================
+   Load Kelime Avı puzzle
+================================ */
+
+async function loadKelimeAvi() {
+
+  const today = new Date();
+  let data = null;
+
+  /* Try URL date first */
+  if (selectedDate) {
+
+    try {
+      const res = await fetch(`/kelimeavi/data/${selectedDate}.json`);
+      if (res.ok) data = await res.json();
+    } catch(e){}
+
+  }
+
+  /* Search backwards for nearest puzzle */
+  if (!data) {
+
+    for (let i = 0; i < 3650; i++) {
+
+      const d = new Date(today);
+      d.setDate(today.getDate() - i);
+
+      const dateStr = d.toISOString().split("T")[0];
+
+      try {
+
+        const res = await fetch(`/kelimeavi/data/${dateStr}.json`);
+
+        if (res.ok) {
+
+          data = await res.json();
+          console.log("Loaded fallback kelimeavi:", dateStr);
+          break;
+
+        }
+
+      } catch(e){}
+
+    }
+
+  }
+
+  if (!data) {
+
+    document.getElementById("puzzleTitle").textContent =
+      "Hiç bulmaca bulunamadı.";
+
+    return;
+
+  }
+
+  puzzle = data;
+
+  document.getElementById("puzzleTitle").textContent = puzzle.title;
+
+  const matrix = puzzle.matrix;
+  const words = puzzle.words;
+
+  totalWords = words.length;
+
+  initializePuzzle(matrix, words);
+
+}
+
+loadKelimeAvi();
+
+/* ===============================
+   Puzzle Engine
+================================ */
+
+function initializePuzzle(matrix, words) {
+
+  const grid = document.getElementById("grid");
+  const gridSize = matrix.length;
+
+  let selectedCells = [];
+  const usedCells = new Set();
+  const foundSet = new Set();
+
+  grid.innerHTML = "";
+
+  matrix.forEach((row, r) => {
+
+    row.forEach((letter, c) => {
+
+      const cell = document.createElement("div");
+
+      cell.className = "cell";
+      cell.textContent = letter;
+      cell.dataset.key = `${r},${c}`;
+
+      grid.appendChild(cell);
+
+      cell.addEventListener("click", () => handleCellClick(cell, r, c));
+
+    });
+
+  });
+
+  function handleCellClick(cell, r, c) {
+
+    const key = `${r},${c}`;
+
+    if (usedCells.has(key)) return;
+
+    if (selectedCells.includes(key)) {
+
+      cell.classList.remove("selected");
+      selectedCells = selectedCells.filter(k => k !== key);
+
+    } else {
+
+      cell.classList.add("selected");
+      selectedCells.push(key);
+
+    }
+
+    const selectedLetters = selectedCells.map(k => {
+
+      const [row, col] = k.split(",").map(Number);
+      return matrix[row][col];
+
+    }).join("");
+
+    const match = words.find(w => w === selectedLetters);
+
+    if (match && isAdjacentPath(selectedCells)) {
+
+      markWordFound(match);
+
+    }
+
+  }
+
+  function isAdjacentPath(cells) {
+
+    for (let i = 1; i < cells.length; i++) {
+
+      const [r1, c1] = cells[i-1].split(",").map(Number);
+      const [r2, c2] = cells[i].split(",").map(Number);
+
+      const rowDiff = Math.abs(r1 - r2);
+      const colDiff = Math.abs(c1 - c2);
+
+      if (rowDiff > 1 || colDiff > 1) return false;
+
+    }
+
+    return true;
+
+  }
+
+  function markWordFound(word) {
+
+    selectedCells.forEach(key => {
+
+      usedCells.add(key);
+
+      const [r, c] = key.split(",").map(Number);
+      const index = r * gridSize + c;
+
+      grid.children[index].classList.remove("selected");
+      grid.children[index].classList.add("found");
+
+    });
+
+    foundSet.add(word);
+    foundWords++;
+
+    document.getElementById("progress").textContent =
+      `${foundWords} / ${words.length} bulundu`;
+
+    selectedCells = [];
+
+    if (foundSet.size === words.length) {
+
+      document.getElementById("game-container").style.display = "none";
+      document.getElementById("success-screen").style.display = "block";
+
+    }
+
+  }
+
+}
+
+</script>
+
+</body>
+</html>

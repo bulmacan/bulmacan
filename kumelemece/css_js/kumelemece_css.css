@@ -1,0 +1,446 @@
+/* === Base Layout === */
+body {
+  font-family: sans-serif, Arial, "Comic Sans MS", "Trebuchet MS";
+  color: #333;
+  text-align: center;
+  margin: 0;
+  background-color: #fff;
+}
+
+/* === Typography === */
+h1 {
+  font-size: 1.5em;
+  margin-bottom: 10px;
+}
+
+.instructions {
+  font-size: 1em;
+  margin-bottom: 20px;
+}
+
+#timer {
+  font-size: 1em;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #444;
+}
+
+/* === Puzzle Grid === */
+#puzzle-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  height: auto;
+  max-width: 90vmin;
+  width: 100%;
+  margin: 20px auto;
+  gap: 1vmin;
+  padding: 1vmin;
+  box-sizing: border-box;
+  border-radius: 2vmin;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background: #f0f0f0;
+}
+
+/* === Word Tiles === */
+.word {
+  background: white;
+  padding: 15px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: bold;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  transition: all 0.2s ease-in-out;
+  font-size: 1em;
+}
+
+.word:hover {
+  background: #f1f1f1;
+  transform: scale(1.05);
+}
+
+.selected {
+  background: #e0f7fa !important;
+  border: 2px solid #00acc1;
+}
+
+.correct {
+  cursor: default;
+  pointer-events: none;
+  color: white;
+}
+
+/* === Group Colors === */
+.group-1 { background: #5FB26D !important; }
+.group-2 { background: #B168B6 !important; }
+.group-3 { background: #41A7BE !important; }
+.group-4 { background: #F6DA39 !important; }
+
+.incorrect {
+  color: red;
+}
+
+/* === Feedback === */
+#feedback {
+  margin-top: 20px;
+  font-size: 1em;
+  font-weight: bold;
+  color: #388e3c;
+}
+
+/* === Hint Boxes === */
+.hint-box {
+  background-color: #dedede;
+  border: 2px dashed #c4c4c4;
+  border-radius: 10px;
+  padding: 10px;
+  width: 160px;
+  font-size: 0.75em;
+  font-weight: bold;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.3s;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.hint-box.revealed {
+  background-color: #f1f1f1;
+  border-style: solid;
+  cursor: default;
+}
+
+#hint-boxes {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 30px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.group-info {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 0 15px;
+  text-align: left;
+}
+
+.group-info p {
+  margin: 10px 0;
+}
+
+.highlight-1,
+.highlight-2,
+.highlight-3,
+.highlight-4 {
+  padding: 2px 6px;
+  border-radius: 4px;
+  color: white;
+  font-weight: bold;
+}
+
+.highlight-1 { background-color: #f1f02e; }
+.highlight-2 { background-color: #2ec2f1; }
+.highlight-3 { background-color: #c2f12e; }
+.highlight-4 { background-color: #f1902e; }
+
+.success-message {
+  font-size: 1em;
+  font-weight: bold;
+  color: #2e7d32;
+  margin-top: 20px;
+}
+
+.success-message span {
+  font-size: 2em;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.share-button {
+  display: inline-block;
+  padding: 5px 10px;
+  background-color: #4267B2;
+  color: white;
+  border-radius: 3px;
+  text-decoration: none;
+  font-weight: bold;
+  margin-top: 8px;
+  text-align: center;
+}
+
+.toast {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #333;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 6px;
+  opacity: 0;
+  transition: opacity .3s ease;
+}
+.toast.visible {
+  opacity: 1;
+}
+
+.ad-container {
+  max-width: 960px;
+  margin: 40px auto 20px auto;
+  padding: 16px;
+  text-align: center;
+  border: 1px solid #eee;
+  background: #fafafa;
+  border-radius: 8px;
+  min-height: 300px;
+}
+
+.ad-slot {
+  width: 100%;
+  height: 250px;
+}
+
+.word-highlight {
+  display: inline-block;
+  margin: 4px;
+}
+.group-line {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+
+
+/* ============================================================
+   === SUCCESS PAGE TILES (MATCH EXACT PUZZLE TILE SIZE) ===
+   ============================================================ */
+
+.group-block {
+  margin: 30px auto;
+  max-width: 960px;
+  text-align: center;
+}
+
+/* 1×4 row */
+.group-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+
+  /* FIX: prevent wrapping */
+  flex-wrap: nowrap;
+
+  /* optional: prevent overflow on tiny screens */
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* EXACT MATCH to .word tile size */
+.word-box {
+  background: white;
+  padding: 15px;
+  border-radius: 12px;
+  font-weight: bold;
+  font-size: 1em;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+
+  /* FIX: allow shrinking */
+  flex: 1 1 0;
+  min-width: 0;
+
+  min-height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: default;
+  pointer-events: none;
+  transform: none !important;
+}
+
+.word-box:hover {
+  background: inherit !important;
+  transform: none !important;
+}
+
+/* Highlight colours */
+.word-box.highlight-1 { background-color: #f1f02e; color: #000; }
+.word-box.highlight-2 { background-color: #2ec2f1; color: #000; }
+.word-box.highlight-3 { background-color: #c2f12e; color: #000; }
+.word-box.highlight-4 { background-color: #f1902e; color: #000; }
+
+.group-label {
+  font-weight: bold;
+  font-size: 1em;
+  color: #333;
+  white-space: nowrap;
+  margin-left: 10px;
+}
+
+.social-icons {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin: 20px 0;
+}
+
+.social-icons .icon {
+  max-width: 32px;
+  height: auto;
+  border-radius: 8px;
+  transition: transform 0.2s ease;
+}
+
+.social-icons a:hover .icon {
+  transform: scale(1.1);
+}
+
+
+/* === Mobile Responsiveness === */
+@media (max-width: 600px) {
+  body {
+    padding: 10px;
+  }
+
+  h1 {
+    font-size: 1em;
+  }
+
+  .instructions {
+    font-size: 0.95em;
+  }
+
+  #timer {
+    font-size: 0.95em;
+  }
+
+  #puzzle-grid {
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: minmax(60px, auto);
+    width: 100%;
+    max-width: 400px;
+    margin: 20px auto;
+    gap: 10px;
+    padding: 10px;
+    box-sizing: border-box;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background: #f0f0f0;
+  }
+
+  .word {
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 0.9em;
+    min-width: 60px;
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* SUCCESS PAGE MOBILE MATCH */
+  .word-box {
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 0.9em;
+    min-height: 20px;
+  }
+
+  .group-label {
+    font-size: 0.9em;
+    margin-left: 6px;
+  }
+}
+
+/* Puzzle List Container */
+.puzzle-list {
+  list-style: none;
+  padding: 0;
+  margin: 2rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.puzzle-list li a {
+  display: block;
+  padding: 0.75rem 1.25rem;
+  background-color: var(--bg-soft, #f9f9f9);
+  border: 1px solid var(--border-light, #ddd);
+  border-radius: 8px;
+  text-decoration: none;
+  color: var(--text-primary, #333);
+  font-weight: 500;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  max-width: 320px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.puzzle-list li a:hover,
+.puzzle-list li a:focus {
+  background-color: var(--bg-hover, #e6f7ff);
+  border-color: var(--accent, #30D5C8);
+  color: var(--accent-text, #007a7a);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.puzzle-list li a::after {
+  content: '>';
+  float: right;
+  font-size: 1rem;
+  color: var(--accent, #30D5C8);
+  transition: transform 0.2s ease;
+}
+
+.puzzle-list li a:hover::after {
+  transform: translateX(4px);
+}
+
+#rating-box{
+    width:320px;
+    margin:30px auto;
+    padding:20px;
+    border:1px solid #ddd;
+    border-radius:10px;
+    background:#fafafa;
+    text-align:center;
+    box-shadow:0 3px 8px rgba(0,0,0,0.1);
+}
+
+.rating-sub{
+    font-size:14px;
+    color:#666;
+    margin-bottom:10px;
+}
+
+#stars span{
+    font-size:40px;
+    color:#ccc;
+    cursor:pointer;
+    padding:4px;
+}
+
+#stars span.active{
+    color:gold;
+}
+
+#submit-rating{
+    margin-top:15px;
+    padding:8px 16px;
+    font-size:16px;
+    border-radius:6px;
+    border:none;
+    background:#2b7cff;
+    color:white;
+    cursor:pointer;
+}
+
+#submit-rating:hover{
+    background:#1f5ed6;
+}

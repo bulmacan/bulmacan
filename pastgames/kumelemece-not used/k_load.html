@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>bulmacan – Kümelemece</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Kümelemece – Günlük ve haftalık bulmacalar. Grupları doğru şekilde eşleştir, zekanı sınırla!">
+  <link rel="stylesheet" href="https://www.bulmacan.com/kumelemece/css_js/kumelemece_css.css">
+
+  <!-- Favicons -->
+  <link rel="icon" href="../../icons/favicon.ico" type="image/x-icon">
+  <link rel="icon" type="image/png" sizes="32x32" href="../../icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../../icons/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../../icons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="../../icons/android-chrome-192x192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="../../icons/android-chrome-512x512.png">
+  <link rel="manifest" href="../../icons/site.webmanifest">
+
+  <!-- Social sharing -->
+  <meta property="og:title" content="bulmacan – Kümelemece">
+  <meta property="og:description" content="Kümelemece bulmacası: Grupları doğru şekilde eşleştir!">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.bulmacan.com/kumelemece">
+  <meta property="og:image" content="https://www.bulmacan.com/icons/kumelemece.png">
+  <meta name="twitter:card" content="summary_large_image">
+</head>
+
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js"
+data-cf-beacon='{"token": "6ed43d34957a49fcb90ec8e43f7db523"}'></script><body>
+
+
+<body>
+  <!-- 🔺 External Smart Header -->
+<div id="smart-header"></div>
+<script src="https://www.bulmacan.com/header/load_header.js" defer></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    loadHeader("back");
+  });
+</script>
+
+
+  <div id="countdown">kumelemece Yükleniyor: 10 saniye</div>
+
+<BR><BR><BR>
+<div id="smart-footer"></div>
+<link rel="stylesheet" href="https://www.bulmacan.com/footer/footer.css">
+<script src="https://www.bulmacan.com/footer/load_footer.js" defer></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    loadFooter();
+  });
+</script>
+
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const nextPage = "kumelemece_past.html";
+  const date = params.get("date");
+
+  function addParam(url, key, value) {
+    if (!value) return url;
+    const sep = url.includes('?') ? '&' : '?';
+    return `${url}${sep}${key}=${encodeURIComponent(value)}`;
+  }
+
+  const fullRedirect = addParam(nextPage, 'date', date);
+
+  let seconds = 10;
+  let redirected = false;
+  const countdownEl = document.getElementById('countdown');
+
+  function redirect() {
+    if (!redirected) {
+      redirected = true;
+      window.location.href = fullRedirect;
+    }
+  }
+
+  const timer = setInterval(() => {
+    seconds--;
+    if (countdownEl) {
+      countdownEl.textContent = `kumelemece Yükleniyor: ${seconds} saniye`;
+    }
+    if (seconds <= 0) {
+      clearInterval(timer);
+      redirect();
+    }
+  }, 1000);
+
+  document.getElementById('adVideo')?.addEventListener('ended', () => {
+    clearInterval(timer);
+    redirect();
+  });
+
+  setTimeout(() => {
+    redirect();
+  }, 11000);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>bulmacan – Arşiv</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Geçmiş bulmacan bulmacaları: Kümelemece, Dedektiflemece, Sembollemece ve Kelime Avı.">
+
+  <link rel="icon" href="../icons/favicon.ico" type="image/x-icon">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f8f9fb;
+      color: #333;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 24px 16px 40px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 4px;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #666;
+      margin-bottom: 28px;
+    }
+
+    .archive-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+    }
+
+    .archive-box {
+      background: #fff;
+      border-radius: 12px;
+      padding: 16px 18px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+
+    .archive-box h2 {
+      font-size: 18px;
+      margin: 0 0 10px;
+    }
+
+    .archive-box ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .archive-box li {
+      margin-bottom: 6px;
+    }
+
+    .archive-box a {
+      text-decoration: none;
+      color: #2c5cff;
+      font-size: 14px;
+    }
+
+    .archive-box a:hover {
+      text-decoration: underline;
+    }
+
+    .archive-more {
+      margin-top: 10px;
+      display: inline-block;
+      font-size: 13px;
+      color: #444;
+    }
+  </style>
+</head>
+
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js"
+data-cf-beacon='{"token": "6ed43d34957a49fcb90ec8e43f7db523"}'></script><body>
+
+<body>
+
+<!-- Header -->
+<div id="smart-header"></div>
+<script src="https://www.bulmacan.com/header/load_header.js" defer></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    loadHeader("docs");
+  });
+</script>
+
+
+<div class="container">
+  <h1>Arşiv</h1>
+  <div class="subtitle">Geçmiş bulmacalar seni bekliyor</div>
+
+  <div class="archive-grid">
+
+    <!-- Kümelemece -->
+    <div class="archive-box">
+      <h2>Kümelemece</h2>
+      <ul id="archive-kumelemece"></ul>
+    </div>
+
+    <!-- Dedektiflemece -->
+    <div class="archive-box">
+      <h2>Dedektiflemece</h2>
+      <ul id="archive-dedektif"></ul>
+    </div>
+
+    <!-- Sembollemece -->
+    <div class="archive-box">
+      <h2>Sembollemece</h2>
+      <ul id="archive-sembol"></ul>
+    </div>
+
+    <!-- Kelime Avı -->
+    <div class="archive-box">
+      <h2>Kelime Avı</h2>
+      <ul id="archive-kelime"></ul>
+    </div>
+
+  </div>
+</div>
+
+<!-- Footer -->
+<div id="smart-footer"></div>
+<link rel="stylesheet" href="https://www.bulmacan.com/footer/footer.css">
+<script src="https://www.bulmacan.com/footer/load_footer.js" defer></script>
+
+<script>
+
+function buildUrl(path, params) {
+  const url = new URL(path, window.location.origin);
+  Object.entries(params).forEach(([k, v]) => {
+    if (v) url.searchParams.set(k, v);
+  });
+  return url.pathname + url.search;
+}
+
+const today = new Date().toISOString().split("T")[0];
+
+function loadArchive(jsonUrl, listId, linkBuilder) {
+  fetch(jsonUrl)
+    .then(res => res.json())
+    .then(data => {
+      const list = document.getElementById(listId);
+      const items = data.puzzles
+        .filter(p => p.date && p.date < today)
+        .sort((a, b) => b.date.localeCompare(a.date))
+        .slice(0, 10);
+
+      items.forEach(p => {
+        const li = document.createElement("li");
+        const a = document.createElement("a");
+        a.href = linkBuilder(p);
+        a.textContent = p.date;
+        li.appendChild(a);
+        list.appendChild(li);
+      });
+
+      if (items.length === 0) {
+        list.innerHTML = "<li>Henüz bulmaca yok.</li>";
+      }
+    })
+    .catch(() => {
+      document.getElementById(listId).innerHTML = "<li>Yüklenemedi.</li>";
+    });
+}
+
+loadArchive(
+  "/dedektiflemece/dedektiflemece_json.json",
+  "archive-dedektif",
+  p => buildUrl("/dedektiflemece/past-puzzles_load.html", {
+    next: "dedektif_past.html",
+    date: p.date
+  })
+);
+
+  if (location.pathname.includes('.html&')) {
+    location.replace(location.href.replace('.html&', '.html?'));
+  }
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,29 @@
+{
+"id": "g-2026-03-15",      
+"date": "2026-03-15",
+"groups": [   	{
+          	"label": "Yoğurtla pişirilen yemekler",
+          	"class": "group-1",
+          	"words": ["Mantı", "Cılbır", "İskender", "Şebit"],
+          	"clue": "Yoğurtlu"
+        	},
+        	{
+          	"label": "İstanbul'un köyleri",
+          	"class": "group-2",
+          	"words": ["Kadı", "Bakır", "Orta", "Kara"],
+          	"clue": "İstanbul"
+        	},
+        	{
+          	"label": "Ev Eşyaları",
+          	"class": "group-3",
+          	"words": ["Masa", "Sandalye", "Lamba", "Halı"],
+          	"clue": "Eşyalar"
+        	},
+        	{
+          	"label": "Hayvanlar",
+          	"class": "group-4",
+          	"words": ["Kedi", "Köpek", "Kuş", "Balık"],
+          	"clue": "Hayvanlar"
+        	}
+      		]
+    }

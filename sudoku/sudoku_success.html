@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sudoku Başarılı</title>
+
+  <!-- Main CSS -->
+  <link rel="stylesheet" href="css_js/sudoku_css.css">
+
+  <!-- Favicons -->
+  <link rel="icon" href="../icons/favicon.ico" type="image/x-icon">
+
+</head>
+
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js"
+data-cf-beacon='{"token": "6ed43d34957a49fcb90ec8e43f7db523"}'></script><body>
+
+<body>
+
+  <!-- Dynamic header -->
+  <div id="smart-header"></div>
+  <script src="https://www.bulmacan.com/header/load_header.js" defer></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      if (typeof loadHeader === "function") {
+        loadHeader("home");
+      }
+    });
+  </script>
+
+  <!-- ===============================
+       SUCCESS CONTENT
+  ================================== -->
+<div class="page-container">
+
+  <!-- Success message -->
+  <div class="success-message">
+    <span class="emoji">🎉</span>
+    <span>BRAVO! SUDOKU'yu çözdünüz.</span>
+  </div>
+
+  <!-- Blue Facebook box -->
+  <div class="success-box-wrapper">
+    <div class="success-box">
+      👉 Bulmacaları beğendiniz mi?<br>
+      Facebook'da bizi önermek için tıklayın<br>
+      daha çok oyuncu, daha çok bulmaca! 😊
+    </div>
+  </div>
+
+  <!-- Social icons -->
+<div class="social-icons">
+  <a href="#"><img class="icon" src="https://www.bulmacan.com/icons/insta_icon.png" alt="Instagram"></a>
+  <a href="#"><img class="icon" src="https://www.bulmacan.com/icons/pint_icon.png" alt="Pinterest"></a>
+  <a href="#"><img class="icon" src="https://www.bulmacan.com/icons/face_icon.png" alt="Facebook"></a>
+<a href="#" onclick="shareToWhatsApp(event)"><img class="icon" src="https://www.bulmacan.com/icons/whatsap_icon.png" alt="WhatsApp"></a>
+<a href="#" onclick="copyLink(event)"><img class="icon" src="https://www.bulmacan.com/icons/link_icon.png" alt="Copy link">
+</a>
+</div>
+
+</div>
+</body>
+</html>

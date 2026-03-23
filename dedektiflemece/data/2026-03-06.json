@@ -1,0 +1,20 @@
+{
+      "id": "d-2026-03-06",
+      "date": "2026-03-06",
+"title": "Perili Koskun sirlari",
+      "intro": "INTRO",
+      "clues": [
+        "Clue 1",
+        "Clue 2",
+        "Clue 3"
+      ],
+      "suspects": ["Suspect 1", "Suspect 2", "Suspect 3"],
+      "locations": ["Loc 1", "Loc 2", "Loc 3"],
+      "weapons": ["Method 1", "Method 2", "Method 3"],
+      "solution": {
+        "person": "Suspect 1",
+        "place": "Loc 2",
+        "method": "Method 3",
+        "how": "<h2>Çözüm</h2>"
+      }
+    }

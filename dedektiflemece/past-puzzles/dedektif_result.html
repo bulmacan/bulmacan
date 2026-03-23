@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>Dedektiflemece Sonuç</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="dedektif_css.css">
+  <!-- Favicons -->
+  <link rel="icon" href="../icons/favicon.ico" type="image/x-icon">
+  <link rel="icon" type="image/png" sizes="32x32" href="../icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../../icons/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../../icons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="../../icons/android-chrome-192x192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="../../icons/android-chrome-512x512.png">
+  <link rel="manifest" href="../../icons/site.webmanifest">
+
+  <!-- Social sharing -->
+  <meta property="og:title" content="bulmacan – Kümelemece">
+  <meta property="og:description" content="Kümelemece bulmacası: Grupları doğru şekilde eşleştir!">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.bulmacan.com/kumelemece">
+  <meta property="og:image" content="https://www.bulmacan.com/icons/kumelemece.png">
+  <meta name="twitter:card" content="summary_large_image">
+</head>
+
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js"
+data-cf-beacon='{"token": "6ed43d34957a49fcb90ec8e43f7db523"}'></script><body>
+
+<body>
+     <!-- 🔺 External Smart Header -->
+<div id="smart-header"></div>
+<script src="https://www.bulmacan.com/header/load_header.js" defer></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    loadHeader("home");
+  });
+</script>
+
+  <section class="result-section">
+    <h1 id="result-header"></h1>
+    <div id="result-message"></div>
+    <div style="margin-top:20px;">
+    </div>
+  </section>
+
+<div id="smart-footer"></div>
+<link rel="stylesheet" href="https://www.bulmacan.com/footer/footer.css">
+<script src="https://www.bulmacan.com/footer/load_footer.js" defer></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    loadFooter();
+  });
+</script>
+
+
+  <script>
+    const result = localStorage.getItem("result");
+    const puzzleIndex = parseInt(localStorage.getItem("puzzleIndex"), 10);
+
+    fetch("../dedektiflemece_json.json")
+      .then(res => res.json())
+      .then(data => {
+        const puzzle = data.puzzles[puzzleIndex];
+        const solution = puzzle.solution;
+
+        const header = document.getElementById("result-header");
+        const message = document.getElementById("result-message");
+
+      if (result === "success") {
+  header.textContent = "🎉 BRAVO!";
+  message.innerHTML = `
+    <p>Sırrı başarıyla çözdünüz. Zeki gurur duyuyor!</p>
+    <p><strong>Suçlu:</strong> ${solution.person}</p>
+    <p><strong>Olay Yeri:</strong> ${solution.place}</p>
+    <p><strong>Yöntem:</strong> ${solution.method}</p>
+    <p><em>${solution.how}</em></p>
+  `;
+
+  message.innerHTML += `
+    <!-- 📣 Share Button -->
+    <div style="margin-top: 20px;">
+      <a href="https://www.facebook.com/sharer/sharer.php?u=https://bulmacan.com"
+         target="_blank"
+         class="share-button"
+         style="display: inline-block; padding: 10px 15px; background-color: #2e7d32; color: white; text-decoration: none; border-radius: 5px;">
+        📣 Zeki'nin sırrını çözdünüz mü?<br>
+        Facebook’da bizi önermek için tıklayın<br>
+        daha çok dedektif, daha çok gizem! 🕵️‍♀️
+      </a>
+    </div>
+  `;
+} else {
+  header.textContent = "😟 OLMADI BU SEFER";
+  message.innerHTML = `
+    <p>Zeki biraz hayal kırıklığına uğradı ama bir dahaki sefere başaracaksınız!</p>
+    <p><strong>Doğru Cevap:</strong></p>
+    <p><strong>Suçlu:</strong> ${solution.person}</p>
+    <p><strong>Olay Yeri:</strong> ${solution.place}</p>
+    <p><strong>Yöntem:</strong> ${solution.method}</p>
+    <p><em>${solution.how}</em></p>
+  `;
+}
+
+        localStorage.removeItem("solution");
+        localStorage.removeItem("puzzleIndex");
+      });
+  </script>
+</body>
+</html>

@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<title>bulmacan – Kümelemece</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="description" content="Kümelemece – Günlük ve haftalık bulmacalar.">
+
+<link rel="stylesheet" href="https://www.bulmacan.com/kumelemece/css_js/kumelemece_css.css">
+
+<style>
+
+#rating-box{
+width:320px;
+margin:30px auto;
+padding:20px;
+border:1px solid #ddd;
+border-radius:10px;
+background:#fafafa;
+text-align:center;
+box-shadow:0 3px 8px rgba(0,0,0,0.1);
+}
+
+#stars span{
+font-size:42px;
+color:#ccc;
+cursor:pointer;
+padding:4px;
+}
+
+#stars span.active{
+color:gold;
+}
+
+#submit-rating{
+margin-top:10px;
+padding:8px 16px;
+font-size:16px;
+border:none;
+border-radius:6px;
+background:#2b7cff;
+color:white;
+cursor:pointer;
+}
+
+.group-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+
+}
+
+.group-label {
+  margin-left: 10px;
+  font-weight: 600;
+  color: #333;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div id="smart-header"></div>
+<script src="https://www.bulmacan.com/header/load_header.js" defer></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+loadHeader("home");
+});
+</script>
+
+<!-- SUCCESS MESSAGE -->
+
+<div class="success-message">
+<span>HARİKA 🎉</span> Tüm grupları buldunuz!
+</div>
+
+<!-- GROUP RESULTS -->
+
+<div class="group-info" id="group-results"></div>
+
+
+<!-- RATING BOX -->
+
+<div id="rating-box">
+
+Bu Kümelemece'yi nasil buldunuz?
+
+<div id="stars">
+<span data-value="1">★</span>
+<span data-value="2">★</span>
+<span data-value="3">★</span>
+<span data-value="4">★</span>
+<span data-value="5">★</span>
+</div>
+
+<button id="submit-rating">Submit Rating</button>
+
+<p id="rating-result"></p>
+
+</div>
+
+<!-- SHARE SECTION -->
+
+📣 Bulmacaları beğendiniz mi?<br>
+Bizi önermek için tıklayın<br>
+daha çok oyuncu, daha çok bulmaca! 😊
+
+<div class="social-icons">
+<a href="#"><img class="icon" src="https://www.bulmacan.com/icons/insta_icon.png"></a>
+<a href="#"><img class="icon" src="https://www.bulmacan.com/icons/pint_icon.png"></a>
+<a href="#"><img class="icon" src="https://www.bulmacan.com/icons/face_icon.png"></a>
+<a href="#" onclick="shareToWhatsApp(event)"><img class="icon" src="https://www.bulmacan.com/icons/whatsap_icon.png"></a>
+<a href="#" onclick="copyLink(event)"><img class="icon" src="https://www.bulmacan.com/icons/link_icon.png"></a>
+</div>
+
+
+<!-- FOOTER -->
+
+<div id="smart-footer"></div>
+
+<link rel="stylesheet" href="https://www.bulmacan.com/footer/footer.css">
+<script src="https://www.bulmacan.com/footer/load_footer.js" defer></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+loadFooter();
+});
+</script>
+
+
+<!-- PUZZLE LOADER -->
+
+<script>
+
+let puzzleID = null;
+
+const urlParams = new URLSearchParams(window.location.search);
+const selectedDate = urlParams.get("date");
+
+async function loadPuzzle(){
+
+const today = new Date();
+let puzzle = null;
+
+if(selectedDate){
+
+try{
+
+const res = await fetch(`/kumelemece/data/${selectedDate}.json`);
+
+if(res.ok){
+puzzle = await res.json();
+}
+
+}catch(e){}
+
+}
+
+if(!puzzle){
+
+for(let i=0;i<3650;i++){
+
+const d = new Date(today);
+d.setDate(today.getDate()-i);
+
+const dateStr = d.toISOString().split("T")[0];
+
+try{
+
+const res = await fetch(`/kumelemece/data/${dateStr}.json`);
+
+if(res.ok){
+puzzle = await res.json();
+break;
+}
+
+}catch(e){}
+
+}
+
+}
+
+if(!puzzle){
+
+document.getElementById("group-results").innerHTML =
+"<p>Bugüne ait grup verileri bulunamadı.</p>";
+
+return;
+
+}
+
+/* store puzzle id */
+
+puzzleID = puzzle.id;
+
+console.log("Loaded puzzle ID:", puzzleID);
+
+const container = document.getElementById("group-results");
+
+puzzle.groups.forEach((group,index)=>{
+
+const wordBoxes = group.words
+.map(word=>`<span class="word-highlight">${word}</span>`)
+.join("");
+
+const html = `
+<div class="group-block">
+  <div class="group-row">
+    ${wordBoxes}
+    <span class="group-label"> → ${group.label}</span>
+  </div>
+</div>
+`;
+
+container.innerHTML += html;
+
+});
+
+}
+
+loadPuzzle();
+
+</script>
+
+
+<!-- RATING SYSTEM -->
+
+<script>
+
+document.addEventListener("DOMContentLoaded", () => {
+
+let selectedRating = 0;
+
+const stars = document.querySelectorAll("#stars span");
+const button = document.getElementById("submit-rating");
+const result = document.getElementById("rating-result");
+
+
+/* STAR CLICK */
+
+stars.forEach((star, index) => {
+
+star.addEventListener("click", () => {
+
+selectedRating = index + 1;
+
+stars.forEach(s => s.classList.remove("active"));
+
+for(let i=0;i<selectedRating;i++){
+stars[i].classList.add("active");
+}
+
+});
+
+});
+
+
+/* SUBMIT RATING */
+
+button.addEventListener("click", async () => {
+
+if(selectedRating === 0){
+
+result.innerHTML = "Please select a rating ⭐";
+return;
+
+}
+
+if(!puzzleID){
+
+result.innerHTML = "Puzzle ID not loaded yet.";
+return;
+
+}
+
+result.innerHTML = "⭐ Thank you for rating!";
+
+try{
+
+const response = await fetch(
+"https://aasreluvawvisaswbtzh.supabase.co/rest/v1/ratings",
+{
+
+method:"POST",
+
+ headers: {
+          "apikey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFhc3JlbHV2YXd2aXNhc3didHpoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM0NDA0NDgsImV4cCI6MjA4OTAxNjQ0OH0.3WNhNot604dC_hkCbcc6QUapM7qnkHV-Qj3EtJmXxJo",
+          "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFhc3JlbHV2YXd2aXNhc3didHpoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM0NDA0NDgsImV4cCI6MjA4OTAxNjQ0OH0.3WNhNot604dC_hkCbcc6QUapM7qnkHV-Qj3EtJmXxJo",
+          "Content-Type": "application/json",
+          "Prefer": "return=representation"
+        },
+
+
+body:JSON.stringify({
+puzzle_id: puzzleID,
+rating: selectedRating
+})
+
+}
+);
+
+const data = await response.text();
+
+console.log("Supabase status:", response.status);
+console.log("Supabase response:", data);
+
+}catch(err){
+
+console.error("Fetch error:", err);
+
+}
+
+});
+
+});
+
+</script>
+</body>
+</html>

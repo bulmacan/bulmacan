@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Safe, family-friendly puzzle game.">
+  <meta name="rating" content="safe for kids">
+  <meta name="category" content="puzzle game">
+
+  <link rel="stylesheet" href="dedektif_css.css">
+<!-- Standard favicon -->
+<link rel="icon" type="image/x-icon" href="../../icons/favicon.ico" />
+
+<!-- PNG fav../icons -->
+<link rel="icon" type="image/png" sizes="32x32" href="../../icons/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="../../icons/favicon-16x16.png" />
+
+<!-- Apple Touch Icon -->
+<link rel="apple-touch-icon" href="../../icons/apple-touch-icon.png" />
+
+<!-- Android Chrome ../icons -->
+<link rel="icon" type="image/png" sizes="192x192" href="../../icons/android-chrome-192x192.png" />
+<link rel="icon" type="image/png" sizes="512x512" href="../../icons/android-chrome-512x512.png" />
+
+<!-- Web App Manifest -->
+<link rel="manifest" href="../../icons/site.webmanifest" />
+  <title>Detektif Hazırlanıyor...</title>
+  
+</head>
+
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js"
+data-cf-beacon='{"token": "6ed43d34957a49fcb90ec8e43f7db523"}'></script><body>
+
+<body>
+
+  <!-- 🔺 External Smart Header -->
+<div id="smart-header"></div>
+<script src="https://www.bulmacan.com/header/load_header.js" defer></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    loadHeader("back");
+  });
+</script>
+
+  <div id="countdown">Detektiflemece Yükleniyor: 10 saniye</div>
+
+<BR><BR><BR>
+<div id="smart-footer"></div>
+<link rel="stylesheet" href="https://www.bulmacan.com/footer/footer.css">
+<script src="https://www.bulmacan.com/footer/load_footer.js" defer></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    loadFooter();
+  });
+</script>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const nextPage = params.get('next') || 'past-puzzles_index.html';
+    const date = params.get('date');
+    const fullRedirect = date ? `${nextPage}?date=${date}` : nextPage;
+
+    let seconds = 10;
+    let redirected = false;
+    const countdownEl = document.getElementById('countdown');
+
+    function redirect() {
+      if (!redirected) {
+        redirected = true;
+        window.location.href = fullRedirect;
+      }
+    }
+
+    const timer = setInterval(() => {
+      seconds--;
+      countdownEl.textContent = `Detektiflemece Yükleniyor: ${seconds} saniye`;
+      if (seconds <= 0) {
+        clearInterval(timer);
+        redirect();
+      }
+    }, 1000);
+
+    document.getElementById('adVideo').addEventListener('ended', () => {
+      clearInterval(timer);
+      redirect();
+    });
+
+    // Fallback in case video doesn't play or countdown fails
+    setTimeout(() => {
+      redirect();
+    }, 11000);
+  </script>
+</body>
+</html>
