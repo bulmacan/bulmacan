@@ -46,6 +46,7 @@
 </div>
 
 <div id="success-screen" style="display: none;">
+<div id="nav-links" class="nav-links" style="display:none; margin-top:20px;"></div>
   <div class="success-message">
     <span style="font-size: 2em;">🎉</span> Tüm kelimeleri buldunuz!
   </div>
@@ -181,9 +182,12 @@ function initializePuzzle(matrix, words) {
           document.getElementById("progress").textContent = `${found.size} / ${words.length} bulundu`;
 
           if (found.size === words.length) {
-            document.getElementById("game-container").style.display = "none";
-            document.getElementById("success-screen").style.display = "block";
-          }
+  document.getElementById("game-container").style.display = "none";
+  document.getElementById("success-screen").style.display = "block";
+
+  const nav = document.getElementById("nav-links");
+  if (nav) nav.style.display = "flex";
+}
         }
       };
 
@@ -191,6 +195,53 @@ function initializePuzzle(matrix, words) {
     });
   });
 }
+
+async function findValidDate(startDate, direction) {
+  const maxSearch = 7;
+
+  for (let i = 1; i <= maxSearch; i++) {
+    const d = new Date(startDate);
+    d.setDate(startDate.getDate() + (direction * i));
+
+    const dateStr = d.toISOString().split("T")[0];
+
+    try {
+      const res = await fetch(`/kelimeavi/data/${dateStr}.json`);
+      if (res.ok) return dateStr;
+    } catch (e) {}
+  }
+
+  return null;
+}
+
+async function createNavLinks() {
+  const pathParts = window.location.pathname.split("/").filter(Boolean);
+  const dateStr = pathParts[pathParts.length - 1];
+
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) return;
+
+  const currentDate = new Date(dateStr);
+
+  const prev = await findValidDate(currentDate, -1);
+  const next = await findValidDate(currentDate, 1);
+
+  let html = "";
+
+  if (prev) {
+    html += `<a href="/kelimeavi/${prev}">← Önceki Kelime Avı</a>`;
+  }
+
+  if (prev && next) html += " ";
+
+  if (next) {
+    html += `<a href="/kelimeavi/${next}">Sonraki Kelime Avı →</a>`;
+  }
+
+  document.getElementById("nav-links").innerHTML = html;
+}
+
+createNavLinks();
+
 </script>
 
 </body>
