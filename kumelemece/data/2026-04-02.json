@@ -1,0 +1,30 @@
+{
+  "id": "g-2026-04-03",
+  "date": "2026-04-03",
+  "groups": [
+    {
+      "label": "Satranç taşları",
+      "class": "group-1",
+      "words": ["Piyon", "Vezir", "Fil", "Kale"],
+      "clue": "Satranç taşları"
+    },
+   {
+  "label": "Tarık Akan filmleri",
+  "class": "group-2",
+  "words": ["Maden", "Sürü", "Yol", "Hababam"],
+  "clue": "Tarık Akan"
+   }
+    {
+      "label": "Ev anlamına gelen kelimeler",
+      "class": "group-3",
+      "words": ["Ev", "Konut", "Mesken", "Hane"],
+      "clue": "Ev"
+    },
+    {
+      "label": "Erkeklere hitap şekilleri",
+      "class": "group-4",
+      "words": ["Ağa", "Birader", "Abi", "Bro"],
+      "clue": "Hitap"
+    }
+  ]
+}

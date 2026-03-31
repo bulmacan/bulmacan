@@ -14,10 +14,10 @@
           	"clue": "Resmî Belgeler"
         	},
         	{
-          	"label": "Su Coğrafyası",
+          	"label": "___ defteri",
           	"class": "group-3",
-          	"words": ["Bahriye", "Deniz", "Levent", "Derya"],
-          	"clue": "Su Coğrafyası"
+          	"words": ["Hatıra", "Onur", "Yoklama", "Hesap"],
+          	"clue": "Defterler"
         	},
         	{
           	"label": "Yağış türleri ile başlayan kelimeler.",
