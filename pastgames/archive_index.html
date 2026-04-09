@@ -60,44 +60,57 @@
   </script>
 
   <!-- MAIN APP -->
-  <script>
-    function getDateFromUrl() {
-      const parts = window.location.pathname.split("/");
-      return parts.pop() || parts.pop();
+<script>
+  function getDateFromUrl() {
+    const parts = window.location.pathname.split("/").filter(Boolean);
+    const last = parts[parts.length - 1];
+
+    if (/^\d{4}-\d{2}-\d{2}$/.test(last)) {
+      return last;
     }
 
-    async function loadPuzzle() {
-      const date = getDateFromUrl();
-      const url = `/kumelemece/data/${date}.json`;
+    return null;
+  }
 
-      try {
-        const res = await fetch(url);
+  async function loadPuzzle() {
+    const date = getDateFromUrl();
 
-        if (!res.ok) {
-          throw new Error("JSON bulunamadı");
-        }
+    if (!date) {
+      document.getElementById("content").innerHTML =
+        `<p>📅 Geçerli bir tarih bulunamadı</p>`;
+      return;
+    }
 
-        const data = await res.json();
-        renderPuzzle(data);
+    const url = `/kumelemece/data/${date}.json`;
 
-      } catch (err) {
-        console.error("LOAD ERROR:", err);
-        document.getElementById("content").innerHTML =
-          `<p class="error">⚠️ ${date} için veri bulunamadı</p>`;
+    try {
+      const res = await fetch(url);
+
+      if (!res.ok) {
+        throw new Error("JSON bulunamadı");
       }
+
+      const data = await res.json();
+      renderPuzzle(data);
+
+    } catch (err) {
+      console.error("LOAD ERROR:", err);
+      document.getElementById("content").innerHTML =
+        `<p class="error">⚠️ ${date} için veri bulunamadı</p>`;
     }
+  }
 
-    function renderPuzzle(data) {
-      const container = document.getElementById("content");
+  function renderPuzzle(data) {
+    const container = document.getElementById("content");
 
-      container.innerHTML = `
-        <h2>${data.title || "Günün Bulmacası"}</h2>
-        <pre>${JSON.stringify(data, null, 2)}</pre>
-      `;
-    }
+    container.innerHTML = `
+      <h2>${data.title || "Günün Bulmacası"}</h2>
+      <pre>${JSON.stringify(data, null, 2)}</pre>
+    `;
+  }
 
-    loadPuzzle();
-  </script>
+  loadPuzzle();
+</script>
 
 </body>
 </html>
