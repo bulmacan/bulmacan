@@ -21,57 +21,37 @@
   <meta property="og:image" content="https://bulmacan.com/icons/kelimeavi.png">
   <meta name="twitter:card" content="summary_large_image">
 
-<link rel="stylesheet" href="/kelimeavi/css_js/kelimeavi_css.css" />
-</head>
+  <!-- CSS (relative for flexibility) -->
+  <link rel="stylesheet" href="css_js/kelimeavi_css.css" />
 
+</head>
 <body>
 
 <div id="smart-header"></div>
-<script src="/header/load_header.js" defer></script>
+<script src="../header/load_header.js" defer></script>
 
 <h1 id="pageTitle">Kelime Avı</h1>
+<p id="pageDescription">Günlük kelime avı bulmacasında gizli kelimeleri bulun.</p>
 
-<p id="pageDescription">
-  Günlük kelime avı bulmacasında gizli kelimeleri bulun.
-</p>
-
-<div id="subject">
-  🧩 Konu: <strong id="puzzleTitle">Yükleniyor...</strong>
-</div>
-
+<div id="subject">🧩 Konu: <strong id="puzzleTitle">Yükleniyor...</strong></div>
 <div id="progress">0 / 0 bulundu</div>
 
 <div id="game-container">
   <div id="grid"></div>
 </div>
 
-<div id="success-screen" style="display: none;">
-<div id="nav-links" class="nav-links" style="display:none; margin-top:20px;"></div>
-  <div class="success-message">
-    <span style="font-size: 2em;">🎉</span> Tüm kelimeleri buldunuz!
-  </div>
-
-  <div class="group-info">
-    <p><strong>Bulduğunuz kelimeler:</strong></p>
-    <ul id="word-list"></ul>
-  </div>
-
-  <div style="margin-top: 20px;">
-    <a href="https://www.facebook.com/sharer/sharer.php?u=https://bulmacan.com"
-       target="_blank"
-       class="share-button"
-       style="display:inline-block;padding:10px 15px;background:#2e7d32;color:white;border-radius:5px;text-decoration:none;">
-      📣 Bulmacaları beğendiniz mi?<br>
-      Facebook’da bizi önermek için tıklayın
-    </a>
-  </div>
+<div id="success-screen" style="display:none;">
+  <div class="success-message">🎉 Tüm kelimeleri buldunuz!</div>
+  <ul id="word-list"></ul>
+  <div id="nav-links" style="margin-top:20px;"></div>
 </div>
 
-<div id="smart-footer"></div>
-<script src="/footer/load_footer.js" defer></script>
-
 <script>
-function getDateFromURL() {
+
+/* ==============================
+   DATE HANDLING (combined)
+================================ */
+function getDate() {
   const pathParts = window.location.pathname.split("/").filter(Boolean);
   const last = pathParts[pathParts.length - 1];
 
@@ -81,39 +61,40 @@ function getDateFromURL() {
   return params.get("date");
 }
 
-let selectedDate = getDateFromURL();
-
+let selectedDate = getDate();
 if (!selectedDate) {
-  const today = new Date();
-  selectedDate = today.toISOString().split("T")[0];
+  selectedDate = new Date().toISOString().split("T")[0];
 }
 
+/* ==============================
+   LOAD PUZZLE
+================================ */
 async function loadPuzzle() {
-  const today = new Date();
+
   let data = null;
   let usedDate = selectedDate;
 
-  if (selectedDate) {
-    try {
-      const res = await fetch(`/kelimeavi/data/${selectedDate}.json`);
-      if (res.ok) data = await res.json();
-    } catch (e) {}
-  }
+  // Try selected date
+  try {
+    const res = await fetch(`data/${selectedDate}.json`);
+    if (res.ok) data = await res.json();
+  } catch(e){}
 
+  // Fallback search
   if (!data) {
     for (let i = 0; i < 365; i++) {
-      const d = new Date(today);
-      d.setDate(today.getDate() - i);
+      const d = new Date();
+      d.setDate(d.getDate() - i);
       const dateStr = d.toISOString().split("T")[0];
 
       try {
-        const res = await fetch(`/kelimeavi/data/${dateStr}.json`);
+        const res = await fetch(`data/${dateStr}.json`);
         if (res.ok) {
           data = await res.json();
           usedDate = dateStr;
           break;
         }
-      } catch (e) {}
+      } catch(e){}
     }
   }
 
@@ -122,35 +103,41 @@ async function loadPuzzle() {
     return;
   }
 
-  document.title = `Kelime Avı – ${data.title} (${usedDate})`;
-  document.getElementById("pageTitle").textContent = `Kelime Avı – ${data.title}`;
-  document.getElementById("pageDescription").textContent = `${data.title} konulu kelime avı bulmacasını çözün.`;
   document.getElementById("puzzleTitle").textContent = data.title;
+  document.getElementById("progress").textContent = `0 / ${data.words.length} bulundu`;
 
   initializePuzzle(data.matrix, data.words);
+  createNavLinks(usedDate);
 }
 
 loadPuzzle();
 
+/* ==============================
+   PUZZLE ENGINE (merged + robust)
+================================ */
 function initializePuzzle(matrix, words) {
+
   const grid = document.getElementById("grid");
   const size = matrix.length;
 
   let selected = [];
-  let found = new Set();
+  const usedCells = new Set();
+  const found = new Set();
 
-  document.getElementById("progress").textContent = `0 / ${words.length} bulundu`;
-  document.getElementById("word-list").innerHTML = "";
   grid.innerHTML = "";
 
   matrix.forEach((row, r) => {
     row.forEach((letter, c) => {
+
       const cell = document.createElement("div");
       cell.className = "cell";
       cell.textContent = letter;
 
-      cell.onclick = () => {
+      cell.addEventListener("click", () => {
+
         const key = `${r},${c}`;
+
+        if (usedCells.has(key)) return;
 
         if (selected.includes(key)) {
           selected = selected.filter(k => k !== key);
@@ -165,82 +152,85 @@ function initializePuzzle(matrix, words) {
           return matrix[rr][cc];
         }).join("");
 
-        if (words.includes(word) && !found.has(word)) {
-          selected.forEach(k => {
-            const [rr, cc] = k.split(",").map(Number);
-            grid.children[rr * size + cc].classList.add("found");
-            grid.children[rr * size + cc].classList.remove("selected");
-          });
-
-          const li = document.createElement("li");
-          li.textContent = word;
-          document.getElementById("word-list").appendChild(li);
-
-          found.add(word);
-          selected = [];
-
-          document.getElementById("progress").textContent = `${found.size} / ${words.length} bulundu`;
-
-          if (found.size === words.length) {
-  document.getElementById("game-container").style.display = "none";
-  document.getElementById("success-screen").style.display = "block";
-
-  const nav = document.getElementById("nav-links");
-  if (nav) nav.style.display = "flex";
-}
+        if (words.includes(word) && isAdjacent(selected) && !found.has(word)) {
+          markFound(word);
         }
-      };
+
+      });
 
       grid.appendChild(cell);
     });
   });
+
+  function isAdjacent(cells) {
+    for (let i = 1; i < cells.length; i++) {
+      const [r1, c1] = cells[i-1].split(",").map(Number);
+      const [r2, c2] = cells[i].split(",").map(Number);
+
+      if (Math.abs(r1 - r2) > 1 || Math.abs(c1 - c2) > 1) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  function markFound(word) {
+
+    selected.forEach(k => {
+      usedCells.add(k);
+      const [r, c] = k.split(",").map(Number);
+      grid.children[r * size + c].classList.add("found");
+      grid.children[r * size + c].classList.remove("selected");
+    });
+
+    const li = document.createElement("li");
+    li.textContent = word;
+    document.getElementById("word-list").appendChild(li);
+
+    found.add(word);
+    selected = [];
+
+    document.getElementById("progress").textContent = `${found.size} / ${words.length} bulundu`;
+
+    if (found.size === words.length) {
+      document.getElementById("game-container").style.display = "none";
+      document.getElementById("success-screen").style.display = "block";
+    }
+  }
 }
 
+/* ==============================
+   NAVIGATION
+================================ */
 async function findValidDate(startDate, direction) {
-  const maxSearch = 7;
-
-  for (let i = 1; i <= maxSearch; i++) {
+  for (let i = 1; i <= 7; i++) {
     const d = new Date(startDate);
     d.setDate(startDate.getDate() + (direction * i));
-
     const dateStr = d.toISOString().split("T")[0];
 
     try {
-      const res = await fetch(`/kelimeavi/data/${dateStr}.json`);
+      const res = await fetch(`data/${dateStr}.json`);
       if (res.ok) return dateStr;
-    } catch (e) {}
+    } catch(e){}
   }
-
   return null;
 }
 
-async function createNavLinks() {
-  const pathParts = window.location.pathname.split("/").filter(Boolean);
-  const dateStr = pathParts[pathParts.length - 1];
+async function createNavLinks(currentDateStr) {
 
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) return;
-
-  const currentDate = new Date(dateStr);
+  const currentDate = new Date(currentDateStr);
 
   const prev = await findValidDate(currentDate, -1);
   const next = await findValidDate(currentDate, 1);
 
   let html = "";
 
-  if (prev) {
-    html += `<a href="/kelimeavi/${prev}">← Önceki Kelime Avı</a>`;
-  }
-
-  if (prev && next) html += " ";
-
-  if (next) {
-    html += `<a href="/kelimeavi/${next}">Sonraki Kelime Avı →</a>`;
-  }
+  if (prev) html += `<a href="?date=${prev}">← Önceki</a>`;
+  if (prev && next) html += " | ";
+  if (next) html += `<a href="?date=${next}">Sonraki →</a>`;
 
   document.getElementById("nav-links").innerHTML = html;
 }
-
-createNavLinks();
 
 </script>
 
