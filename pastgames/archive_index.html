@@ -170,7 +170,7 @@ async function loadAllArchives(){
 
   try{
 
-    const res=await fetch("/data/index.json");
+    const res=await fetch("archive_index.json");
     archiveData=await res.json();
 
     loadArchive("kumelemece","archive-kumelemece");
