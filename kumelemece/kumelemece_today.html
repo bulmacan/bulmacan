@@ -69,34 +69,38 @@
     const urlParams = new URLSearchParams(window.location.search);
     const selectedDate = urlParams.get("date");
 
+    // ✅ Reliable date formatter (no locale issues)
     function getToday() {
-      return new Date().toLocaleDateString("en-CA"); // YYYY-MM-DD
+      const d = new Date();
+      const year = d.getFullYear();
+      const month = String(d.getMonth() + 1).padStart(2, "0");
+      const day = String(d.getDate()).padStart(2, "0");
+      return `${year}-${month}-${day}`;
     }
 
     async function loadPuzzle() {
       try {
         const dateToLoad = selectedDate || getToday();
 
-        // Show loading instantly
+        console.log("Loading puzzle:", dateToLoad); // debug
+
         document.getElementById("puzzle-grid").innerHTML = "Yükleniyor...";
 
         const res = await fetch(`${dataPath}${dateToLoad}.json`);
 
-        // If today's puzzle does NOT exist → show message
         if (!res.ok) {
-          throw new Error("No puzzle today");
+          throw new Error("No puzzle for today");
         }
 
         const puzzle = await res.json();
 
-        // Setup puzzle data
+        // Setup puzzle
         window.correctGroups = puzzle.groups;
         window.hintMessages = puzzle.groups.map(g => ({
           text: g.clue,
           label: g.label
         }));
 
-        // Result navigation
         window.showResults = function(type) {
           const target = type === "success"
             ? "kumelemece_success_today.html"
@@ -104,7 +108,7 @@
           window.location.href = target;
         };
 
-        // Create hint boxes
+        // Hint boxes
         const hintContainer = document.getElementById("hint-boxes");
         hintContainer.innerHTML = "";
 
@@ -115,7 +119,7 @@
           hintContainer.appendChild(box);
         });
 
-        // Render puzzle (handled by your JS file)
+        // Render puzzle
         if (typeof renderPuzzle === "function") {
           renderPuzzle(puzzle);
         } else {
@@ -123,7 +127,7 @@
         }
 
       } catch (err) {
-        console.warn("No puzzle today:", err);
+        console.warn("Puzzle load failed:", err);
 
         document.getElementById("game-ui").style.display = "none";
         document.getElementById("no-puzzle").style.display = "block";
