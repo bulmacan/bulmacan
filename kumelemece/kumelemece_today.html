@@ -49,13 +49,14 @@ function getToday() {
 }
 
 async function loadPuzzle() {
+  const dateToLoad = getToday();
+
+  // SIMPLE, SAME-AS-BEFORE STYLE PATH
+  const url = "data/" + dateToLoad + ".json";
+
+  console.log("Fetching:", url);
+
   try {
-    const dateToLoad = getToday();
-
-    const url = `/kumelemece/data/${dateToLoad}.json`;
-
-    console.log("Fetching:", url);
-
     const res = await fetch(url);
 
     if (!res.ok) throw new Error("No puzzle");
