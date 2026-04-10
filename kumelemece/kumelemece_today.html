@@ -14,7 +14,7 @@
   <link rel="icon" href="../icons/favicon.ico">
   <link rel="manifest" href="/icons/site.webmanifest">
 
-  <!-- Scripts (non-blocking) -->
+  <!-- Scripts -->
   <script src="https://www.bulmacan.com/header/load_header.js" defer></script>
   <script src="https://www.bulmacan.com/footer/load_footer.js" defer></script>
   <script src="css_js/kumelemece_js.js" defer></script>
@@ -55,53 +55,39 @@
 
   </div>
 
-  <!-- Fallback -->
+  <!-- No puzzle message -->
   <div id="no-puzzle" style="display:none; margin-top:20px; font-weight:bold;">
-    Bulmaca bulunamadı.
+    Bugünün bulmacası bulunamadı.
   </div>
 
   <!-- Footer -->
   <div id="smart-footer"></div>
 
-  <!-- MAIN LOGIC -->
+  <!-- MAIN SCRIPT -->
   <script>
     const dataPath = "data/";
-    const archivePath = "pastgames/archive_index.json";
-
     const urlParams = new URLSearchParams(window.location.search);
     const selectedDate = urlParams.get("date");
 
-    async function fetchJSON(path) {
-      const res = await fetch(path);
-      if (!res.ok) throw new Error("Fetch failed: " + path);
-      return await res.json();
+    function getToday() {
+      return new Date().toLocaleDateString("en-CA"); // YYYY-MM-DD
     }
 
     async function loadPuzzle() {
       try {
-        let dateToLoad;
+        const dateToLoad = selectedDate || getToday();
 
-        // 1. If user selected a date
-        if (selectedDate) {
-          dateToLoad = selectedDate;
-        } else {
-          // 2. Load archive index (FAST)
-          const archive = await fetchJSON(archivePath);
+        // Show loading instantly
+        document.getElementById("puzzle-grid").innerHTML = "Yükleniyor...";
 
-          if (!archive || archive.length === 0) {
-            throw new Error("Archive empty");
-          }
+        const res = await fetch(`${dataPath}${dateToLoad}.json`);
 
-          // Supports BOTH formats:
-          // ["2026-04-10"] OR [{date:"2026-04-10"}]
-          dateToLoad = archive[0].date || archive[0];
+        // If today's puzzle does NOT exist → show message
+        if (!res.ok) {
+          throw new Error("No puzzle today");
         }
 
-        // 3. Load puzzle
-        const puzzle = await fetchJSON(`${dataPath}${dateToLoad}.json`);
-
-        // Hide fallback
-        document.getElementById("no-puzzle").style.display = "none";
+        const puzzle = await res.json();
 
         // Setup puzzle data
         window.correctGroups = puzzle.groups;
@@ -129,7 +115,7 @@
           hintContainer.appendChild(box);
         });
 
-        // Render puzzle (handled in your JS file)
+        // Render puzzle (handled by your JS file)
         if (typeof renderPuzzle === "function") {
           renderPuzzle(puzzle);
         } else {
@@ -137,15 +123,13 @@
         }
 
       } catch (err) {
-        console.error("Load error:", err);
+        console.warn("No puzzle today:", err);
 
         document.getElementById("game-ui").style.display = "none";
         document.getElementById("no-puzzle").style.display = "block";
-        document.getElementById("no-puzzle").textContent = "Bulmaca yüklenemedi.";
       }
     }
 
-    // Start everything together (FAST)
     document.addEventListener("DOMContentLoaded", () => {
       try {
         loadHeader("home");
