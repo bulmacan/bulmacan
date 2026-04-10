@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>bulmacan – Kümelemece</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Kümelemece – Günlük ve haftalık bulmacalar. Grupları doğru şekilde eşleştir, zekanı sınırla!">
+
+  <!-- Puzzle CSS -->
+  <link rel="stylesheet" href="https://www.bulmacan.com/kumelemece/css_js/kumelemece_css.css">
+
+  <!-- Favicons -->
+  <link rel="icon" href="../icons/favicon.ico" type="image/x-icon">
+  <link rel="icon" type="image/png" sizes="32x32" href="../icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../icons/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../icons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="../icons/android-chrome-192x192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="../icons/android-chrome-512x512.png">
+  <link rel="manifest" href="/icons/site.webmanifest">
+
+  <!-- Social sharing -->
+  <meta property="og:title" content="bulmacan – Kümelemece">
+  <meta property="og:description" content="Kümelemece bulmacası: Grupları doğru şekilde eşleştir!">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.bulmacan.com/kumelemece">
+  <meta property="og:image" content="https://www.bulmacan.com/icons/kumelemece.png">
+  <meta name="twitter:card" content="summary_large_image">
+</head>
+
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js"
+data-cf-beacon='{"token": "6ed43d34957a49fcb90ec8e43f7db523"}'></script><body>
+
+<body>
+
+  <!-- 🔺 Smart Header -->
+<div id="smart-header"></div>
+<script src="https://www.bulmacan.com/header/load_header.js" defer></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    loadHeader("home");
+  });
+</script>
+
+
+
+  <!-- Game UI (hidden when no puzzle exists) -->
+  <div id="game-ui">
+
+    <!-- Timer -->
+    <div id="timer">⏱️ Süre: 10:00</div>
+
+    <!-- Progress Boxes -->
+    <div class="countdown-container">
+      <div class="count-box filled"></div>
+      <div class="count-box filled"></div>
+      <div class="count-box filled"></div>
+      <div class="count-box filled"></div>
+      <div class="count-box filled"></div>
+    </div>
+
+    <!-- Puzzle Title -->
+    <div id="puzzle-title" class="puzzle-title"></div>
+
+    <!-- Puzzle Grid -->
+    <div id="puzzle-grid"></div>
+
+    <button id="restart-btn" style="display: none;">🔄 Oyunu Yeniden Başlat</button>
+
+    <div id="feedback"></div>
+
+    <!-- Hint Boxes -->
+    <div id="hint-boxes"></div>
+
+  </div>
+
+  <!-- Fallback Message -->
+  <div id="no-puzzle" style="display:none; margin-top:20px; font-weight:bold;">
+    Bugüne ait bulmaca bulunamadı.
+  </div>
+
+<div id="smart-footer"></div>
+<link rel="stylesheet" href="https://www.bulmacan.com/footer/footer.css">
+<script src="https://www.bulmacan.com/footer/load_footer.js" defer></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    loadFooter();
+  });
+</script>
+
+
+  <!-- Puzzle Loader -->
+<script>
+  const urlParams = new URLSearchParams(window.location.search);
+  const today = new Date();
+  const selectedDate = urlParams.get("date");
+
+  const dataPath = "data/";
+
+  async function loadPuzzle() {
+
+    let puzzle = null;
+
+    // If specific date requested (?date=YYYY-MM-DD)
+    if (selectedDate) {
+      const res = await fetch(`${dataPath}${selectedDate}.json`);
+      if (res.ok) puzzle = await res.json();
+    }
+
+    // Otherwise search backwards for the newest puzzle
+    if (!puzzle) {
+
+      for (let i = 0; i < 30; i++) {
+
+        const d = new Date(today);
+        d.setDate(today.getDate() - i);
+
+        const dateStr = d.toLocaleDateString("en-CA");
+
+        try {
+          const res = await fetch(`${dataPath}${dateStr}.json`);
+
+          if (res.ok) {
+            puzzle = await res.json();
+            console.log("Loaded puzzle:", dateStr);
+            break;
+          }
+
+        } catch(err) {
+          console.log("Puzzle not found:", dateStr);
+        }
+      }
+    }
+
+    // If STILL no puzzle
+    if (!puzzle) {
+      document.getElementById("game-ui").style.display = "none";
+      document.getElementById("no-puzzle").style.display = "block";
+      document.getElementById("no-puzzle").textContent =
+        "Hiç bulmaca bulunamadı.";
+      return;
+    }
+
+    // Hide fallback message
+    document.getElementById("no-puzzle").style.display = "none";
+
+    // Hide title (you only use it for fallback)
+    document.getElementById("puzzle-title").style.display = "none";
+
+    // Prepare puzzle data
+    window.correctGroups = puzzle.groups;
+    window.hintMessages = puzzle.groups.map(g => ({
+      text: g.clue,
+      label: g.label
+    }));
+
+    // Success / timeout redirect
+    window.showResults = function(type) {
+      const target = type === "success"
+        ? "kumelemece_success_today.html"
+        : "kumelemece_timeout_today.html";
+      window.location.href = target;
+    };
+
+    // Create hint boxes
+    const hintContainer = document.getElementById("hint-boxes");
+    puzzle.groups.forEach(() => {
+      const box = document.createElement("div");
+      box.className = "hint-box";
+      box.textContent = "❓İpucu Göster";
+      hintContainer.appendChild(box);
+    });
+
+    // Load puzzle logic
+    const script = document.createElement("script");
+    script.src = "css_js/kumelemece_js.js";
+    document.body.appendChild(script);
+  }
+
+  loadPuzzle().catch(err => {
+    document.getElementById("game-ui").style.display = "none";
+    document.getElementById("no-puzzle").textContent = "Veri yüklenemedi.";
+    document.getElementById("no-puzzle").style.display = "block";
+    console.error("JSON fetch error:", err);
+  });
+</script>
+
+</body>
+</html>
