@@ -4,147 +4,106 @@
   <meta charset="UTF-8">
   <title>bulmacan – Kümelemece</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Kümelemece – Günlük ve haftalık bulmacalar. Grupları doğru şekilde eşleştir, zekanı sınırla!">
 
-  <!-- CSS -->
-  <link rel="stylesheet" href="https://www.bulmacan.com/kumelemece/css_js/kumelemece_css.css">
-  <link rel="stylesheet" href="https://www.bulmacan.com/footer/footer.css">
+  <link rel="stylesheet" href="/kumelemece/css_js/kumelemece_css.css">
+  <link rel="stylesheet" href="/footer/footer.css">
 
-  <!-- Favicons -->
-  <link rel="icon" href="../icons/favicon.ico">
-  <link rel="manifest" href="/icons/site.webmanifest">
-
-  <!-- Scripts -->
-  <script src="https://www.bulmacan.com/header/load_header.js" defer></script>
-  <script src="https://www.bulmacan.com/footer/load_footer.js" defer></script>
-  <script src="css_js/kumelemece_js.js" defer></script>
-
-  <!-- Cloudflare -->
-  <script defer src="https://static.cloudflareinsights.com/beacon.min.js"
-    data-cf-beacon='{"token": "6ed43d34957a49fcb90ec8e43f7db523"}'>
-  </script>
+  <script src="/header/load_header.js" defer></script>
+  <script src="/footer/load_footer.js" defer></script>
+  <script src="/kumelemece/css_js/kumelemece_js.js" defer></script>
 </head>
 
 <body>
 
-  <!-- Header -->
-  <div id="smart-header"></div>
+<div id="smart-header"></div>
 
-  <!-- Game UI -->
-  <div id="game-ui">
+<div id="game-ui">
+  <div id="timer">⏱️ Süre: 10:00</div>
 
-    <div id="timer">⏱️ Süre: 10:00</div>
-
-    <div class="countdown-container">
-      <div class="count-box filled"></div>
-      <div class="count-box filled"></div>
-      <div class="count-box filled"></div>
-      <div class="count-box filled"></div>
-      <div class="count-box filled"></div>
-    </div>
-
-    <div id="puzzle-title" class="puzzle-title"></div>
-
-    <!-- Instant feedback -->
-    <div id="puzzle-grid">Yükleniyor...</div>
-
-    <button id="restart-btn" style="display:none;">🔄 Oyunu Yeniden Başlat</button>
-
-    <div id="feedback"></div>
-    <div id="hint-boxes"></div>
-
+  <div class="countdown-container">
+    <div class="count-box filled"></div>
+    <div class="count-box filled"></div>
+    <div class="count-box filled"></div>
+    <div class="count-box filled"></div>
+    <div class="count-box filled"></div>
   </div>
 
-  <!-- No puzzle message -->
-  <div id="no-puzzle" style="display:none; margin-top:20px; font-weight:bold;">
-    Bugünün bulmacası bulunamadı.
-  </div>
+  <div id="puzzle-title" class="puzzle-title"></div>
+  <div id="puzzle-grid">Yükleniyor...</div>
 
-  <!-- Footer -->
-  <div id="smart-footer"></div>
+  <button id="restart-btn" style="display:none;">🔄 Oyunu Yeniden Başlat</button>
+  <div id="feedback"></div>
+  <div id="hint-boxes"></div>
+</div>
 
-  <!-- MAIN SCRIPT -->
-  <script>
-    const dataPath = "data/";
-    const urlParams = new URLSearchParams(window.location.search);
-    const selectedDate = urlParams.get("date");
+<div id="no-puzzle" style="display:none; margin-top:20px; font-weight:bold;">
+  Bugünün bulmacası bulunamadı.
+</div>
 
-    // ✅ Reliable date formatter (no locale issues)
-    function getToday() {
-      const d = new Date();
-      const year = d.getFullYear();
-      const month = String(d.getMonth() + 1).padStart(2, "0");
-      const day = String(d.getDate()).padStart(2, "0");
-      return `${year}-${month}-${day}`;
-    }
+<div id="smart-footer"></div>
 
-    async function loadPuzzle() {
-      try {
-        const dateToLoad = selectedDate || getToday();
+<script>
+function getToday() {
+  const d = new Date();
+  return d.toISOString().split("T")[0];
+}
 
-        console.log("Loading puzzle:", dateToLoad); // debug
+async function loadPuzzle() {
+  try {
+    const dateToLoad = getToday();
 
-        document.getElementById("puzzle-grid").innerHTML = "Yükleniyor...";
+    const url = `/kumelemece/data/${dateToLoad}.json`;
 
-        const res = await fetch(`${dataPath}${dateToLoad}.json`);
+    console.log("Fetching:", url);
 
-        if (!res.ok) {
-          throw new Error("No puzzle for today");
-        }
+    const res = await fetch(url);
 
-        const puzzle = await res.json();
+    if (!res.ok) throw new Error("No puzzle");
 
-        // Setup puzzle
-        window.correctGroups = puzzle.groups;
-        window.hintMessages = puzzle.groups.map(g => ({
-          text: g.clue,
-          label: g.label
-        }));
+    const puzzle = await res.json();
 
-        window.showResults = function(type) {
-          const target = type === "success"
-            ? "kumelemece_success_today.html"
-            : "kumelemece_timeout_today.html";
-          window.location.href = target;
-        };
+    window.correctGroups = puzzle.groups;
+    window.hintMessages = puzzle.groups.map(g => ({
+      text: g.clue,
+      label: g.label
+    }));
 
-        // Hint boxes
-        const hintContainer = document.getElementById("hint-boxes");
-        hintContainer.innerHTML = "";
+    window.showResults = function(type) {
+      window.location.href = type === "success"
+        ? "kumelemece_success_today.html"
+        : "kumelemece_timeout_today.html";
+    };
 
-        puzzle.groups.forEach(() => {
-          const box = document.createElement("div");
-          box.className = "hint-box";
-          box.textContent = "❓İpucu Göster";
-          hintContainer.appendChild(box);
-        });
+    const hintContainer = document.getElementById("hint-boxes");
+    hintContainer.innerHTML = "";
 
-        // Render puzzle
-        if (typeof renderPuzzle === "function") {
-          renderPuzzle(puzzle);
-        } else {
-          console.warn("renderPuzzle not found");
-        }
-
-      } catch (err) {
-        console.warn("Puzzle load failed:", err);
-
-        document.getElementById("game-ui").style.display = "none";
-        document.getElementById("no-puzzle").style.display = "block";
-      }
-    }
-
-    document.addEventListener("DOMContentLoaded", () => {
-      try {
-        loadHeader("home");
-        loadFooter();
-      } catch (e) {
-        console.warn("Header/Footer error:", e);
-      }
-
-      loadPuzzle();
+    puzzle.groups.forEach(() => {
+      const box = document.createElement("div");
+      box.className = "hint-box";
+      box.textContent = "❓İpucu Göster";
+      hintContainer.appendChild(box);
     });
-  </script>
+
+    if (typeof renderPuzzle === "function") {
+      renderPuzzle(puzzle);
+    }
+
+  } catch (err) {
+    console.error("Puzzle load failed:", err);
+    document.getElementById("game-ui").style.display = "none";
+    document.getElementById("no-puzzle").style.display = "block";
+  }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  try {
+    loadHeader("home");
+    loadFooter();
+  } catch {}
+
+  loadPuzzle();
+});
+</script>
 
 </body>
 </html>
