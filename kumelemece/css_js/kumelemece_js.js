@@ -1,30 +1,33 @@
 // ===============================
 //  🧩 WORD GRID INITIALIZATION
 // ===============================
-const allWords = window.correctGroups.flatMap(group => group.words);
-const shuffledWords = shuffle([...allWords]);
+function renderPuzzle(puzzle) {
+  window.correctGroups = puzzle.groups;
 
-const grid = document.getElementById("puzzle-grid");
-const feedback = document.getElementById("feedback");
-const timerDisplay = document.getElementById("timer");
+  const allWords = window.correctGroups.flatMap(group => group.words);
+  const shuffledWords = shuffle([...allWords]);
 
-let selected = [];
-let solvedGroups = new Set();
-let startTime = Date.now();
-let countdownDuration = 600; // 10 minutes
-let penaltySeconds = 0;      // Safari-safe penalty tracking
-let timerInterval = setInterval(updateTimer, 1000);
-let hintIndex = 0;
+  const grid = document.getElementById("puzzle-grid");
+  const feedback = document.getElementById("feedback");
+  const timerDisplay = document.getElementById("timer");
 
-// Create puzzle grid
-shuffledWords.forEach(word => {
-  const div = document.createElement("div");
-  div.className = "word";
-  div.textContent = word;
-  div.setAttribute("aria-label", word);
-  div.addEventListener("click", () => handleWordClick(div));
-  grid.appendChild(div);
-});
+  let selected = [];
+  let solvedGroups = new Set();
+  let startTime = Date.now();
+  let countdownDuration = 600;
+  let penaltySeconds = 0;
+  let timerInterval = setInterval(updateTimer, 1000);
+  let hintIndex = 0;
+
+  grid.innerHTML = "";
+
+  shuffledWords.forEach(word => {
+    const div = document.createElement("div");
+    div.className = "word";
+    div.textContent = word;
+    div.addEventListener("click", () => handleWordClick(div));
+    grid.appendChild(div);
+  });
 
 // ===============================
 // ⏱️ TIMER LOGIC (Safari-safe)
@@ -217,4 +220,5 @@ function renderKumelemeceResult(result) {
       </div>
     `;
   }
+}
 }
