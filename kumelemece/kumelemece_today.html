@@ -50,8 +50,6 @@ function getToday() {
 
 async function loadPuzzle() {
   const dateToLoad = getToday();
-
-  // SIMPLE, SAME-AS-BEFORE STYLE PATH
   const url = "data/" + dateToLoad + ".json";
 
   console.log("Fetching:", url);
@@ -63,6 +61,15 @@ async function loadPuzzle() {
 
     const puzzle = await res.json();
 
+    // 🔍 DEBUG (you can remove later)
+    console.log("PUZZLE:", puzzle);
+
+    // ✅ SAFETY CHECK
+    if (!puzzle || !Array.isArray(puzzle.groups)) {
+      throw new Error("Invalid puzzle structure");
+    }
+
+    // ✅ SET GLOBALS (expected by your other JS)
     window.correctGroups = puzzle.groups;
     window.hintMessages = puzzle.groups.map(g => ({
       text: g.clue,
@@ -75,6 +82,7 @@ async function loadPuzzle() {
         : "kumelemece_timeout_today.html";
     };
 
+    // ✅ BUILD HINT BOXES
     const hintContainer = document.getElementById("hint-boxes");
     hintContainer.innerHTML = "";
 
@@ -85,12 +93,16 @@ async function loadPuzzle() {
       hintContainer.appendChild(box);
     });
 
+    // ✅ ONLY CALL IF EXISTS
     if (typeof renderPuzzle === "function") {
       renderPuzzle(puzzle);
+    } else {
+      console.warn("renderPuzzle not found");
     }
 
   } catch (err) {
     console.error("Puzzle load failed:", err);
+
     document.getElementById("game-ui").style.display = "none";
     document.getElementById("no-puzzle").style.display = "block";
   }
@@ -100,7 +112,9 @@ document.addEventListener("DOMContentLoaded", () => {
   try {
     loadHeader("home");
     loadFooter();
-  } catch {}
+  } catch (e) {
+    console.warn("Header/Footer error:", e);
+  }
 
   loadPuzzle();
 });
