@@ -1,5 +1,5 @@
 function loadFooter() {
-  fetch("https://bulmacan.com/footer/footer.html")
+  fetch("/footer/footer.html")
     .then(res => res.text())
     .then(html => {
       document.getElementById("smart-footer").innerHTML = html;

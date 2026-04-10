@@ -1,9 +1,9 @@
 function loadHeader(type = "home") {
   const headerMap = {
-    home: "https://bulmacan.com/header/header_home.html",
-    back: "https://bulmacan.com/header/header_back.html",
-    blogs: "https://bulmacan.com/header/header_blogs.html",
-    docs: "https://bulmacan.com/header/header_docs.html"
+    home: "/header/header_home.html",
+    back: "/header/header_back.html",
+    blogs: "/header/header_blogs.html",
+    docs: "/header/header_docs.html"
   };
 
   const file = headerMap[type] || headerMap.home;
@@ -12,7 +12,7 @@ function loadHeader(type = "home") {
     .then(res => res.text())
     .then(html => {
       document.getElementById("smart-header").innerHTML = html;
-      initCookiePopup(); // ⭐ run cookie logic AFTER header is injected
+      initCookiePopup();
     })
     .catch(err => console.error("Header load error:", err));
 }
