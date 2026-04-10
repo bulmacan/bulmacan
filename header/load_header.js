@@ -1,9 +1,9 @@
 function loadHeader(type = "home") {
   const headerMap = {
-    home: "https://www.bulmacan.com/header/header_home.html",
-    back: "https://www.bulmacan.com/header/header_back.html",
-    blogs: "https://www.bulmacan.com/header/header_blogs.html",
-    docs: "https://www.bulmacan.com/header/header_docs.html"
+    home: "https://bulmacan.com/header/header_home.html",
+    back: "https://bulmacan.com/header/header_back.html",
+    blogs: "https://bulmacan.com/header/header_blogs.html",
+    docs: "https://bulmacan.com/header/header_docs.html"
   };
 
   const file = headerMap[type] || headerMap.home;
