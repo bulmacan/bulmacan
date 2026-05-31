@@ -1,0 +1,124 @@
+{
+"puzzles": 
+[
+
+
+    {
+      "date": "2026-01-28",
+           "groups": [
+        	{
+          	"label": "Yoğurtla pişirilen yemekler",
+          	"class": "group-1",
+          	"words": ["Mantı", "Cılbır", "İskender", "Şebit"],
+          	"clue": "Yoğurtlu"
+        	},
+        	{
+          	"label": "İstanbul'un köyleri",
+          	"class": "group-2",
+          	"words": ["Kadı", "Bakır", "Orta", "Kara"],
+          	"clue": "İstanbul"
+        	},
+        	{
+          	"label": "Ev Eşyaları",
+          	"class": "group-3",
+          	"words": ["Masa", "Sandalye", "Lamba", "Halı"],
+          	"clue": "Eşyalar"
+        	},
+        	{
+          	"label": "Hayvanlar",
+          	"class": "group-4",
+          	"words": ["Kedi", "Köpek", "Kuş", "Balık"],
+          	"clue": "Hayvanlar"
+        	}
+      		]
+    },
+    {
+      "date": "2026-01-26",
+           "groups": [
+        	{
+          	"label": "Yoğurtla pişirilen yemekler",
+          	"class": "group-1",
+          	"words": ["Mantı", "Cılbır", "İskender", "Şebit"],
+          	"clue": "Yoğurtlu"
+        	},
+        	{
+          	"label": "İstanbul'un köyleri",
+          	"class": "group-2",
+          	"words": ["Kadı", "Bakır", "Orta", "Kara"],
+          	"clue": "İstanbul"
+        	},
+        	{
+          	"label": "Ev Eşyaları",
+          	"class": "group-3",
+          	"words": ["Masa", "Sandalye", "Lamba", "Halı"],
+          	"clue": "Eşyalar"
+        	},
+        	{
+          	"label": "Hayvanlar",
+          	"class": "group-4",
+          	"words": ["Kedi", "Köpek", "Kuş", "Balık"],
+          	"clue": "Hayvanlar"
+        	}
+      		]
+    },
+    {
+      "date": "2026-01-25",
+      "groups": [
+        	{
+          	"label": "Gökyüzü",
+          	"class": "group-1",
+          	"words": ["Güneş", "Ay", "Yıldız", "Gezegen"],
+          	"clue": "Gökyüzü"
+        	},
+        	{
+          	"label": "Okul Eşyaları",
+          	"class": "group-2",
+          	"words": ["Kalem", "Defter", "Silgi", "Cetvel"],
+          	"clue": "Okul"
+        	},
+        	{
+          	"label": "Meyveler",
+          	"class": "group-3",
+          	"words": ["Elma", "Armut", "Muz", "Kiraz"],
+          	"clue": "Meyve"
+        	},
+        	{
+          	"label": "Renkler",
+          	"class": "group-4",
+          	"words": ["Kırmızı", "Mavi", "Yeşil", "Sarı"],
+          	"clue": "Renk"
+        	}
+	      	]
+    },
+    {
+      "date": "2025-10-18",
+      "groups": [
+       		 {
+          	"label": "Zeytin çeşitleri",
+          	"class": "group-1",
+          	"words": ["Sele", "Salamura", "Çizik", "Kırma"],
+          	"clue": "Zeytin"
+        	},
+        	{
+          	"label": "Attila İlhan şiirlerinde geçen kadın isimleri",
+          	"class": "group-2",
+          	"words": ["Aysel", "Ayten", "Cezabel", "Müjde"],
+          	"clue": "Attila İlhan şiirleri"
+        	},
+        	{
+          	"label": "Çay çeşitleri",
+          	"class": "group-3",
+          	"words": ["Siyah", "Yeşil", "Oolong", "Seylan"],
+          	"clue": "Çay"
+        	},
+        	{
+          	"label": "Anne anlamına gelen kelimeler",
+          	"class": "group-4",
+          	"words": ["Valide", "Anne", "Ana", "Mama"],
+          	"clue": "Anneler"
+        	}
+      		]
+    }
+
+]
+}

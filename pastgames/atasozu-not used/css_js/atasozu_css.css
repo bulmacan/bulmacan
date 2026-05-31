@@ -1,0 +1,175 @@
+
+    body {
+      margin: 0;
+      font-family: Arial, "Comic Sans MS", "Trebuchet MS", sans-serif;
+      background-color: white;
+      color: black;
+      text-align: center;
+    }
+
+.share-button {
+      margin-top: 20px;
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #4267B2;
+      color: white;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .emoji-clue {
+      font-size: 2.5rem;
+      margin: 15px 0 5px;
+    }
+
+    .selected-words {
+      margin-top: 10px;
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #6b4226;
+    }
+
+    .legend {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      margin-top: 10px;
+      font-weight: bold;
+      flex-wrap: wrap;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .legend-box {
+      width: 12px;
+      height: 12px;
+      border-radius: 2px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 3px;
+      justify-content: center;
+      margin: 5px auto;
+      padding: 0 0px;
+      max-width: 600px;
+    }
+
+.word {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f0f4f8;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  text-align: center;
+  padding: 2px 2px; /* minimal padding */
+  height: auto;     /* allow height to adjust */
+  line-height: normal; /* prevent vertical stretching */
+}
+
+
+    .word.selected {
+      background-color: #a5d6a7;
+      border-color: #4caf50;
+    }
+
+    .word.wrong-red {
+      background-color: #f44336;
+      border-color: #c62828;
+      color: white;
+    }
+
+    .word.wrong-amber {
+      background-color: #ffb300;
+      border-color: #ffa000;
+      color: black;
+    }
+
+/* Puzzle List Container */
+.puzzle-list {
+  list-style: none;
+  padding: 0;
+  margin: 2rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Puzzle Item Styling */
+.puzzle-list li a {
+  display: block;
+  padding: 0.75rem 1.25rem;
+  background-color: var(--bg-soft, #f9f9f9);
+  border: 1px solid var(--border-light, #ddd);
+  border-radius: 8px;
+  text-decoration: none;
+  color: var(--text-primary, #333);
+  font-weight: 500;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  max-width: 320px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Hover and Focus Effects */
+.puzzle-list li a:hover,
+.puzzle-list li a:focus {
+  background-color: var(--bg-hover, #e6f7ff);
+  border-color: var(--accent, #30D5C8);
+  color: var(--accent-text, #007a7a);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Optional: Add a subtle icon or arrow */
+.puzzle-list li a::after {
+  content: '>';
+  float: right;
+  font-size: 1rem;
+  color: var(--accent, #30D5C8);
+  transition: transform 0.2s ease;
+}
+
+.puzzle-list li a:hover::after {
+  transform: translateX(4px);
+}
+
+    @media (max-width: 600px) {
+      .grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+
+
+.word {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f0f4f8;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  text-align: center;
+  padding: 0px 0px; /* minimal padding */
+  height: auto;     /* allow height to adjust */
+  line-height: normal; /* prevent vertical stretching */
+}
+    .emoji-clue {
+      font-size: 1.5rem;
+      margin: 5px 0 5px;
+    }
+    }

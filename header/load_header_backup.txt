@@ -1,0 +1,13 @@
+function loadHeader(type = "home") {
+  const file = type === "back"
+    ? "https://www.bulbuldur.com/header/header_back.html"
+    : "https://www.bulbuldur.com/header/header_home.html";
+
+  fetch(file)
+    .then(res => res.text())
+    .then(html => {
+      document.getElementById("smart-header").innerHTML = html;
+    })
+    .catch(err => console.error("Header load error:", err));
+}
+
