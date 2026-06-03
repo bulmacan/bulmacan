@@ -120,7 +120,7 @@ document.getElementById("playersToday").innerText = (base + minutesToday).toLoca
     </div>
   </a>
 
-  <!-- SUDOKU — static for now -->
+  <!-- SUDOKU — live stats from Supabase -->
   <a href="/sudoku/sudoku.html" class="card-link">
     <div class="card">
       <img src="sudoku.webp" alt="Sudoku">
@@ -128,7 +128,8 @@ document.getElementById("playersToday").innerText = (base + minutesToday).toLoca
       <p>Boşlukları Doldur. Matriksi tamamla.</p>
       <span class="btn-card">Oyna</span>
       <div class="game-stats">
-        <div class="stat">⏱ Ortalama süre: 5dk</div>
+        <div class="stat" id="sudoku-count">⏳ Yükleniyor...</div>
+        <div class="stat" id="sudoku-time"></div>
       </div>
     </div>
   </a>
@@ -253,10 +254,35 @@ async function loadKumelemeceStats() {
   }
 }
 
+async function loadSudokuStats() {
+  const today = new Date().toISOString().split("T")[0];
+  const puzzleId = `s-${today}`;
+  try {
+    const res = await fetch(
+      `${SUPABASE_URL}/rest/v1/ratings_summary?puzzle_id=eq.${puzzleId}&select=solve_count,avg_solve_time`,
+      { headers: { "apikey": SUPABASE_KEY, "Authorization": `Bearer ${SUPABASE_KEY}` } }
+    );
+    const data = await res.json();
+    const countEl = document.getElementById("sudoku-count");
+    const timeEl = document.getElementById("sudoku-time");
+    if (data && data.length > 0) {
+      const { solve_count, avg_solve_time } = data[0];
+      countEl.textContent = `👥 Bugün ${solve_count} kişi çözdü`;
+      if (avg_solve_time) timeEl.textContent = `⏱ Ortalama süre: ${formatMinutes(avg_solve_time)}`;
+    } else {
+      countEl.textContent = "🧩 Bugün ilk sen çöz!";
+      timeEl.textContent = "";
+    }
+  } catch (err) {
+    document.getElementById("sudoku-count").textContent = "";
+  }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   loadFooter();
   initCookiePopup();
   loadKumelemeceStats();
+  loadSudokuStats();
 });
 
 function initCookiePopup() {
