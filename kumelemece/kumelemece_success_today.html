@@ -6,17 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Kümelemece – Günlük ve haftalık bulmacalar. Grupları doğru şekilde eşleştir, zekanı sınırla!">
   <link rel="stylesheet" href="https://www.bulmacan.com/kumelemece/css_js/kumelemece_css.css">
-
-  <!-- Favicons -->
   <link rel="icon" href="../icons/favicon.ico" type="image/x-icon">
-  <link rel="icon" type="image/png" sizes="32x32" href="../icons/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="../icons/favicon-16x16.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="../icons/apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="192x192" href="../icons/android-chrome-192x192.png">
-  <link rel="icon" type="image/png" sizes="512x512" href="../icons/android-chrome-512x512.png">
   <link rel="manifest" href="/icons/site.webmanifest">
-
-  <!-- Social sharing -->
   <meta property="og:title" content="bulmacan – Kümelemece">
   <meta property="og:description" content="Kümelemece bulmacası: Grupları doğru şekilde eşleştir!">
   <meta property="og:type" content="website">
@@ -24,176 +15,179 @@
   <meta property="og:image" content="https://www.bulmacan.com/icons/kumelemece.png">
   <meta name="twitter:card" content="summary_large_image">
 </head>
-
 <body>
 
-  <!-- 🔺 External Smart Header -->
-<div id="smart-header"></div>
-<script src="https://www.bulmacan.com/header/load_header.js" defer></script>
-<script>
-  document.addEventListener("DOMContentLoaded", () => {
-    loadHeader("home");
-  });
+  <div id="smart-header"></div>
+  <script src="https://www.bulmacan.com/header/load_header.js" defer></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => { loadHeader("home"); });
 
-function shareToWhatsApp(event) {
-  event.preventDefault();
+    function shareToWhatsApp(event) {
+      event.preventDefault();
+      const url = "https://www.bulmacan.com";
+      navigator.clipboard.writeText(url).then(() => {
+        window.open("https://wa.me/?text=" + encodeURIComponent(url), "_blank");
+      });
+    }
 
-  const url = "https://www.bulmacan.com";
+    function copyLink(event) {
+      event.preventDefault();
+      navigator.clipboard.writeText("https://www.bulmacan.com");
+    }
+  </script>
 
-  // Copy to clipboard
-  navigator.clipboard.writeText(url).then(() => {
-    // Open WhatsApp share
-    const whatsappUrl = "https://wa.me/?text=" + encodeURIComponent(url);
-    window.open(whatsappUrl, "_blank");
-  });
-}
-
-function copyLink(event) {
-  event.preventDefault();
-  navigator.clipboard.writeText("https://www.bulmacan.com");
-}
-
-</script>
-  
   <!-- 🎉 Success Message -->
   <div class="success-message">
     <span>HARİKA 🎉</span> Tüm grupları buldunuz!
   </div>
 
+  <!-- ⏱️ Personal solve time -->
+  <div id="solve-time-display" style="font-size:1.1em; font-weight:bold; color:#444; margin:12px 0;"></div>
+
+  <!-- 👥 Community stats -->
+  <div id="community-stats" style="font-size:1em; color:#666; margin-bottom:16px;"></div>
+
   <!-- 🧩 Group Results -->
   <div class="group-info" id="group-results"></div>
 
-  <!-- 📣 Share Button -->
-    📣 Bulmacaları beğendiniz mi?<br>
-    Facebook’da bizi önermek için tıklayın<br>
-    daha çok oyuncu, daha çok bulmaca! 😊
- 
-<div class="social-icons">
-  <a href="#"><img class="icon" src="https://www.bulmacan.com/icons/insta_icon.png" alt="Instagram"></a>
-  <a href="#"><img class="icon" src="https://www.bulmacan.com/icons/pint_icon.png" alt="Pinterest"></a>
-  <a href="#"><img class="icon" src="https://www.bulmacan.com/icons/face_icon.png" alt="Facebook"></a>
-  <a href="#" onclick="shareToWhatsApp(event)"><img class="icon" src="https://www.bulmacan.com/icons/whatsap_icon.png" alt="WhatsApp"></a>
-  <a href="#" onclick="copyLink(event)"><img class="icon" src="https://www.bulmacan.com/icons/link_icon.png" alt="Copy link"></a>
-</div>
+  <!-- 📣 Share -->
+  <p>📣 Bulmacaları beğendiniz mi?<br>
+  Facebook'da bizi önermek için tıklayın<br>
+  daha çok oyuncu, daha çok bulmaca! 😊</p>
 
+  <div class="social-icons">
+    <a href="#"><img class="icon" src="https://www.bulmacan.com/icons/insta_icon.png" alt="Instagram"></a>
+    <a href="#"><img class="icon" src="https://www.bulmacan.com/icons/pint_icon.png" alt="Pinterest"></a>
+    <a href="#"><img class="icon" src="https://www.bulmacan.com/icons/face_icon.png" alt="Facebook"></a>
+    <a href="#" onclick="shareToWhatsApp(event)"><img class="icon" src="https://www.bulmacan.com/icons/whatsap_icon.png" alt="WhatsApp"></a>
+    <a href="#" onclick="copyLink(event)"><img class="icon" src="https://www.bulmacan.com/icons/link_icon.png" alt="Copy link"></a>
+  </div>
 
-<div id="smart-footer"></div>
-<link rel="stylesheet" href="https://www.bulmacan.com/footer/footer.css">
-<script src="https://www.bulmacan.com/footer/load_footer.js" defer></script>
-<script>
-  document.addEventListener("DOMContentLoaded", () => {
-    loadFooter();
-  });
-</script>
+  <div id="smart-footer"></div>
+  <link rel="stylesheet" href="https://www.bulmacan.com/footer/footer.css">
+  <script src="https://www.bulmacan.com/footer/load_footer.js" defer></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => { loadFooter(); });
+  </script>
 
+  <script>
+    const SUPABASE_URL = "https://aasreluvawvisaswbtzh.supabase.co";
+    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFhc3JlbHV2YXd2aXNhc3didHpoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM0NDA0NDgsImV4cCI6MjA4OTAxNjQ0OH0.3WNhNot604dC_hkCbcc6QUapM7qnkHV-Qj3EtJmXxJo";
 
+    const urlParams = new URLSearchParams(window.location.search);
+    const selectedDate = urlParams.get("date");
+    const solveTime = parseInt(urlParams.get("time") || "0", 10);
 
+    function formatTime(seconds) {
+      const m = Math.floor(seconds / 60);
+      const s = seconds % 60;
+      return m > 0 ? `${m} dakika ${s} saniye` : `${s} saniye`;
+    }
 
-  <!-- 🧠 Load Group Data from JSON -->
-<script>
-/********************************************
- *  KUMELEMECÉ RESULT PAGE LOADER
- *  Works with /kumelemece/data/YYYY-MM-DD.json
- ********************************************/
+    // Show personal time
+    if (solveTime > 0) {
+      document.getElementById("solve-time-display").textContent =
+        `⏱️ Bu bulmacayı ${formatTime(solveTime)} içinde çözdünüz!`;
+    }
 
-const urlParams = new URLSearchParams(window.location.search);
+    // Save solve time to Supabase
+    async function saveSolveTime(puzzleId, time) {
+      try {
+        await fetch(`${SUPABASE_URL}/rest/v1/ratings`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "apikey": SUPABASE_KEY,
+            "Authorization": `Bearer ${SUPABASE_KEY}`
+          },
+          body: JSON.stringify({ puzzle_id: puzzleId, solve_time: time })
+        });
+      } catch (err) {
+        console.warn("Supabase save error:", err);
+      }
+    }
 
-// Try to read ?date=YYYY-MM-DD
-const selectedDate = urlParams.get("date");
+    // Fetch community stats for this puzzle
+    async function fetchStats(puzzleId) {
+      try {
+        const res = await fetch(
+          `${SUPABASE_URL}/rest/v1/ratings_summary?puzzle_id=eq.${puzzleId}&select=solve_count,avg_solve_time`,
+          {
+            headers: {
+              "apikey": SUPABASE_KEY,
+              "Authorization": `Bearer ${SUPABASE_KEY}`
+            }
+          }
+        );
+        const data = await res.json();
+        if (data && data.length > 0) {
+          const { solve_count, avg_solve_time } = data[0];
+          document.getElementById("community-stats").textContent =
+            `👥 Bugün ${solve_count} kişi bu bulmacayı çözdü — ortalama süre ${formatTime(avg_solve_time)}.`;
+        }
+      } catch (err) {
+        console.warn("Stats fetch error:", err);
+      }
+    }
 
-console.log("Result page selected date:", selectedDate);
+    // Load puzzle groups and save time
+    async function loadPuzzle() {
+      const today = new Date();
+      let puzzle = null;
+      let loadedDate = null;
 
-async function loadPuzzle() {
-
-  const today = new Date();
-  let puzzle = null;
-
-  /* 1️⃣ Try to load the requested puzzle date */
-  if (selectedDate) {
-    try {
-
-      const res = await fetch(`/kumelemece/data/${selectedDate}.json`);
-
-      if (res.ok) {
-        puzzle = await res.json();
-        console.log("Loaded puzzle:", selectedDate);
+      if (selectedDate) {
+        try {
+          const res = await fetch(`/kumelemece/data/${selectedDate}.json`);
+          if (res.ok) { puzzle = await res.json(); loadedDate = selectedDate; }
+        } catch (e) {}
       }
 
-    } catch (e) {
-      console.warn("Requested puzzle not found:", selectedDate);
-    }
-  }
-
-  /* 2️⃣ Fallback: search backwards for latest puzzle */
-  if (!puzzle) {
-
-    for (let i = 0; i < 3650; i++) {
-
-      const d = new Date(today);
-      d.setDate(today.getDate() - i);
-
-      const dateStr = d.toISOString().split("T")[0];
-
-      try {
-
-        const res = await fetch(`/kumelemece/data/${dateStr}.json`);
-
-        if (res.ok) {
-
-          puzzle = await res.json();
-          console.log("Loaded fallback puzzle:", dateStr);
-          break;
-
+      if (!puzzle) {
+        for (let i = 0; i < 3650; i++) {
+          const d = new Date(today);
+          d.setDate(today.getDate() - i);
+          const dateStr = d.toISOString().split("T")[0];
+          try {
+            const res = await fetch(`/kumelemece/data/${dateStr}.json`);
+            if (res.ok) { puzzle = await res.json(); loadedDate = dateStr; break; }
+          } catch (e) {}
         }
+      }
 
-      } catch (e) {}
+      if (!puzzle || !puzzle.groups) {
+        document.getElementById("group-results").innerHTML = "<p>Bugüne ait grup verileri bulunamadı.</p>";
+        return;
+      }
 
+      const puzzleId = `k-${loadedDate}`;
+
+      // Save time then fetch updated stats
+      if (solveTime > 0) {
+        await saveSolveTime(puzzleId, solveTime);
+        await fetchStats(puzzleId);
+      }
+
+      // Render groups
+      const container = document.getElementById("group-results");
+      puzzle.groups.forEach((group, index) => {
+        const colorClass = group.class || `highlight-${index + 1}`;
+        const wordBoxes = group.words
+          .map(w => `<span class="word-highlight ${colorClass}">${w}</span>`).join("");
+        container.innerHTML += `
+          <div class="group-block">
+            <div class="group-line">
+              <div class="group-row">${wordBoxes}</div>
+              <div class="group-label">→ ${group.label}</div>
+            </div>
+          </div>`;
+      });
     }
-  }
 
-  /* 3️⃣ If still nothing found */
-  if (!puzzle || !puzzle.groups) {
-
-    document.getElementById("group-results").innerHTML =
-      "<p>Bugüne ait grup verileri bulunamadı.</p>";
-
-    return;
-
-  }
-
-  /* 4️⃣ Render puzzle groups */
-
-  const container = document.getElementById("group-results");
-
-  puzzle.groups.forEach((group, index) => {
-
-    const colorClass = group.class || `highlight-${index + 1}`;
-
-    const wordBoxes = group.words
-      .map(word => `<span class="word-highlight ${colorClass}">${word}</span>`)
-      .join("");
-
-    const html = `
-      <div class="group-block">
-        <div class="group-line">
-          <div class="group-row">${wordBoxes}</div>
-          <div class="group-label">→ ${group.label}</div>
-        </div>
-      </div>
-    `;
-
-    container.innerHTML += html;
-
-  });
-
-}
-
-loadPuzzle().catch(err => {
-  console.error("Puzzle load error:", err);
-  document.getElementById("group-results").innerHTML =
-    "<p>Grup verileri yüklenemedi.</p>";
-});
-
-</script>
+    loadPuzzle().catch(err => {
+      console.error("Error:", err);
+      document.getElementById("group-results").innerHTML = "<p>Grup verileri yüklenemedi.</p>";
+    });
+  </script>
 </body>
 </html>

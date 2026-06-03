@@ -5,15 +5,17 @@ function loadHeader(type = "home") {
     blogs: "https://www.bulmacan.com/header/header_blogs.html",
     docs: "https://www.bulmacan.com/header/header_docs.html"
   };
-
+ 
   const file = headerMap[type] || headerMap.home;
-
+ 
   fetch(file)
     .then(res => res.text())
     .then(html => {
       document.getElementById("smart-header").innerHTML = html;
-      initCookiePopup(); // ⭐ run cookie logic AFTER header is injected
+      // Only call initCookiePopup if it exists on this page
+      if (typeof initCookiePopup === "function") {
+        initCookiePopup();
+      }
     })
     .catch(err => console.error("Header load error:", err));
 }
-

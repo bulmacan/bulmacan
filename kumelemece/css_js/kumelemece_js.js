@@ -23,10 +23,8 @@ function renderPuzzle(puzzle) {
   let penaltySeconds = 0;
   let hintIndex = 0;
 
-  // Clear grid first
   grid.innerHTML = "";
 
-  // Create puzzle grid
   shuffledWords.forEach(word => {
     const div = document.createElement("div");
     div.className = "word";
@@ -36,22 +34,17 @@ function renderPuzzle(puzzle) {
     grid.appendChild(div);
   });
 
-  // ===============================
-  // ⏱️ TIMER LOGIC
-  // ===============================
   let timerInterval = setInterval(updateTimer, 1000);
 
   function updateTimer() {
     const elapsed = Math.floor((Date.now() - startTime) / 1000);
     const remaining = countdownDuration - elapsed - penaltySeconds;
-
     if (remaining <= 0) {
       clearInterval(timerInterval);
       timerDisplay.textContent = "⏱️ Süre: 00:00";
-      window.showResults("timeout");
+      window.showResults("timeout", 600);
       return;
     }
-
     timerDisplay.textContent = `⏱️ Süre: ${formatTime(remaining)}`;
   }
 
@@ -61,14 +54,9 @@ function renderPuzzle(puzzle) {
     return `${minutes}:${secs}`;
   }
 
-  // ===============================
-  //  🧠 WORD SELECTION + GROUP CHECK
-  // ===============================
   function handleWordClick(el) {
     if (el.classList.contains("correct")) return;
-
     const word = el.textContent;
-
     if (el.classList.contains("selected")) {
       el.classList.remove("selected");
       selected = selected.filter(w => w !== word);
@@ -76,7 +64,6 @@ function renderPuzzle(puzzle) {
       el.classList.add("selected");
       selected.push(word);
     }
-
     if (selected.length === 4) checkGroup(selected);
   }
 
@@ -84,7 +71,6 @@ function renderPuzzle(puzzle) {
     const match = window.correctGroups.find(({ words, label }) =>
       words.every(word => group.includes(word)) && !solvedGroups.has(label)
     );
-
     if (match) {
       solvedGroups.add(match.label);
       feedback.textContent = `✅ Doğru grup: ${match.label}`;
@@ -95,7 +81,6 @@ function renderPuzzle(puzzle) {
       updateWordStyles(group, ["selected"], ["incorrect"]);
       setTimeout(() => updateWordStyles(group, ["incorrect"], []), 1500);
     }
-
     selected = [];
   }
 
@@ -110,12 +95,11 @@ function renderPuzzle(puzzle) {
 
   function endGame() {
     clearInterval(timerInterval);
-    window.showResults("success");
+    // Total time including hint penalties
+    const elapsed = Math.floor((Date.now() - startTime) / 1000) + penaltySeconds;
+    window.showResults("success", elapsed);
   }
 
-  // ===============================
-  //  💡 HINT SYSTEM
-  // ===============================
   const hintContainer = document.getElementById("hint-boxes");
   hintContainer.innerHTML = "";
 
@@ -123,23 +107,16 @@ function renderPuzzle(puzzle) {
     const box = document.createElement("div");
     box.className = "hint-box";
     box.textContent = "❓İpucu Göster";
-
     box.addEventListener("click", () => {
       if (box.classList.contains("revealed") || hintIndex >= window.hintMessages.length) return;
-
-      while (
-        hintIndex < window.hintMessages.length &&
-        solvedGroups.has(window.hintMessages[hintIndex].label)
-      ) {
+      while (hintIndex < window.hintMessages.length && solvedGroups.has(window.hintMessages[hintIndex].label)) {
         hintIndex++;
       }
-
       if (hintIndex >= window.hintMessages.length) {
         box.textContent = "Tüm ipuçları gösterildi.";
         box.classList.add("revealed");
         return;
       }
-
       penaltySeconds += 60;
       setTimeout(() => showToast("İpucu size 1 dakika kaybettirdi."), 0);
       box.textContent = window.hintMessages[hintIndex].text;
@@ -147,20 +124,10 @@ function renderPuzzle(puzzle) {
       box.classList.add("revealed");
       hintIndex++;
     });
-
     hintContainer.appendChild(box);
   });
-
-  // Restart button
-  const restartBtn = document.getElementById("restart-btn");
-  if (restartBtn) {
-    restartBtn.style.display = "none";
-  }
 }
 
-// ===============================
-//  🔀 SHUFFLE
-// ===============================
 function shuffle(array) {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -169,9 +136,6 @@ function shuffle(array) {
   return array;
 }
 
-// ===============================
-//  🔔 TOAST SYSTEM
-// ===============================
 function showToast(msg) {
   const t = document.createElement("div");
   t.className = "toast";
