@@ -20,7 +20,7 @@
 <div class="sudoku-wrapper">
   <div class="sudoku">
 
-    <!-- ⏱️ Stopwatch timer -->
+    <!-- ⏱️ Subtle stopwatch timer -->
     <div id="timer" style="font-size:0.9em; font-weight:normal; color:#aaa; margin-bottom:10px; text-align:center;">⏱️ Süre: 00:00</div>
 
     <table id="grid"></table>
@@ -38,7 +38,6 @@
     </div>
 
     <div class="buttons">
-      <button onclick="checkSudoku()">Kontrol Et</button>
       <button class="danger" onclick="clearCell()">Sil</button>
     </div>
 
@@ -80,16 +79,23 @@ function getSolveTime() {
   return Math.floor((Date.now() - startTime) / 1000);
 }
 
-const grid = document.getElementById("grid");
-const urlParams = new URLSearchParams(window.location.search);
-const selectedDate = urlParams.get("date");
-
 function getToday() {
   const d = new Date();
   return d.getFullYear() + "-" +
     String(d.getMonth() + 1).padStart(2, "0") + "-" +
     String(d.getDate()).padStart(2, "0");
 }
+
+function goToSuccess() {
+  clearInterval(timerInterval);
+  const solveTime = getSolveTime();
+  const dateParam = loadedDate || getToday();
+  window.location.href = `sudoku_success.html?date=${dateParam}&time=${solveTime}`;
+}
+
+const grid = document.getElementById("grid");
+const urlParams = new URLSearchParams(window.location.search);
+const selectedDate = urlParams.get("date");
 
 async function loadSudoku() {
   const today = new Date();
@@ -119,7 +125,7 @@ async function loadSudoku() {
   puzzle = data.puzzle;
   solution = data.solution;
   createGrid();
-  startTimer(); // ⏱️ Start timer after puzzle loads
+  startTimer();
 }
 
 loadSudoku();
@@ -198,6 +204,7 @@ function enterNumber(num) {
   if (!activeCell || activeCell.disabled) return;
   activeCell.value = num;
   validateGrid();
+  autoCheck();
 }
 
 function clearCell() {
@@ -206,28 +213,34 @@ function clearCell() {
   validateGrid();
 }
 
-function checkSudoku() {
-  validateGrid();
+// ✅ Auto-complete when last number is correctly placed
+function autoCheck() {
   const inputs = document.querySelectorAll(".sudoku input");
-  let allFilled = true;
-  let anyWrong = false;
-  inputs.forEach(input => {
-    if (!input.value) allFilled = false;
-    if (input.classList.contains("wrong")) anyWrong = true;
-  });
-  if (!allFilled) { alert("Henüz tüm hücreler doldurulmadı."); return; }
-  if (anyWrong) { alert("Bazı hücreler Sudoku kurallarını ihlal ediyor."); return; }
-
+  const allFilled = Array.from(inputs).every(i => i.value !== "");
+  if (!allFilled) return;
+  const anyWrong = Array.from(inputs).some(i => i.classList.contains("wrong"));
+  if (anyWrong) return;
   let correct = true;
   inputs.forEach(input => {
     if (Number(input.value) !== solution[input.dataset.row][input.dataset.col]) correct = false;
   });
+  if (correct) goToSuccess();
+}
 
+// Manual check button
+function checkSudoku() {
+  validateGrid();
+  const inputs = document.querySelectorAll(".sudoku input");
+  const allFilled = Array.from(inputs).every(i => i.value !== "");
+  if (!allFilled) { alert("Henüz tüm hücreler doldurulmadı."); return; }
+  const anyWrong = Array.from(inputs).some(i => i.classList.contains("wrong"));
+  if (anyWrong) { alert("Bazı hücreler Sudoku kurallarını ihlal ediyor."); return; }
+  let correct = true;
+  inputs.forEach(input => {
+    if (Number(input.value) !== solution[input.dataset.row][input.dataset.col]) correct = false;
+  });
   if (correct) {
-    clearInterval(timerInterval);
-    const solveTime = getSolveTime();
-    const dateParam = loadedDate || getToday();
-    window.location.href = `sudoku_success.html?date=${dateParam}&time=${solveTime}`;
+    goToSuccess();
   } else {
     alert("Kurallar doğru ama çözüm hatalı.");
   }
