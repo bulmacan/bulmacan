@@ -177,6 +177,9 @@ function initializePuzzle(matrix, words) {
   }
 
   function markWordFound(word) {
+    // Draw SVG line from first to last cell
+    drawLine(selectedCells);
+
     selectedCells.forEach(key => {
       usedCells.add(key);
       const [r, c] = key.split(",").map(Number);
@@ -197,6 +200,37 @@ function initializePuzzle(matrix, words) {
       const dateParam = loadedDate || getToday();
       window.location.href = `kelimeavi_success.html?date=${dateParam}&time=${solveTime}`;
     }
+  }
+
+  function drawLine(cells) {
+    if (cells.length < 2) return;
+
+    const svg = document.getElementById("overlay");
+    const gridEl = document.getElementById("grid");
+    const gridRect = gridEl.getBoundingClientRect();
+    const containerRect = document.getElementById("game-container").getBoundingClientRect();
+
+    const getCellCenter = (key) => {
+      const [r, c] = key.split(",").map(Number);
+      const index = r * gridSize + c;
+      const cell = gridEl.children[index];
+      const rect = cell.getBoundingClientRect();
+      return {
+        x: rect.left - containerRect.left + rect.width / 2,
+        y: rect.top - containerRect.top + rect.height / 2
+      };
+    };
+
+    const start = getCellCenter(cells[0]);
+    const end = getCellCenter(cells[cells.length - 1]);
+
+    const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+    line.setAttribute("x1", start.x);
+    line.setAttribute("y1", start.y);
+    line.setAttribute("x2", end.x);
+    line.setAttribute("y2", end.y);
+    line.classList.add("line");
+    svg.appendChild(line);
   }
 }
 </script>
