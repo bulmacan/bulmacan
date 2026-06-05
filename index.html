@@ -5,6 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>bulmacan</title>
 <meta name="description" content="bulmacan - Günlük ve haftalık bulmacalar: Kümelemece, Dedektiflemece, Sembollemece, Kelime Avı.">
+<meta property="og:title" content="Bulmacan – Türkçe Günlük Bulmacalar">
+<meta property="og:description" content="Her gün yeni bulmacalar! Kümelemece, Sudoku, Kelime Avı ve daha fazlası.">
+<meta property="og:image" content="https://www.bulmacan.com/icons/social_share.png">
+<meta property="og:url" content="https://www.bulmacan.com">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.bulmacan.com/icons/social_share.png">
 <link rel="icon" href="../icons/favicon.ico" type="image/x-icon">
 <style>
 * { box-sizing: border-box; }
@@ -78,6 +85,30 @@ footer { margin-top: 30px; padding: 18px 10px; font-size: 14px; color: #777; }
 }
 #cookie-popup button:hover { background: #1f44cc; }
 .tagline { margin: 4px auto 4px; font-size: 15px; color: #666; }
+.social-share-icons {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+  justify-content: center;
+}
+.social-share-icons a img {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  object-fit: contain;
+  transition: transform 0.2s ease;
+}
+.social-share-icons a:hover img { transform: scale(1.15); }
+.social-share-icons .share-label {
+  font-size: 11px;
+  color: #999;
+  text-align: right;
+}
+.social-row { display: flex; gap: 6px; }
+@media (max-width: 480px) {
+  .social-share-icons a img { width: 22px; height: 22px; }
+}
 </style>
 </head>
 <body>
@@ -93,8 +124,61 @@ data-cf-beacon='{"token": "6ed43d34957a49fcb90ec8e43f7db523"}'></script>
       Her gün bulmaca severler burada buluşuyor. Bugün <strong><span id="playersToday"></span></strong> kişi Bulmacan'da bulmaca çözdü.
     </p>
   </div>
-  <div></div>
+  <div class="social-share-icons">
+    <span class="share-label">Bizi paylaşın</span>
+    <div class="social-row">
+      <a href="#" onclick="shareToWhatsApp(event)" title="WhatsApp'ta paylaş">
+        <img src="icons/whatsap_icon.png" alt="WhatsApp">
+      </a>
+      <a href="#" onclick="shareToFacebook(event)" title="Facebook'ta paylaş">
+        <img src="icons/face_icon.png" alt="Facebook">
+      </a>
+      <a href="#" onclick="shareToX(event)" title="X'te paylaş">
+        <img src="icons/x_icon.png" alt="X">
+      </a>
+      <a href="#" onclick="shareToInstagram(event)" title="Instagram">
+        <img src="icons/insta_icon.png" alt="Instagram">
+      </a>
+      <a href="#" onclick="copyLink(event)" title="Linki kopyala">
+        <img src="icons/link_icon.png" alt="Kopyala">
+      </a>
+    </div>
+  </div>
 </header>
+
+<script>
+const shareMessage = "Türkçe günlük bulmacalar için Bulmacan'ı deneyin! 🧩";
+const shareURL = "https://www.bulmacan.com";
+
+function shareToWhatsApp(event) {
+  event.preventDefault();
+  window.open("https://wa.me/?text=" + encodeURIComponent(shareMessage + " " + shareURL), "_blank");
+}
+
+function shareToFacebook(event) {
+  event.preventDefault();
+  window.open("https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(shareURL), "_blank");
+}
+
+function shareToX(event) {
+  event.preventDefault();
+  window.open("https://twitter.com/intent/tweet?text=" + encodeURIComponent(shareMessage) + "&url=" + encodeURIComponent(shareURL), "_blank");
+}
+
+function shareToInstagram(event) {
+  event.preventDefault();
+  navigator.clipboard.writeText(shareURL).then(() => {
+    alert("Link kopyalandı! Instagram'da paylaşabilirsiniz. 📋");
+  });
+}
+
+function copyLink(event) {
+  event.preventDefault();
+  navigator.clipboard.writeText(shareURL).then(() => {
+    alert("Link kopyalandı! 📋");
+  });
+}
+</script>
 
 <script>
 const now = new Date();
