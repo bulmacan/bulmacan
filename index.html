@@ -166,6 +166,10 @@ document.getElementById("playersToday").innerText = (base + minutesToday).toLoca
       BETA versiyonu deneyen ilk sen ol.
       <p>Sembollere bak, anlamı çöz, kelimeleri seç.</p>
       <span class="btn-card">Oyna</span>
+      <div class="game-stats">
+        <div class="stat" id="sembol-count">⏳ Yükleniyor...</div>
+        <div class="stat" id="sembol-time"></div>
+      </div>
     </div>
   </a>
 
@@ -279,6 +283,30 @@ async function loadSudokuStats() {
   }
 }
 
+async function loadSembolStats() {
+  const today = new Date().toISOString().split("T")[0];
+  const puzzleId = `sb-${today}`;
+  try {
+    const res = await fetch(
+      `${SUPABASE_URL}/rest/v1/ratings_summary?puzzle_id=eq.${puzzleId}&select=solve_count,avg_solve_time`,
+      { headers: { "apikey": SUPABASE_KEY, "Authorization": `Bearer ${SUPABASE_KEY}` } }
+    );
+    const data = await res.json();
+    const countEl = document.getElementById("sembol-count");
+    const timeEl = document.getElementById("sembol-time");
+    if (data && data.length > 0) {
+      const { solve_count, avg_solve_time } = data[0];
+      countEl.textContent = `👥 Bugün ${solve_count} kişi çözdü`;
+      if (avg_solve_time) timeEl.textContent = `⏱ Ortalama süre: ${formatMinutes(avg_solve_time)}`;
+    } else {
+      countEl.textContent = "🧩 Bugün ilk sen çöz!";
+      timeEl.textContent = "";
+    }
+  } catch (err) {
+    document.getElementById("sembol-count").textContent = "";
+  }
+}
+
 async function loadKelimeAviStats() {
   const today = new Date().toISOString().split("T")[0];
   const puzzleId = `ka-${today}`;
@@ -309,6 +337,7 @@ document.addEventListener("DOMContentLoaded", () => {
   loadKumelemeceStats();
   loadSudokuStats();
   loadKelimeAviStats();
+  loadSembolStats();
 });
 
 function initCookiePopup() {
