@@ -1,9 +1,35 @@
-
 <link rel="stylesheet" href="https://www.bulmacan.com/header/header.css">
+
+<style>
+.social-share-icons {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.social-share-icons a img {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  object-fit: contain;
+  transition: transform 0.2s ease;
+}
+
+.social-share-icons a:hover img {
+  transform: scale(1.15);
+}
+
+@media (max-width: 400px) {
+  .social-share-icons a img {
+    width: 24px;
+    height: 24px;
+  }
+}
+</style>
 
 <div class="header-nav">
   <div>
-      <a href="https://bulmacan.com">
+    <a href="https://bulmacan.com">
       <img src="https://www.bulmacan.com/header/anasayfa.png" alt="Anasayfa">
     </a>
   </div>
@@ -19,10 +45,51 @@
     <a href="https://www.bulmacan.com/documents/onerileriniz.html">
       <img src="https://www.bulmacan.com/header/onerileriniz.png" alt="Onerileriniz">
     </a>
+
+    <!-- Social sharing icons -->
+    <div class="social-share-icons">
+      <a href="https://www.instagram.com/" target="_blank" title="Instagram'da paylaş">
+        <img src="https://www.bulmacan.com/icons/insta_icon.png" alt="Instagram">
+      </a>
+      <a href="#" onclick="shareToFacebook(event)" title="Facebook'ta paylaş">
+        <img src="https://www.bulmacan.com/icons/face_icon.png" alt="Facebook">
+      </a>
+      <a href="#" onclick="shareToWhatsApp(event)" title="WhatsApp'ta paylaş">
+        <img src="https://www.bulmacan.com/icons/whatsap_icon.png" alt="WhatsApp">
+      </a>
+      <a href="#" onclick="shareToX(event)" title="X'te paylaş">
+        <img src="https://www.bulmacan.com/icons/x_icon.png" alt="X">
+      </a>
+      <a href="#" onclick="copyLink(event)" title="Linki kopyala">
+        <img src="https://www.bulmacan.com/icons/link_icon.png" alt="Linki Kopyala">
+      </a>
+    </div>
   </div>
 </div>
 
+<script>
+const shareMessage = "Türkçe günlük bulmacalar için Bulmacan'ı deneyin! 🧩 bulmacan.com";
+const shareURL = "https://www.bulmacan.com";
 
+function shareToFacebook(event) {
+  event.preventDefault();
+  window.open("https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(shareURL), "_blank");
+}
 
+function shareToWhatsApp(event) {
+  event.preventDefault();
+  window.open("https://wa.me/?text=" + encodeURIComponent(shareMessage + " " + shareURL), "_blank");
+}
 
+function shareToX(event) {
+  event.preventDefault();
+  window.open("https://twitter.com/intent/tweet?text=" + encodeURIComponent(shareMessage) + "&url=" + encodeURIComponent(shareURL), "_blank");
+}
 
+function copyLink(event) {
+  event.preventDefault();
+  navigator.clipboard.writeText(shareURL).then(() => {
+    alert("Link kopyalandı! 📋");
+  });
+}
+</script>
