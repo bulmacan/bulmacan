@@ -1,334 +1,329 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Bulmacan – Arşiv</title>
-
 <link rel="icon" href="../icons/favicon.ico">
-
 <style>
-
-body{
-margin:0;
-font-family:Arial, Helvetica, sans-serif;
-background:#f8f9fb;
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #f8f9fb;
 }
 
-.container{
-max-width:1100px;
-margin:auto;
-padding:30px 16px;
+.container {
+  max-width: 1100px;
+  margin: auto;
+  padding: 30px 16px;
 }
 
-.archive-grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-gap:20px;
+.archive-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
 }
 
-.archive-box{
-background:white;
-padding:16px;
-border-radius:10px;
-box-shadow:0 2px 10px rgba(0,0,0,0.08);
+.archive-box {
+  background: white;
+  padding: 16px;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
 }
 
-.archive-box h2{
-margin-top:0;
+.archive-box h2 {
+  margin-top: 0;
 }
 
-.archive-box ul{
-list-style:none;
-padding:0;
-margin:0;
+.archive-box ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
-.archive-box li{
-margin-bottom:8px;
+.archive-box li {
+  margin-bottom: 10px;
+  border-bottom: 1px solid #f0f0f0;
+  padding-bottom: 8px;
 }
 
-.archive-box a{
-text-decoration:none;
-color:#2c5cff;
-font-size:14px;
+.archive-box li:last-child {
+  border-bottom: none;
 }
 
-.archive-box a:hover{
-text-decoration:underline;
+.archive-box a {
+  text-decoration: none;
+  color: #2c5cff;
+  font-size: 14px;
+  font-weight: bold;
+  display: block;
 }
 
-/* Loader */
-
-#archive-loader{
-display:none;
-text-align:center;
-padding:80px 0;
+.archive-box a:hover {
+  text-decoration: underline;
 }
 
-#loader-count{
-font-size:24px;
-color:#2c5cff;
-margin-top:10px;
+.puzzle-stats {
+  font-size: 12px;
+  color: #888;
+  margin-top: 3px;
 }
 
-/* Ads */
-
-.ad-container{
-max-width:720px;
-margin:40px auto 20px auto;
-padding:16px;
-text-align:center;
-border:1px solid #eee;
-background:#fafafa;
-border-radius:8px;
+/* Pass-through loader */
+#archive-loader {
+  display: none;
+  text-align: center;
+  padding: 40px 16px;
 }
 
-.ad-slot{
-width:100%;
-height:250px;
+#archive-loader h2 {
+  color: #333;
+  margin-bottom: 10px;
 }
 
-@media (max-width:600px){
-
-.ad-slot{
-height:90px;
+#loader-count {
+  font-size: 48px;
+  font-weight: bold;
+  color: #2c5cff;
+  margin: 20px 0;
 }
 
+.loader-message {
+  font-size: 14px;
+  color: #888;
+  margin-bottom: 20px;
 }
 
+/* Ad slot in loader */
+.loader-ad {
+  max-width: 720px;
+  margin: 20px auto;
+  padding: 16px;
+  background: #fafafa;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  min-height: 250px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #aaa;
+  font-size: 14px;
+}
+
+.ad-container {
+  max-width: 720px;
+  margin: 40px auto 20px auto;
+  padding: 16px;
+  text-align: center;
+  border: 1px solid #eee;
+  background: #fafafa;
+  border-radius: 8px;
+}
+
+.ad-slot {
+  width: 100%;
+  height: 90px;
+}
+
+@media (max-width: 600px) {
+  .ad-slot { height: 90px; }
+}
 </style>
-
 </head>
 
 <body>
 
-
-<!-- HEADER -->
 <div id="smart-header"></div>
-
 <script src="https://www.bulmacan.com/header/load_header.js" defer></script>
 <script>
-document.addEventListener("DOMContentLoaded",()=>{loadHeader("docs");});
+  document.addEventListener("DOMContentLoaded", () => { loadHeader("docs"); });
 </script>
 
 <div class="ad-container">
-<div class="ad-slot">
-
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1329536784333556"
-crossorigin="anonymous"></script>
-
-</div>
+  <div class="ad-slot">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1329536784333556" crossorigin="anonymous"></script>
+  </div>
 </div>
 
 <div class="container">
 
+  <!-- Pass-through loader -->
+  <div id="archive-loader">
+    <h2>🧩 Bulmaca yükleniyor...</h2>
+    <div class="loader-message">Lütfen bekleyin, bulmaca hazırlanıyor.</div>
+    <div id="loader-count">10</div>
+    <div class="loader-message">saniye içinde bulmacaya yönlendirileceksiniz.</div>
 
-<!-- Loader -->
+    <!-- Ad slot during wait -->
+    <div class="loader-ad">
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1329536784333556" crossorigin="anonymous"></script>
+      <!-- Ad loads here during the 10 second wait -->
+    </div>
+  </div>
 
-<div id="archive-loader">
+  <!-- Archive content -->
+  <div id="archive-content">
+    <div class="archive-grid">
 
-<h2>Arşivdeki bulmaca yüklenmekte</h2>
-<div id="loader-count">10</div>
+      <div class="archive-box">
+        <h2>🧩 Kümelemece</h2>
+        <ul id="archive-kumelemece"></ul>
+      </div>
+
+      <div class="archive-box">
+        <h2>🔢 Sudoku</h2>
+        <ul id="archive-sudoku"></ul>
+      </div>
+
+      <div class="archive-box">
+        <h2>🔎 Sembollemece</h2>
+        <ul id="archive-sembol"></ul>
+      </div>
+
+      <div class="archive-box">
+        <h2>🔤 Kelime Avı</h2>
+        <ul id="archive-kelime"></ul>
+      </div>
+
+    </div>
+  </div>
 
 </div>
-
-
-<!-- Archive content -->
-
-<div id="archive-content">
-
-<div class="archive-grid">
-
-<div class="archive-box">
-<h2>Kümelemece</h2>
-<ul id="archive-kumelemece"></ul>
-</div>
-
-<div class="archive-box">
-<h2>Sudoku</h2>
-<ul id="archive-sudoku"></ul>
-</div>
-
-<div class="archive-box">
-<h2>Sembollemece</h2>
-<ul id="archive-sembol"></ul>
-</div>
-
-<div class="archive-box">
-<h2>Kelime Avı</h2>
-<ul id="archive-kelime"></ul>
-</div>
-
-</div>
-
-</div>
-
-
-</div>
-
-
-<!-- FOOTER -->
 
 <div id="smart-footer"></div>
-
 <link rel="stylesheet" href="https://www.bulmacan.com/footer/footer.css">
-
 <script src="https://www.bulmacan.com/footer/load_footer.js" defer></script>
-
 <script>
-document.addEventListener("DOMContentLoaded",()=>{loadFooter("docs");});
+  document.addEventListener("DOMContentLoaded", () => { loadFooter(); });
 </script>
 
 <script>
+const SUPABASE_URL = "https://aasreluvawvisaswbtzh.supabase.co";
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFhc3JlbHV2YXd2aXNhc3didHpoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM0NDA0NDgsImV4cCI6MjA4OTAxNjQ0OH0.3WNhNot604dC_hkCbcc6QUapM7qnkHV-Qj3EtJmXxJo";
 
-/* Turkish date */
-
-function formatTurkishDate(dateStr){
-
-const months=[
-"Ocak","Şubat","Mart","Nisan","Mayıs","Haziran",
-"Temmuz","Ağustos","Eylül","Ekim","Kasım","Aralık"
-];
-
-const d=new Date(dateStr);
-
-return d.getDate()+" "+months[d.getMonth()]+" "+d.getFullYear();
-
+// Turkish date formatter
+function formatTurkishDate(dateStr) {
+  const months = ["Ocak","Şubat","Mart","Nisan","Mayıs","Haziran","Temmuz","Ağustos","Eylül","Ekim","Kasım","Aralık"];
+  const d = new Date(dateStr);
+  return d.getDate() + " " + months[d.getMonth()] + " " + d.getFullYear();
 }
 
-
-/* Format YYYY-MM-DD */
-
-function formatDate(d){
-
-return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
-
+function formatDate(d) {
+  return d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0") + "-" + String(d.getDate()).padStart(2,"0");
 }
 
+function formatMinutes(seconds) {
+  const m = Math.floor(seconds / 60);
+  const s = seconds % 60;
+  return m > 0 ? `${m}dk ${s}sn` : `${s}sn`;
+}
 
-/* Archive loader */
+// Fetch stats for a puzzle from Supabase
+async function fetchPuzzleStats(puzzleId) {
+  try {
+    const res = await fetch(
+      `${SUPABASE_URL}/rest/v1/ratings_summary?puzzle_id=eq.${puzzleId}&select=solve_count,avg_solve_time`,
+      { headers: { "apikey": SUPABASE_KEY, "Authorization": `Bearer ${SUPABASE_KEY}` } }
+    );
+    const data = await res.json();
+    if (data && data.length > 0) return data[0];
+  } catch(e) {}
+  return null;
+}
 
-async function loadArchive(folder,listId,page){
+// Load archive for a puzzle type
+async function loadArchive(folder, listId, page, prefix) {
+  const list = document.getElementById(listId);
+  const today = new Date();
+  const MAX_RESULTS = 7;
+  const SEARCH_DAYS = 60;
+  let found = [];
 
-const list=document.getElementById(listId);
-const today=new Date();
+  for (let i = 1; i < SEARCH_DAYS; i++) {
+    const d = new Date(today);
+    d.setDate(today.getDate() - i);
+    const dateStr = formatDate(d);
+    try {
+      const res = await fetch(`/${folder}/data/${dateStr}.json`);
+      if (res.ok) {
+        found.push({ date: dateStr });
+      }
+    } catch(e) {}
+    if (found.length >= MAX_RESULTS) break;
+  }
 
-const MAX_RESULTS=5;
-const SEARCH_DAYS=15;
+  if (found.length === 0) {
+    list.innerHTML = "<li>Henüz bulmaca yok.</li>";
+    return;
+  }
 
-let found=[];
+  // Render each puzzle with stats
+  for (const item of found) {
+    const li = document.createElement("li");
 
-for(let i=1;i<SEARCH_DAYS;i++){
+    const a = document.createElement("a");
+    a.href = `/${folder}/${page}?date=${item.date}`;
+    a.textContent = formatTurkishDate(item.date);
+    li.appendChild(a);
 
-const d=new Date(today);
-d.setDate(today.getDate()-i);
+    // Fetch stats for this puzzle
+    const statsDiv = document.createElement("div");
+    statsDiv.className = "puzzle-stats";
+    statsDiv.textContent = "⏳ yükleniyor...";
+    li.appendChild(statsDiv);
+    list.appendChild(li);
 
-const dateStr=formatDate(d);
+    // Load stats asynchronously
+    const puzzleId = `${prefix}-${item.date}`;
+    fetchPuzzleStats(puzzleId).then(stats => {
+      if (stats && stats.solve_count > 0) {
+        let text = `👥 ${stats.solve_count} kişi çözdü`;
+        if (stats.avg_solve_time) text += ` · ⏱ ort. ${formatMinutes(stats.avg_solve_time)}`;
+        statsDiv.textContent = text;
+      } else {
+        statsDiv.textContent = "Henüz çözülmedi";
+      }
+    });
+  }
+}
 
-try{
+// Load all archives
+loadArchive("kumelemece", "archive-kumelemece", "kumelemece_today.html", "k");
+loadArchive("sudoku", "archive-sudoku", "sudoku.html", "s");
+loadArchive("atasozu", "archive-sembol", "atasozu.html", "sb");
+loadArchive("kelimeavi", "archive-kelime", "kelimeavi.html", "ka");
 
-const res=await fetch(`/${folder}/data/${dateStr}.json`);
+// Pass-through loader with 10 second countdown
+let targetURL = null;
 
-if(res.ok){
-
-const data=await res.json();
-
-found.push({
-date:dateStr,
-title:data.title || dateStr
+document.addEventListener("click", function(e) {
+  const link = e.target.closest("a");
+  if (!link) return;
+  if (link.href && link.href.includes("?date=")) {
+    e.preventDefault();
+    targetURL = link.href;
+    startLoader();
+  }
 });
 
+function startLoader() {
+  document.getElementById("archive-content").style.display = "none";
+  document.getElementById("archive-loader").style.display = "block";
+  window.scrollTo(0, 0);
+
+  let seconds = 10;
+  document.getElementById("loader-count").textContent = seconds;
+
+  const timer = setInterval(() => {
+    seconds--;
+    document.getElementById("loader-count").textContent = seconds;
+    if (seconds <= 0) {
+      clearInterval(timer);
+      window.location.href = targetURL;
+    }
+  }, 1000);
 }
-
-}catch(e){}
-
-if(found.length>=MAX_RESULTS) break;
-
-}
-
-if(found.length===0){
-list.innerHTML="<li>Henüz bulmaca yok.</li>";
-return;
-}
-
-found.forEach(item=>{
-
-const li=document.createElement("li");
-const a=document.createElement("a");
-
-a.href=`/${folder}/${page}?date=${item.date}`;
-a.textContent=formatTurkishDate(item.date);
-
-li.appendChild(a);
-list.appendChild(li);
-
-});
-
-}
-
-
-/* Load archives */
-
-loadArchive("kumelemece","archive-kumelemece","kumelemece_today");
-loadArchive("sudoku","archive-sudoku","sudoku");
-loadArchive("atasozu","archive-sembol","atasozu");
-loadArchive("kelimeavi","archive-kelime","kelimeavi");
-
-
-/* Loader countdown */
-
-let targetURL=null;
-
-document.addEventListener("click",function(e){
-
-const link=e.target.closest("a");
-
-if(!link) return;
-
-if(link.href.includes("?date=")){
-
-e.preventDefault();
-
-targetURL=link.href;
-
-startLoader();
-
-}
-
-});
-
-
-function startLoader(){
-
-const loader=document.getElementById("archive-loader");
-const archive=document.getElementById("archive-content");
-const counter=document.getElementById("loader-count");
-
-archive.style.display="none";
-loader.style.display="block";
-
-let seconds=10;
-
-const timer=setInterval(()=>{
-
-seconds--;
-counter.textContent=seconds;
-
-if(seconds<=0){
-
-clearInterval(timer);
-window.location.href=targetURL;
-
-}
-
-},1000);
-
-}
-
 </script>
-
 
 </body>
 </html>
