@@ -71,15 +71,15 @@
     return m > 0 ? `${m} dakika ${sec} saniye` : `${sec} saniye`;
   }
 
-  let shareText = "Bugünkü Bulmacan Kelime Avı'nı tamamladım! 🔤 Sen de dene! bulmacan.com";
+  let shareText = "Bugünkü Bulmacan Kelime Avı'nı tamamladım! 🔤 Sen de dene! https://www.bulmacan.com/kelimeavi/kelimeavi.html";
   if (solveTime > 0) {
-    shareText = `Bugünkü Kelime Avı'nı ${formatTime(solveTime)} içinde tamamladım! 🔤 Sen bulabilir misin? bulmacan.com`;
+    shareText = `Bugünkü Kelime Avı'nı ${formatTime(solveTime)} içinde tamamladım! 🔤 Sen bulabilir misin? https://www.bulmacan.com/kelimeavi/kelimeavi.html`;
     document.getElementById("solve-time-display").textContent = `⏱️ ${formatTime(solveTime)} içinde tamamladınız!`;
   }
   document.getElementById("share-preview").textContent = shareText;
 
   function shareToWhatsApp(e) { e.preventDefault(); window.open("https://wa.me/?text=" + encodeURIComponent(shareText), "_blank"); }
-  function shareToFacebook(e) { e.preventDefault(); window.open("https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent("https://www.bulmacan.com"), "_blank"); }
+  function shareToFacebook(e) { e.preventDefault(); window.open("https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent("https://www.bulmacan.com/kelimeavi/kelimeavi.html"), "_blank"); }
   function shareToX(e) { e.preventDefault(); window.open("https://twitter.com/intent/tweet?text=" + encodeURIComponent(shareText), "_blank"); }
   function shareToInstagram(e) { e.preventDefault(); navigator.clipboard.writeText(shareText).then(() => { alert("Mesaj kopyalandı! Instagram'da paylaşabilirsiniz. 📋"); }); }
   function copyLink(e) {

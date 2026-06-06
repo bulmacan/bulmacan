@@ -93,10 +93,10 @@
     return m > 0 ? `${m} dakika ${s} saniye` : `${s} saniye`;
   }
 
-  let shareText = "Bugünkü Kümelemece bulmacasını çözdüm! 🧩 Sen de dene! bulmacan.com";
+  let shareText = "Bugünkü Kümelemece bulmacasını çözdüm! 🧩 Sen de dene! https://www.bulmacan.com/kumelemece/kumelemece_today.html";
 
   if (solveTime > 0) {
-    shareText = `Bugünkü Kümelemece'yi ${formatTime(solveTime)} içinde çözdüm! 🧩 Sen çözebilir misin? bulmacan.com`;
+    shareText = `Bugünkü Kümelemece'yi ${formatTime(solveTime)} içinde çözdüm! 🧩 Sen çözebilir misin? https://www.bulmacan.com/kumelemece/kumelemece_today.html`;
     document.getElementById("solve-time-display").textContent = `⏱️ ${formatTime(solveTime)} içinde çözdünüz!`;
   }
 
@@ -109,7 +109,7 @@
 
   function shareToFacebook(event) {
     event.preventDefault();
-    window.open("https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent("https://www.bulmacan.com"), "_blank");
+    window.open("https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent("https://www.bulmacan.com/kumelemece/kumelemece_today.html"), "_blank");
   }
 
   function shareToX(event) {
