@@ -204,7 +204,20 @@ document.getElementById("playersToday").innerText = (base + minutesToday).toLoca
     </div>
   </a>
 
- 
+  <!-- SUDOKU — live stats from Supabase -->
+  <a href="/sudoku/sudoku.html" class="card-link">
+    <div class="card">
+      <img src="sudoku.webp" alt="Sudoku">
+      <h3>SUDOKU</h3>
+      <p>Boşlukları Doldur. Matriksi tamamla.</p>
+      <span class="btn-card">Oyna</span>
+      <div class="game-stats">
+        <div class="stat" id="sudoku-count">⏳ Yükleniyor...</div>
+        <div class="stat" id="sudoku-time"></div>
+      </div>
+    </div>
+  </a>
+
   <!-- KELİME AVI — static for now -->
   <a href="/kelimeavi/kelimeavi.html" class="card-link">
     <div class="card">
