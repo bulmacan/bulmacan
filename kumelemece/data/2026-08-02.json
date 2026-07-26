@@ -1,0 +1,30 @@
+{
+  "id": "2026-08-02",
+  "date": "2026-08-02",
+  "groups": [
+    {
+      "label": "Satranç",
+      "class": "group-1",
+      "words": ["Vezir", "Fil", "Kale", "At"],
+      "clue": "Satranç"
+    },
+    {
+      "label": "Padişah lakapları",
+      "class": "group-2",
+      "words": ["Yıldırım", "Yavuz", "Fatih", "Avcı"],
+      "clue": "Padişah lakapları"
+    },
+    {
+      "label": "Işıklar",
+      "class": "group-3",
+      "words": ["Işık", "Nur", "Parlaklık", "Aydın"],
+      "clue": "Işıklar"
+    },
+    {
+      "label": "Burçlar",
+      "class": "group-4",
+      "words": ["Yay", "Oğlak", "Kova", "Balık"],
+      "clue": "Burçlar"
+    }
+  ]
+}

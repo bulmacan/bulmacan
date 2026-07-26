@@ -1,0 +1,30 @@
+{
+  "id": "2026-08-03",
+  "date": "2026-08-03",
+  "groups": [
+    {
+      "label": "Kağıt oyunları",
+      "class": "group-1",
+      "words": ["Pişti", "Ellibir", "Biriç", "Batak"],
+      "clue": "Kağıt oyunları"
+    },
+    {
+      "label": "Akıllı karakterler",
+      "class": "group-2",
+      "words": ["Akıllı", "Zeki", "Kurnaz", "Becerikli"],
+      "clue": "Akıllı karakterler"
+    },
+    {
+      "label": "Rakamla başlayan kelimeler",
+      "class": "group-3",
+      "words": ["Bira", "Onur", "Altın", "Beşik"],
+      "clue": "Rakamla başlayan kelimeler"
+    },
+    {
+      "label": "Atilla İlhan şiirleri",
+      "class": "group-4",
+      "words": ["Duvar", "Ayrılık", "Tutkun", "Beyaz"],
+      "clue": "Atilla İlhan şiirleri"
+    }
+  ]
+}

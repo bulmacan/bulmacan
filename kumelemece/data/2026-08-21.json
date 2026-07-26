@@ -1,0 +1,30 @@
+{
+  "id": "2026-08-21",
+  "date": "2026-08-21",
+  "groups": [
+    {
+      "label": "Zeytinyağı türleri",
+      "class": "group-1",
+      "words": ["Natürel", "Sızma", "Riviera", "Rafine"],
+      "clue": "Zeytinağı türleri"
+    },
+    {
+      "label": "Futbol takım lakapları",
+      "class": "group-2",
+      "words": ["Kartal", "Kanarya", "Aslan", "Şimşek"],
+      "clue": "Futbol takım lakapları"
+    },
+    {
+      "label": "Ekmek metodları",
+      "class": "group-3",
+      "words": ["Saç", "Fırın", "Tandır", "Sini"],
+      "clue": "Ekmek metodları"
+    },
+    {
+      "label": "Burç Grupları",
+      "class": "group-4",
+      "words": ["Ateş", "Toprak", "Hava", "Su"],
+      "clue": "Burç Gurupları"
+    }
+  ]
+}

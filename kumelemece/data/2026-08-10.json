@@ -1,0 +1,30 @@
+{
+  "id": "2026-08-10",
+  "date": "2026-08-10",
+  "groups": [
+    {
+      "label": "Gerekçeler",
+      "class": "group-1",
+      "words": ["Mahazaret", "Bahane", "Özür", "Gerekçe"],
+      "clue": "Gerekçeler"
+    },
+    {
+      "label": "Köfte methodları",
+      "class": "group-2",
+      "words": ["Izgara", "Fırın", "Tava", "Güveç"],
+      "clue": "Köfte methodları"
+    },
+    {
+      "label": "Sezen Aksu şarkıları",
+      "class": "group-3",
+      "words": ["Tükeneceğiz", "Gülümse", "Şımarık", "Hadibakalım"],
+      "clue": "Sezen Aksu şarkıları"
+    },
+    {
+      "label": "Kadın akrabalar",
+      "class": "group-4",
+      "words": ["Abla", "Bacı", "Teyze", "Hala"],
+      "clue": "Kadın akrabalar"
+    }
+  ]
+}

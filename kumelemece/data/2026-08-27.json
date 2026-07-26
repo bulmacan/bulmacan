@@ -1,0 +1,30 @@
+{
+  "id": "2026-08-27",
+  "date": "2026-08-27",
+  "groups": [
+    {
+      "label": "Milli Parklar",
+      "class": "group-1",
+      "words": ["Göreme", "Köprülü", "Munzur", "Saklıkent"],
+      "clue": "Milli Parklar"
+    },
+    {
+      "label": "Şerbetli Tatlılar",
+      "class": "group-2",
+      "words": ["Kadıboğan", "Şıllık", "Nuriye", "Şöbyet"],
+      "clue": "Şerbetliler"
+    },
+    {
+      "label": "Telefon acma yöntemeleri",
+      "class": "group-3",
+      "words": ["Parmak izi", "Şifre", "PIN", "Yüz tanıma"],
+      "clue": "Telefon Açmak"
+    },
+    {
+      "label": "Data bağlantı metodları",
+      "class": "group-4",
+      "words": ["Bluetooth", "wifi", "kablo", "mobil veri"],
+      "clue": "Data bağlantı"
+    }
+  ]
+}

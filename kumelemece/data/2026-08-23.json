@@ -1,0 +1,30 @@
+{
+  "id": "2026-08-23",
+  "date": "2026-08-23",
+  "groups": [
+    {
+      "label": "Tatlılar",
+      "class": "group-1",
+      "words": ["Lokma", "Pişi", "Puf", "Tulumba"],
+      "clue": "Tatlılar"
+    },
+    {
+      "label": "Ekmek malzemeleri",
+      "class": "group-2",
+      "words": ["Un", "Tuz", "Maya", "Su"],
+      "clue": "Ekmek malzemeleri"
+    },
+    {
+      "label": "Generaller",
+      "class": "group-3",
+      "words": ["Tuğ", "Kor", "Or", "Tüm"],
+      "clue": "Generaller"
+    },
+    {
+      "label": "Orhan Gencebay Şarkıları",
+      "class": "group-4",
+      "words": ["Kader", "Dert", "Hasiret", "Yanlızlık"],
+      "clue": "Orhan Gencebay Şarkıları"
+    }
+  ]
+}

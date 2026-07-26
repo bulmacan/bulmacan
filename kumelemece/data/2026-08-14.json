@@ -1,0 +1,30 @@
+{
+  "id": "2026-08-14",
+  "date": "2026-08-14",
+  "groups": [
+    {
+      "label": "Fiat arabalar",
+      "class": "group-1",
+      "words": ["Murat", "Şahin", "Doğan", "Kartal"],
+      "clue": "Fiat arabalar"
+    },
+    {
+      "label": "Sucuk çeşitleri",
+      "class": "group-2",
+      "words": ["Kangal", "Parmak", "Dilim", "Kasap"],
+      "clue": "Sucuk çeşıtleri"
+    },
+    {
+      "label": "Baş ile başlayanlar",
+      "class": "group-3",
+      "words": ["Hekim", "Vuru", "Kan", "Kent"],
+      "clue": "Baş ile başlayanlar"
+    },
+    {
+      "label": "Zeytin türleri",
+      "class": "group-4",
+      "words": ["Sele", "Salamura", "Cizik", "Kırma"],
+      "clue": "Zetin Türleri"
+    }
+  ]
+}

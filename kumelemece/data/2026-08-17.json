@@ -1,0 +1,30 @@
+{
+  "id": "2026-08-17",
+  "date": "2026-08-17",
+  "groups": [
+    {
+      "label": "Yetkilik Belgeleri",
+      "class": "group-1",
+      "words": ["Ehliyet", "Ruhsat", "Diploma", "Lisans"],
+      "clue": "Yetkilik Belgeleri"
+    },
+    {
+      "label": "Anne isimleri",
+      "class": "group-2",
+      "words": ["Valide", "Anne", "Ana", "Mama"],
+      "clue": "Anne isimleri"
+    },
+    {
+      "label": "Izgara aletleri",
+      "class": "group-3",
+      "words": ["Mangal", "Köz", "şiş", "maşa"],
+      "clue": "Izgara aletleri"
+    },
+    {
+      "label": "Ekspresler",
+      "class": "group-4",
+      "words": ["Doğu", "Pamukkale", "Anadolu", "Mavi"],
+      "clue": "Ekspresler"
+    }
+  ]
+}

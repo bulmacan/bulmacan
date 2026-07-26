@@ -1,0 +1,30 @@
+{
+  "id": "2026-08-20",
+  "date": "2026-08-20",
+  "groups": [
+    {
+      "label": "Yumurtalı yemekler",
+      "class": "group-1",
+      "words": ["Kaygana", "çılbır", "Menemen", "Omlet"],
+      "clue": "Yumurtalı yemekler"
+    },
+    {
+      "label": "Yağmurdan koruyanlar",
+      "class": "group-2",
+      "words": ["Pardisö", "Panço", "Kaban", "Parka"],
+      "clue": "Yamurdan koruyanlar"
+    },
+    {
+      "label": "Boyalar",
+      "class": "group-3",
+      "words": ["Yağlı", "Sulu", "Akrilik", "Pastel"],
+      "clue": "Boyalar"
+    },
+    {
+      "label": "Hava taşıtları",
+      "class": "group-4",
+      "words": ["Uçak", "Teyyare", "Jet", "Pırpır"],
+      "clue": "Hava taşıtları"
+    }
+  ]
+}

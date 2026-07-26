@@ -1,0 +1,30 @@
+{
+  "id": "2026-08-16",
+  "date": "2026-08-16",
+  "groups": [
+    {
+      "label": "İskambiller kartları",
+      "class": "group-1",
+      "words": ["Karo", "Şimşek", "Maça", "Kupa"],
+      "clue": "İskambiller kartları"
+    },
+    {
+      "label": "Karar verenler",
+      "class": "group-2",
+      "words": ["Yargıç", "Hakim", "Hakem", "Kurul"],
+      "clue": "Karar verenler"
+    },
+    {
+      "label": "Çay türleri",
+      "class": "group-3",
+      "words": ["Ihlamur", "Ada", "Papatya", "Kuşburnu"],
+      "clue": "Çay türleri"
+    },
+    {
+      "label": "Su adları",
+      "class": "group-4",
+      "words": ["Okyanus", "Deniz", "Derya", "Levent"],
+      "clue": "Su adları"
+    }
+  ]
+}

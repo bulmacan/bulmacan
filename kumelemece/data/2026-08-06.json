@@ -1,0 +1,30 @@
+{
+  "id": "2026-08-06",
+  "date": "2026-08-06",
+  "groups": [
+    {
+      "label": "Doktorlar",
+      "class": "group-1",
+      "words": ["Doktor", "Hekim", "Tabib", "Cerrah"],
+      "clue": "Doktorlar"
+    },
+    {
+      "label": "Su kaynakları",
+      "class": "group-2",
+      "words": ["sebil", "Kaynak", "Pınar", "çeşme"],
+      "clue": "Su kaynakları"
+    },
+    {
+      "label": "Ak ile başlayanlar",
+      "class": "group-3",
+      "words": ["Deniz", "Baba", "şam", "Ciğer"],
+      "clue": "Ak ile başlayanlar"
+    },
+    {
+      "label": "Deniz olayları",
+      "class": "group-4",
+      "words": ["Akıntı", "Girdap", "Medcezir", "Dalga"],
+      "clue": "Deniz olayları"
+    }
+  ]
+}

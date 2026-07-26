@@ -1,0 +1,30 @@
+{
+  "id": "2026-08-01",
+  "date": "2026-08-01",
+  "groups": [
+    {
+      "label": "Burçlar",
+      "class": "group-1",
+      "words": ["Aslan", "Başak", "Terazi", "Akrep"],
+      "clue": "Burçlar"
+    },
+    {
+      "label": "Kedi türleri",
+      "class": "group-2",
+      "words": ["Van", "Tekir", "Çorum", "Ankara"],
+      "clue": "Kediler"
+    },
+    {
+      "label": "Askerler",
+      "class": "group-3",
+      "words": ["Er", "Mehmetcik", "Nefer", "Asker"],
+      "clue": "Askerler"
+    },
+    {
+      "label": "Sultan Mehmet lakapları",
+      "class": "group-4",
+      "words": ["Fatih", "Çelebi", "Reşat", "Avcı"],
+      "clue": "Sultan Mehmet lakapları"
+    }
+  ]
+}

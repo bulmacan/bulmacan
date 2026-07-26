@@ -1,0 +1,30 @@
+{
+  "id": "2026-08-08",
+  "date": "2026-08-08",
+  "groups": [
+    {
+      "label": "Baba isimleri",
+      "class": "group-1",
+      "words": ["Peder", "Baba", "Ata", "Ebeveyn"],
+      "clue": "Baba isimleri"
+    },
+    {
+      "label": "İhanet gibi",
+      "class": "group-2",
+      "words": ["İhanet", "Hiyanet", "Hainlik", "Ele vermek"],
+      "clue": "İhanet gibi"
+    },
+    {
+      "label": "Yakıtlar",
+      "class": "group-3",
+      "words": ["Petrol", "Dizel", "Gaz", "Elektrik"],
+      "clue": "Yakıtlar"
+    },
+    {
+      "label": "Erkek Akrabalar",
+      "class": "group-4",
+      "words": ["Amca", "Dayı", "Kayın", "Enişte"],
+      "clue": "Erkek Akrabalar"
+    }
+  ]
+}

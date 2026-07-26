@@ -1,0 +1,30 @@
+{
+  "id": "2026-08-19",
+  "date": "2026-08-19",
+  "groups": [
+    {
+      "label": "Atilla İlhan karakterleri",
+      "class": "group-1",
+      "words": ["Ayten", "Aysel", "Cezabel", "Müjde"],
+      "clue": "Atilla İlhan karakterleri"
+    },
+    {
+      "label": "Şeker çeşitleri",
+      "class": "group-2",
+      "words": ["Bonbon", "Akide", "Lohusa", "Nane"],
+      "clue": "Şeker çeşitleri"
+    },
+    {
+      "label": "Bahçe ile bitenler",
+      "class": "group-3",
+      "words": ["Dolma", "Güzel", "Fener", "Narlı"],
+      "clue": "Bahçe ile bitenler"
+    },
+    {
+      "label": "Sarayla başlayanlar",
+      "class": "group-4",
+      "words": ["Burnu", "köy", "Bosna", "Oba"],
+      "clue": "Sarayla başlayanlar"
+    }
+  ]
+}

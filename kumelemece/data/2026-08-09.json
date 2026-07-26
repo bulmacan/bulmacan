@@ -1,0 +1,30 @@
+{
+  "id": "2026-08-09",
+  "date": "2026-08-09",
+  "groups": [
+    {
+      "label": "İletişim yöntemleri",
+      "class": "group-1",
+      "words": ["Telgraf", "Mektup", "Kartpostal", "e-posta"],
+      "clue": "İletişim yöntemleri"
+    },
+    {
+      "label": "Bakliyat",
+      "class": "group-2",
+      "words": ["Barbunya", "Mercimek", "Nohut", "Fasulye"],
+      "clue": "Bakliyat"
+    },
+    {
+      "label": "Denizle başlayanlar",
+      "class": "group-3",
+      "words": ["Anası", "Yıldızı", "Kızı", "Feneri"],
+      "clue": "Denizle başlayanlar"
+    },
+    {
+      "label": "Yol türleri",
+      "class": "group-4",
+      "words": ["Köprü", "Tünel", "Viyadük", "Geçit"],
+      "clue": "Yol türleri"
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "id": "2026-08-24",
+  "date": "2026-08-24",
+  "groups": [
+    {
+      "label": "Sevgiler",
+      "class": "group-1",
+      "words": ["Aşk", "Sevgi", "Muhabbet", "Tutku"],
+      "clue": "Sevgiler"
+    },
+    {
+      "label": "İskambiller kartları",
+      "class": "group-2",
+      "words": ["Papaz", "As", "Kızı", "Vale"],
+      "clue": "İskambiller kartları"
+    },
+    {
+      "label": "Orhan Kemal şiirleri",
+      "class": "group-3",
+      "words": ["Duvarlar", "Tutkun", "Leman", "Yanlızlık"],
+      "clue": "Orhan Kemal şiirleri"
+    },
+    {
+      "label": "Cüneyt Arkın Filmleri",
+      "class": "group-4",
+      "words": ["Maden", "Darbe", "Antidot", "Yaralı"],
+      "clue": "Cüneyt Arkın Filmleri"
+    }
+  ]
+}
