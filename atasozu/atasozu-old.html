@@ -14,62 +14,6 @@
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://www.bulmacan.com/icons/share_sembollemece.png">
-
-<style>
-  /* 🃏 Card reveal mechanic */
-  .card-grid {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin: 16px auto 8px auto;
-  }
-  .card {
-    width: 56px;
-    height: 76px;
-    perspective: 600px;
-    cursor: pointer;
-  }
-  .card-inner {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    transition: transform 0.5s ease;
-    transform-style: preserve-3d;
-  }
-  .card.flipped .card-inner {
-    transform: rotateY(180deg);
-    cursor: default;
-  }
-  .card-face {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 10px;
-    font-size: 1.8em;
-    backface-visibility: hidden;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.15);
-  }
-  .card-front {
-    background: #2c3e50;
-    color: #fff;
-    font-weight: bold;
-  }
-  .card-back {
-    background: #fff;
-    border: 2px solid #4caf50;
-    transform: rotateY(180deg);
-  }
-  .card-hint {
-    text-align: center;
-    font-size: 0.85em;
-    color: #999;
-    margin-bottom: 12px;
-  }
-</style>
-
 </head>
 <body>
 
@@ -82,11 +26,8 @@
 <!-- ⏱️ Subtle stopwatch -->
 <div id="timer" style="font-size:0.9em; font-weight:normal; color:#aaa; margin:8px 0; text-align:center;">⏱️ Süre: 00:00</div>
 
-<!-- 🃏 Card reveal grid -->
-<div class="card-hint">Kartlara dokunarak ipuçlarını aç 👆</div>
-<div class="card-grid" id="cardGrid"></div>
-
 <!-- 🧩 Puzzle Clue and Solution -->
+<div class="emoji-clue" id="emojiClue">Yükleniyor...</div>
 <div class="selected-words" id="selectedWords">Çözüm: </div>
 
 <!-- 🟩 Legend -->
@@ -117,8 +58,6 @@
 let correctSequence = [];
 let selected = [];
 let loadedDate = null;
-let emojiSymbols = [];   // individual emoji, one per card
-let cardsOpened = 0;
 
 // ⏱️ Stopwatch
 let startTime = null;
@@ -145,66 +84,6 @@ function getToday() {
   return d.getFullYear() + "-" +
     String(d.getMonth() + 1).padStart(2, "0") + "-" +
     String(d.getDate()).padStart(2, "0");
-}
-
-/********************************************
- * Split an emoji string into individual
- * visual symbols (grapheme clusters), so
- * combined emoji (ZWJ sequences, skin tones,
- * flags) don't get split incorrectly.
- ********************************************/
-function splitEmoji(str) {
-  if (typeof Intl !== "undefined" && Intl.Segmenter) {
-    const seg = new Intl.Segmenter("tr", { granularity: "grapheme" });
-    return Array.from(seg.segment(str), s => s.segment);
-  }
-  // Fallback for older browsers: split on code points (less accurate for ZWJ sequences)
-  return Array.from(str);
-}
-
-/********************************************
- * Build the 5-card reveal grid
- ********************************************/
-function renderCardGrid(symbols) {
-  const grid = document.getElementById("cardGrid");
-  grid.innerHTML = "";
-  cardsOpened = 0;
-
-  symbols.forEach((symbol, i) => {
-    const card = document.createElement("div");
-    card.className = "card";
-    card.dataset.index = i;
-    card.innerHTML = `
-      <div class="card-inner">
-        <div class="card-face card-front">?</div>
-        <div class="card-face card-back">${symbol}</div>
-      </div>`;
-    card.addEventListener("click", () => {
-      if (!card.classList.contains("flipped")) {
-        card.classList.add("flipped");
-        cardsOpened++;
-      }
-    });
-    grid.appendChild(card);
-  });
-
-  // Give the player one free hint up front so they aren't guessing completely blind
-  const firstCard = grid.querySelector(".card");
-  if (firstCard) {
-    firstCard.classList.add("flipped");
-    cardsOpened = 1;
-  }
-}
-
-/********************************************
- * Auto-reveal any remaining unopened cards,
- * called once the player guesses correctly.
- ********************************************/
-function revealAllCards() {
-  const cards = document.querySelectorAll("#cardGrid .card:not(.flipped)");
-  cards.forEach((card, i) => {
-    setTimeout(() => card.classList.add("flipped"), i * 150);
-  });
 }
 
 const urlParams = new URLSearchParams(window.location.search);
@@ -234,14 +113,12 @@ async function loadAtasozu() {
   }
 
   if (!puzzle) {
-    document.getElementById("cardGrid").innerHTML = "<p>Bulmaca bulunamadı.</p>";
+    document.getElementById("emojiClue").textContent = "Bulmaca bulunamadı.";
     return;
   }
 
   correctSequence = puzzle.correctSequence;
-
-  emojiSymbols = splitEmoji(puzzle.emojiClue);
-  renderCardGrid(emojiSymbols);
+  document.getElementById("emojiClue").textContent = puzzle.emojiClue;
 
   const grid = document.getElementById("wordGrid");
   grid.innerHTML = "";
@@ -293,13 +170,9 @@ grid.addEventListener("click", function(e) {
 
     if (selectedWords.join(" ") === correctSequence.join(" ")) {
       clearInterval(timerInterval);
-      const cardsAtGuess = cardsOpened; // capture before the auto-reveal opens the rest
-      revealAllCards();
       const solveTime = getSolveTime();
       const dateParam = loadedDate || getToday();
-      setTimeout(() => {
-        window.location.href = `atasozu_success.html?date=${dateParam}&time=${solveTime}&cards=${cardsAtGuess}`;
-      }, emojiSymbols.length * 150 + 400); // wait for card reveal animation
+      window.location.href = `atasozu_success.html?date=${dateParam}&time=${solveTime}`;
     }
   }
 });

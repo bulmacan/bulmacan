@@ -29,7 +29,6 @@
     <span class="success-emoji">🎉</span>
     <div class="success-title">BRAVO! Sembollemece'yi çözdünüz!</div>
     <div class="solve-time" id="solve-time-display"></div>
-    <div class="cards-display" id="cards-display" style="font-weight:bold; margin-top:6px;"></div>
     <div class="community-stats" id="community-stats"></div>
   </div>
 
@@ -67,35 +66,17 @@
   const urlParams = new URLSearchParams(window.location.search);
   const selectedDate = urlParams.get("date");
   const solveTime = parseInt(urlParams.get("time") || "0", 10);
-  const cardsOpened = urlParams.has("cards") ? parseInt(urlParams.get("cards"), 10) : null;
 
   function formatTime(s) {
     const m = Math.floor(s / 60); const sec = s % 60;
     return m > 0 ? `${m} dakika ${sec} saniye` : `${sec} saniye`;
   }
 
-  function cardWord(n) {
-    return n === 1 ? "kart" : "kart"; // Turkish doesn't pluralize nouns after numbers
-  }
-
   let shareText = "Bugünkü Bulmacan Sembollemece'yi çözdüm! 🔎 Sen de dene! https://www.bulmacan.com/atasozu/atasozu.html";
-
   if (solveTime > 0) {
     shareText = `Bugünkü Sembollemece'yi ${formatTime(solveTime)} içinde çözdüm! 🔎 Sen çözebilir misin? https://www.bulmacan.com/atasozu/atasozu.html`;
     document.getElementById("solve-time-display").textContent = `⏱️ ${formatTime(solveTime)} içinde çözdünüz!`;
   }
-
-  if (cardsOpened !== null) {
-    const cardsMsg = cardsOpened <= 1
-      ? `🃏 Sadece ilk kartla (hiç ek ipucu açmadan) buldunuz! İnanılmaz!`
-      : `🃏 Bu ifadeyi sadece ${cardsOpened} ${cardWord(cardsOpened)} açarak buldunuz!`;
-    document.getElementById("cards-display").textContent = cardsMsg;
-
-    shareText = solveTime > 0
-      ? `Bugünkü Sembollemece'yi ${formatTime(solveTime)} içinde ve sadece ${cardsOpened} kart açarak çözdüm! 🃏🔎 Sen daha azıyla çözebilir misin? https://www.bulmacan.com/atasozu/atasozu.html`
-      : `Bugünkü Sembollemece'yi sadece ${cardsOpened} kart açarak çözdüm! 🃏🔎 Sen daha azıyla çözebilir misin? https://www.bulmacan.com/atasozu/atasozu.html`;
-  }
-
   document.getElementById("share-preview").textContent = shareText;
 
   function shareToWhatsApp(e) { e.preventDefault(); window.open("https://wa.me/?text=" + encodeURIComponent(shareText), "_blank"); }
@@ -114,12 +95,10 @@
     if (solveTime > 0 && selectedDate) {
       const puzzleId = `sb-${selectedDate}`;
       try {
-        const payload = { puzzle_id: puzzleId, solve_time: solveTime };
-        if (cardsOpened !== null) payload.cards_opened = cardsOpened; // requires a cards_opened column in the `ratings` table
         await fetch(`${SUPABASE_URL}/rest/v1/ratings`, {
           method: "POST",
           headers: { "Content-Type": "application/json", "apikey": SUPABASE_KEY, "Authorization": `Bearer ${SUPABASE_KEY}` },
-          body: JSON.stringify(payload)
+          body: JSON.stringify({ puzzle_id: puzzleId, solve_time: solveTime })
         });
         const res = await fetch(`${SUPABASE_URL}/rest/v1/ratings_summary?puzzle_id=eq.${puzzleId}&select=solve_count,avg_solve_time`,
           { headers: { "apikey": SUPABASE_KEY, "Authorization": `Bearer ${SUPABASE_KEY}` } });

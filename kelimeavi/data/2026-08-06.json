@@ -1,0 +1,18 @@
+{
+  "id": "2026-08-06",
+  "date": "2026-08-06",
+  "title": "Futbol Takımları",
+  "matrix": [
+    ["G","A","L","A","T","A","S","A","R","A"],
+    ["F","E","N","E","R","B","A","H","Ç","E"],
+    ["B","E","Ş","İ","K","T","A","Ş","T","R"],
+    ["A","B","Z","O","N","S","P","O","R","B"],
+    ["U","R","S","A","S","P","O","R","A","N"],
+    ["K","A","Y","S","E","R","İ","E","R","Z"],
+    ["İ","N","C","A","N","K","A","R","A","G"],
+    ["Ü","C","Ü","A","D","A","N","A","D","E"],
+    ["M","İ","R","S","P","O","R","T","A","K"],
+    ["I","M","L","E","R","İ","M","İ","Z","T"]
+  ],
+  "words": ["GALATASARAY", "FENERBAHÇE", "BEŞİKTAŞ", "TRABZONSPOR", "BURSASPOR", "KAYSERİ", "ANKARAGÜCÜ", "ADANADEMİRSPOR"]
+}
