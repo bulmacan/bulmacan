@@ -16,7 +16,8 @@
 <meta name="twitter:image" content="https://www.bulmacan.com/icons/share_sembollemece.png">
 
 <style>
-  /* 🃏 Card reveal mechanic */
+  /* 🃏 Card reveal mechanic — count adapts automatically to however
+     many emoji symbols are in puzzle.emojiClue. No fixed word count. */
   .card-grid {
     display: flex;
     gap: 10px;
@@ -29,13 +30,31 @@
     height: 76px;
     perspective: 600px;
     cursor: pointer;
+    opacity: 0;
+    animation: cardIn 0.45s ease forwards;
   }
+  /* Staggered entrance so cards feel like they're being dealt */
+  .card:nth-child(1) { animation-delay: 0.05s; }
+  .card:nth-child(2) { animation-delay: 0.15s; }
+  .card:nth-child(3) { animation-delay: 0.25s; }
+  .card:nth-child(4) { animation-delay: 0.35s; }
+  .card:nth-child(5) { animation-delay: 0.45s; }
+  .card:nth-child(6) { animation-delay: 0.55s; }
+
+  @keyframes cardIn {
+    from { opacity: 0; transform: translateY(14px) scale(0.85); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
   .card-inner {
     position: relative;
     width: 100%;
     height: 100%;
-    transition: transform 0.5s ease;
+    transition: transform 0.55s cubic-bezier(0.34, 1.56, 0.64, 1); /* slight overshoot = springy flip */
     transform-style: preserve-3d;
+  }
+  .card:not(.flipped):hover .card-inner {
+    transform: rotateY(-12deg) translateY(-3px);
   }
   .card.flipped .card-inner {
     transform: rotateY(180deg);
@@ -50,17 +69,28 @@
     border-radius: 10px;
     font-size: 1.8em;
     backface-visibility: hidden;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+    box-shadow: 0 3px 6px rgba(0,0,0,0.18);
   }
   .card-front {
-    background: #2c3e50;
-    color: #fff;
+    background: linear-gradient(135deg, #3a5a78, #24384d);
+    color: #ffe9a8;
     font-weight: bold;
+    animation: cardPulse 2.4s ease-in-out infinite;
+  }
+  .card.flipped .card-front { animation: none; }
+  @keyframes cardPulse {
+    0%, 100% { box-shadow: 0 3px 6px rgba(0,0,0,0.18); }
+    50% { box-shadow: 0 3px 14px rgba(255, 233, 168, 0.55); }
   }
   .card-back {
     background: #fff;
     border: 2px solid #4caf50;
     transform: rotateY(180deg);
+    animation: popIn 0.35s ease-out;
+  }
+  @keyframes popIn {
+    from { transform: rotateY(180deg) scale(0.7); }
+    to   { transform: rotateY(180deg) scale(1); }
   }
   .card-hint {
     text-align: center;
@@ -69,7 +99,6 @@
     margin-bottom: 12px;
   }
 </style>
-
 </head>
 <body>
 
@@ -82,11 +111,11 @@
 <!-- ⏱️ Subtle stopwatch -->
 <div id="timer" style="font-size:0.9em; font-weight:normal; color:#aaa; margin:8px 0; text-align:center;">⏱️ Süre: 00:00</div>
 
-<!-- 🃏 Card reveal grid -->
+<!-- 🃏 Card reveal grid — one card per emoji symbol, whatever the count -->
 <div class="card-hint">Kartlara dokunarak ipuçlarını aç 👆</div>
 <div class="card-grid" id="cardGrid"></div>
 
-<!-- 🧩 Puzzle Clue and Solution -->
+<!-- 🧩 Puzzle Solution -->
 <div class="selected-words" id="selectedWords">Çözüm: </div>
 
 <!-- 🟩 Legend -->
@@ -117,7 +146,7 @@
 let correctSequence = [];
 let selected = [];
 let loadedDate = null;
-let emojiSymbols = [];   // individual emoji, one per card
+let emojiSymbols = [];   // one entry per card — length adapts to whatever emojiClue contains
 let cardsOpened = 0;
 
 // ⏱️ Stopwatch
@@ -148,22 +177,25 @@ function getToday() {
 }
 
 /********************************************
- * Split an emoji string into individual
- * visual symbols (grapheme clusters), so
- * combined emoji (ZWJ sequences, skin tones,
- * flags) don't get split incorrectly.
+ * Split an emoji string into individual visual
+ * symbols (grapheme clusters) so combined emoji
+ * (ZWJ sequences, skin tones, flags) become one
+ * card each instead of splitting incorrectly.
+ * The NUMBER OF CARDS is simply however many
+ * symbols this returns — 4, 5, 6, 7, whatever
+ * the puzzle's emojiClue contains. Nothing is
+ * hardcoded to a fixed count.
  ********************************************/
 function splitEmoji(str) {
   if (typeof Intl !== "undefined" && Intl.Segmenter) {
     const seg = new Intl.Segmenter("tr", { granularity: "grapheme" });
     return Array.from(seg.segment(str), s => s.segment);
   }
-  // Fallback for older browsers: split on code points (less accurate for ZWJ sequences)
-  return Array.from(str);
+  return Array.from(str); // fallback for older browsers
 }
 
 /********************************************
- * Build the 5-card reveal grid
+ * Build the card reveal grid — count = emojiSymbols.length
  ********************************************/
 function renderCardGrid(symbols) {
   const grid = document.getElementById("cardGrid");
@@ -188,7 +220,7 @@ function renderCardGrid(symbols) {
     grid.appendChild(card);
   });
 
-  // Give the player one free hint up front so they aren't guessing completely blind
+  // One free hint up front so the puzzle doesn't start completely blind
   const firstCard = grid.querySelector(".card");
   if (firstCard) {
     firstCard.classList.add("flipped");
@@ -293,13 +325,13 @@ grid.addEventListener("click", function(e) {
 
     if (selectedWords.join(" ") === correctSequence.join(" ")) {
       clearInterval(timerInterval);
-      const cardsAtGuess = cardsOpened; // capture before the auto-reveal opens the rest
+      const cardsAtGuess = cardsOpened; // capture before auto-reveal opens the rest
       revealAllCards();
       const solveTime = getSolveTime();
       const dateParam = loadedDate || getToday();
       setTimeout(() => {
         window.location.href = `atasozu_success.html?date=${dateParam}&time=${solveTime}&cards=${cardsAtGuess}`;
-      }, emojiSymbols.length * 150 + 400); // wait for card reveal animation
+      }, emojiSymbols.length * 150 + 400); // wait for the card reveal animation
     }
   }
 });
