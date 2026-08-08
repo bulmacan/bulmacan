@@ -1,18 +1,18 @@
-{
-  "id": "2026-08-06",
-  "date": "2026-08-06",
-  "title": "Futbol Takımları",
-  "matrix": [
-    ["G","A","L","A","T","A","S","A","R","A"],
-    ["F","E","N","E","R","B","A","H","Ç","E"],
-    ["B","E","Ş","İ","K","T","A","Ş","T","R"],
-    ["A","B","Z","O","N","S","P","O","R","B"],
-    ["U","R","S","A","S","P","O","R","A","N"],
-    ["K","A","Y","S","E","R","İ","E","R","Z"],
-    ["İ","N","C","A","N","K","A","R","A","G"],
-    ["Ü","C","Ü","A","D","A","N","A","D","E"],
-    ["M","İ","R","S","P","O","R","T","A","K"],
-    ["I","M","L","E","R","İ","M","İ","Z","T"]
-  ],
-  "words": ["GALATASARAY", "FENERBAHÇE", "BEŞİKTAŞ", "TRABZONSPOR", "BURSASPOR", "KAYSERİ", "ANKARAGÜCÜ", "ADANADEMİRSPOR"]
-}
+ {
+      "id": "2026-08-06",
+      "date": "2026-08-06",
+      "title": "8 Şehir'imizi bulun",
+      "matrix": [
+        ["W","A","T","E","R","X","Y","B","A","B"],
+        ["C","D","E","F","G","H","K","U","K","A"],
+        ["M","A","O","P","U","O","S","R","U","L"],
+        ["W","N","Y","Z","N","R","C","S","E","I"],
+        ["G","A","I","Y","K","L","F","A","M","K"],
+        ["Q","R","A","L","I","G","H","A","E","E"],
+        ["A","E","D","İ","R","N","E","H","R","S"],
+        ["K","L","M","S","T","O","N","E","S","İ"],
+        ["U","E","R","Z","U","R","U","M","İ","R"],
+        ["E","F","G","H","I","J","K","L","N","N"]
+      ],
+      "words": ["ADANA", "URFA", "BALIKESİR", "ERZURUM", "BURSA", "EDİRNE", "KONYA", "MERSİN"]
+    }
