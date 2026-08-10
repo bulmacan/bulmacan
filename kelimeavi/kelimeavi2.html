@@ -37,16 +37,6 @@
   0 bulundu
 </div>
 
-<!-- 📝 Word list (shown as blanks until found/hinted) -->
-<div id="wordList" style="display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin:10px 0; font-family:monospace; font-size:1.1em; letter-spacing:2px;"></div>
-
-<!-- 💡 Hint button -->
-<div style="text-align:center; margin:10px 0;">
-  <button id="hintBtn" style="padding:6px 14px; border-radius:6px; border:1px solid #ccc; background:#fff8e1; cursor:pointer; font-size:0.95em;">
-    💡 Kelime Göster (<span id="hintCount">3</span> kaldı)
-  </button>
-</div>
-
 <!-- 🔡 Puzzle Grid -->
 <div id="game-container">
   <div id="grid"></div>
@@ -68,65 +58,6 @@ let foundWords = 0;
 let totalWords = 0;
 let puzzle = null;
 let loadedDate = null;
-
-// 💡 Hints
-const MAX_HINTS = 3;
-let hintsLeft = MAX_HINTS;
-let hintedWords = new Set(); // words whose first letter has been revealed via hint
-let foundWordsSet = new Set();
-
-function renderWordList(words) {
-  const wordListEl = document.getElementById("wordList");
-  wordListEl.innerHTML = "";
-  words.forEach(word => {
-    const span = document.createElement("span");
-    span.dataset.word = word;
-    span.style.padding = "4px 8px";
-    span.style.borderRadius = "6px";
-    span.style.background = "#f0f0f0";
-
-    if (foundWordsSet.has(word)) {
-      span.textContent = word;
-      span.style.background = "#c8e6c9";
-      span.style.color = "#2e7d32";
-      span.style.textDecoration = "line-through";
-      span.style.fontWeight = "bold";
-    } else if (hintedWords.has(word)) {
-      span.textContent = word;
-      span.style.background = "#fff9c4";
-      span.style.color = "#8a6d00";
-      span.style.fontWeight = "bold";
-    } else {
-      span.textContent = "_ ".repeat(word.length).trim();
-    }
-    wordListEl.appendChild(span);
-  });
-}
-
-function updateHintButton() {
-  const btn = document.getElementById("hintBtn");
-  const countEl = document.getElementById("hintCount");
-  countEl.textContent = hintsLeft;
-  const anyUnfoundUnhinted = puzzle && puzzle.words.some(w => !foundWordsSet.has(w) && !hintedWords.has(w));
-  btn.disabled = hintsLeft <= 0 || !anyUnfoundUnhinted;
-  btn.style.opacity = btn.disabled ? "0.5" : "1";
-  btn.style.cursor = btn.disabled ? "not-allowed" : "pointer";
-}
-
-function useHint() {
-  if (hintsLeft <= 0 || !puzzle) return;
-  const candidates = puzzle.words.filter(w => !foundWordsSet.has(w) && !hintedWords.has(w));
-  if (candidates.length === 0) return;
-  const chosen = candidates[Math.floor(Math.random() * candidates.length)];
-  hintedWords.add(chosen);
-  hintsLeft--;
-  renderWordList(puzzle.words);
-  updateHintButton();
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-  document.getElementById("hintBtn").addEventListener("click", useHint);
-});
 
 // ⏱️ Stopwatch
 let startTime = null;
@@ -189,8 +120,6 @@ async function loadKelimeAvi() {
   puzzle = data;
   document.getElementById("puzzleTitle").textContent = puzzle.title;
   totalWords = puzzle.words.length;
-  renderWordList(puzzle.words);
-  updateHintButton();
   initializePuzzle(puzzle.matrix, puzzle.words);
   startTimer();
 }
@@ -262,12 +191,8 @@ function initializePuzzle(matrix, words) {
     });
 
     foundSet.add(word);
-    foundWordsSet.add(word);
-    hintedWords.delete(word); // no longer needs a hint marker once found
     foundWords++;
     document.getElementById("progress").textContent = `${foundWords} / ${words.length} bulundu`;
-    renderWordList(words);
-    updateHintButton();
     selectedCells = [];
 
     if (foundSet.size === words.length) {
