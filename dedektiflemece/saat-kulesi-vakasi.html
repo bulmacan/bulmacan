@@ -193,6 +193,12 @@
       height: 28px;
       margin: 0;
     }
+
+    #suspect-matrix .draggable {
+      font-size: 0.6em;
+      padding: 1px;
+      line-height: 1.05;
+    }
   }
 
   /* ============================================================
@@ -502,72 +508,24 @@ function renderGame(puzzle) {
 loadPuzzleData();
 
 /********************************************
- * HINTS — each hint explains one clue in
- * Aziz's voice, then places the tile(s) that
- * deduction points to, directly in the matrix.
+ * HINTS — each hint explains one clue's
+ * deduction in Aziz's voice. Purely informational:
+ * the player still places every tile themselves.
  * Case-specific, lives here alongside the story
  * (like solution.how) rather than in the JSON.
  ********************************************/
 const hints = [
-  {
-    text: "Bekçi Bahadır olay yerine geldiğinde, yeşil gözlü kişi kulenin dış kapısını tornavida ile açmaya çalışıyordu: yeşil gözlü kişi Mahir'dir. Dolayısıyla dış kapıyı tornavida ile açmaya çalışan Mahir'dir. Tornavida'yı ve Tamir Atölyesi'ni Mahir'in yanına koyalım.",
-    actions: [
-      { type: "silah", suspect: "Kalfa Mahir", item: "Tornavida" },
-      { type: "mahal", suspect: "Kalfa Mahir", item: "Tamir Atölyesi" }
-    ]
-  },
-  {
-    text: "Bodrumda yakalanan şahsın elinde çekiç vardı. Kuleyi ve gizli geçitleri herkesten iyi bilen kişi Kapıcı Nuri'dir, dolayısıyla bodrumda — yani Tarihi Arşiv'de — yakalanan kişi Nuri'dir. Çekiç'i ve Tarihi Arşiv'i Nuri'nin yanına koyalım.",
-    actions: [
-      { type: "silah", suspect: "Kapıcı Nuri", item: "Çekiç" },
-      { type: "mahal", suspect: "Kapıcı Nuri", item: "Tarihi Arşiv" }
-    ]
-  },
-  {
-    text: "Mahir cinayet sırasında hâlâ dışarıda kilitli kalmıştı, Nuri ise yükseklik korkusu yüzünden mekanizma odasına çıkamazdı. Geriye kalan tek şüpheli Halide Hanım'dır. Mekanizma Odası'nı ve İpek Atkı'yı Halide'nin yanına koyalım.",
-    actions: [
-      { type: "silah", suspect: "Halide Hanım", item: "İpek Atkı" },
-      { type: "mahal", suspect: "Halide Hanım", item: "Mekanizma Odası" }
-    ]
-  }
+  "Bekçi Bahadır olay yerine geldiğinde, yeşil gözlü kişi kulenin dış kapısını tornavida ile açmaya çalışıyordu: yeşil gözlü kişi Mahir'dir. Dolayısıyla dış kapıyı tornavida ile açmaya çalışan Mahir'dir. → Mahir = Tornavida",
+  "Bodrumda yakalanan şahsın elinde çekiç vardı. Kuleyi ve gizli geçitleri herkesten iyi bilen kişi Kapıcı Nuri'dir, dolayısıyla bodrumda — yani Tarihi Arşiv'de — yakalanan kişi Nuri'dir. → Nuri = Çekiç = Tarihi Arşiv",
+  "Mahir cinayet sırasında hâlâ dışarıda kilitli kalmıştı, Nuri ise yükseklik korkusu yüzünden mekanizma odasına çıkamazdı. Geriye kalan tek şüpheli Halide Hanım'dır. → Halide Hanım = Mekanizma Odası = İpek Atkı"
 ];
 
 let hintIndex = 0;
 
-/********************************************
- * Moves a tile (by its visible text) into a
- * specific suspect's matrix cell — same click-
- * to-place logic the player uses, just done
- * programmatically. Skips silently if the cell
- * is already filled (e.g. player placed it
- * correctly themselves already).
- ********************************************/
-function placeTile(itemText, suspectName, type) {
-  const suspectIndex = activePuzzle.suspects.indexOf(suspectName);
-  if (suspectIndex === -1) return;
-
-  const targetZone = document.getElementById(`zanli${suspectIndex + 1}-${type}`);
-  if (!targetZone || targetZone.children.length > 0) return;
-
-  const dataType = type === "mahal" ? "location" : "weapon";
-  const tiles = document.querySelectorAll(`.draggable[data-type="${dataType}"]`);
-
-  for (const tile of tiles) {
-    if (tile.textContent.trim() === itemText) {
-      if (tile.parentNode) tile.parentNode.removeChild(tile);
-      targetZone.appendChild(tile);
-      break;
-    }
-  }
-}
-
 function requestHint() {
   if (hintIndex >= hints.length) return;
 
-  const hint = hints[hintIndex];
-  document.getElementById("hint-display").textContent = "🔎 " + hint.text;
-  hint.actions.forEach(a => placeTile(a.item, a.suspect, a.type));
-
+  document.getElementById("hint-display").textContent = "🔎 " + hints[hintIndex];
   hintIndex++;
 
   if (hintIndex >= hints.length) {
