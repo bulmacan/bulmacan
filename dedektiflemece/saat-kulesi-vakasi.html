@@ -116,59 +116,59 @@
   }
 
   /* ============================================================
-     Mobile tightening — groups stay side by side, everything
-     shrinks so the 6 tiles + suspect table fit together on screen.
+     Mobile: strip decoration, just make everything fit.
+     Tiles lose their group boxes/labels (orange = location,
+     red = weapon already distinguishes them) and wrap into a
+     simple grid. The matrix loses its card styling.
      ============================================================ */
   @media screen and (max-width: 480px) {
+    * { box-sizing: border-box; }
+
     #location-weapon-row {
-      flex-direction: row;
-      flex-wrap: nowrap;
-      gap: 8px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      justify-content: center;
       margin: 6px 0 10px 0;
     }
 
     .item-group {
-      flex: 1 1 0;
-      min-width: 0;
-      padding: 6px 6px;
-      gap: 4px;
-      border-radius: 8px;
-      box-sizing: border-box;
+      display: contents; /* removes the box wrapper, keeps DOM structure */
     }
 
     .item-group-label {
-      font-size: 0.68em;
-      margin-bottom: 0;
-      white-space: nowrap;
+      display: none; /* color already distinguishes location vs weapon */
     }
 
     .item-group-tiles {
-      gap: 4px;
-      flex-wrap: nowrap;
+      display: contents;
     }
 
     .item-group .drop-zone {
-      flex: 1 1 0;
-      min-width: 0;
-      width: auto;
-      height: 36px;
+      flex: 0 0 30%;
+      max-width: 31%;
+      height: 32px;
+      margin: 0;
     }
 
     .item-group .draggable {
-      font-size: 0.62em;
+      font-size: 0.6em;
       padding: 1px;
       line-height: 1.05;
-      word-break: keep-all;
     }
 
     .game-hint {
-      font-size: 0.72em;
+      font-size: 0.7em;
       margin: 2px 0 5px 0;
     }
 
     #suspect-matrix {
-      padding: 6px;
+      padding: 0;
+      border: none;
+      box-shadow: none;
+      background: none;
       display: block;
+      width: 100%;
     }
 
     #suspect-matrix .matrix-table {
@@ -178,20 +178,19 @@
 
     #suspect-matrix .matrix-table th,
     #suspect-matrix .matrix-table td {
-      padding: 4px 3px;
-      font-size: 0.7em;
+      padding: 3px 2px;
+      font-size: 0.68em;
     }
 
     #suspect-matrix .matrix-table td:first-child {
-      font-size: 0.68em;
-      line-height: 1.1;
+      font-size: 0.65em;
+      line-height: 1.05;
     }
 
     #suspect-matrix .drop-zone {
-      width: 90%;
-      min-width: 0;
-      height: 30px;
-      margin: 0 auto;
+      width: 100%;
+      height: 28px;
+      margin: 0;
     }
   }
 </style>
