@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Saat Kulesi Vakası: Aldanmaz Aziz ile Tophane Kulesi'nde işlenen gizemli bir cinayeti çöz. İpuçlarını topla, katili, mekânı ve silahı bul.">
   <link rel="stylesheet" href="dedektif_css.css">
+  <link rel="stylesheet" href="https://www.bulmacan.com/success_shared.css">
 
 <style>
   /* ============================================================
@@ -193,6 +194,77 @@
       margin: 0;
     }
   }
+
+  /* ============================================================
+     Fail-choice buttons and success/share banner. Minimal
+     fallback styling in case dedektif_css.css doesn't already
+     define these classes (it may, since the other games use
+     a similar share-box pattern via success_shared.css).
+     ============================================================ */
+  .fail-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+  }
+
+  .fail-actions button {
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    background: #f5f5f5;
+    cursor: pointer;
+    font-size: 0.95em;
+  }
+
+  .fail-actions button:hover {
+    background: #ececec;
+  }
+
+  .hint-box {
+    margin: 10px 0 18px 0;
+  }
+
+  .hint-box button {
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: 1px solid #e0c568;
+    background: #fff8e6;
+    cursor: pointer;
+    font-size: 0.95em;
+  }
+
+  .hint-box button:hover:not(:disabled) {
+    background: #fdeec2;
+  }
+
+  .hint-box button:disabled {
+    opacity: 0.6;
+    cursor: default;
+  }
+
+  #hint-display {
+    margin-top: 8px;
+    font-size: 0.9em;
+    color: #555;
+    font-style: italic;
+    max-width: 640px;
+  }
+
+  .solution-table {
+    border-collapse: collapse;
+    margin: 10px 0 16px 0;
+  }
+
+  .solution-table th,
+  .solution-table td {
+    border: 1px solid #ccc;
+    padding: 8px 16px;
+    text-align: center;
+  }
+
+  .solution-table th {
+    background: #f5f5f5;
+  }
 </style>
   <link rel="icon" href="../icons/favicon.ico" type="image/x-icon">
   <link rel="manifest" href="../icons/site.webmanifest">
@@ -222,7 +294,7 @@
      instead of being fetched in by JS.
      ============================================================ -->
 <section class="clue-section">
-<h1>Saat Kulesi Vakası</h1><h2>1. Saat Kulesi Vakası</h2><p>Gece, Tophane'nin taşlarına ağır bir kefen gibi çökmüştü. İstanbul'un o kendine has rutubet kokusu, denizden yükselen tuzlu nefesle karışıp sokak aralarına sinmişti. Rıhtım tarafında birkaç geminin ışıkları hâlâ suyun üzerinde titriyordu. Limanın geceye karışan sesleri — halatların gıcırtısı, uzaktan gelen bir gemi düdüğü, sarhoş bir kahkaha — ara sıra sessizliği bölüyordu.</p><p>Tophane Kulesi'nin etrafındaki sarı sokak lambalarının ışığı, şehrin gölgelerini aydınlatmaya yetmiyordu. Bu şehir, geceleri başka bir şeye dönüşürdü; gündüzün kalabalığı, gürültüsü, telaşı yok olur; geriye yalnızca fısıltılar, sırlar ve suç kalırdı.</p><p>Aldanmaz Aziz, paltosunun yakasını kaldırıp adımlarını hızlandırdı. Ayakkabılarının altındaki taşlar ıslaktı; yağmur, ince ince yağıyor, her damla Aziz'in zihnindeki düşüncelere bir ritim tutuyordu.</p><p>"Rıza Usta ölü bulundu… Saat Kulesine acilen gelin."</p><p>Bu cümle, Aziz'in zihninde bir çan gibi çalmıştı. Rıza Usta sıradan biri değildi. Tophane Kulesi'nin yaşayan hafızası, mekanizmanın bekçisi, zamanın muhafızı.</p><p>Aziz, Nöbetçi Amirin telefonundan sonra bir an bile tereddüt etmemişti. Odasından çıkmış, yağmurun altında Karaköy'den Tophane'ya doğru yürümeye başlamıştı. Şehrin gece yarısı sessizliğinde, yalnızca köprüden geçen tramvayın metalik iniltileri ve Kemeraltı'ndaki Fransız barikatındaki dipçik sesleri duyuluyordu. Aziz, bu sesleri yıllardır dinlerdi; İstanbul'un fısıldadığı her sırrı önemle dinlerdi.</p><p>Aziz, kuleye yaklaştıkça içindeki ağırlık artıyordu. Cinayetler, kaybolan insanlar, karanlık işler… Hepsini görmüştü. Ama Tophane Kulesi'nde işlenen bir cinayet, başka bir şeydi. Bu şehirde bazı mekânlar kutsaldı; bazıları ise lanetli. Tophane Kulesi, ikisinin arasında bir yerde dururdu. Tarih boyunca nice coşkuya, nice ihanete, nice aşka tanıklık etmişti. Şimdi de bir cinayete tanıklık ediyordu.</p><p>Aziz, kulenin gölgesine girdiğinde yağmurun sesi bile değişti. Sanki damlalar daha ağır düşüyor, taşlar daha derin bir inilti çıkarıyordu. Aziz, bir an durdu, kulenin karanlık siluetine baktı. Kule, geceye meydan okuyan bir dev gibi yükseliyordu. Aziz, içinden bir sesin fısıldadığını duydu:</p><p>"Bu gece, zaman durdu."</p><h2>2. Olay Yeri</h2><p>Aziz, taş merdivenlere adım attığında yağmurun ince taneleri merdivenlere vuruyor, her damla gecenin ritmine bir nota ekliyordu. Merdivenler, yüzyılların ağırlığını taşıyan taşlardan yapılmıştı; her adımda hafif bir yankı oluşuyor, bu yankı kulenin içindeki sessizliğe karışıyordu. Aziz, merdivenleri tırmanırken kulenin içindeki soğuk hava yüzüne çarpıyor, nemli taş kokusu ciğerlerine doluyordu.</p><p>Saat Odası'nın kapısı içeriden kilitliydi. Bekçi Bahadır, kapıyı zorla açmıştı. Bahadır'ın yüzünde hem korku hem şaşkınlık vardı; böyle bir şeyi daha önce hiç görmemişti. Aziz, kapının önünde bir an durdu. Kapı, içeride yaşananların sessiz bir tanığı gibiydi. Kilidin kırık parçaları yerde duruyor, kapının ahşabı yağmurun nemiyle kabarmış görünüyordu.</p><p>Aziz içeri girdiğinde zamanın kendisi bile nefesini tutmuş gibiydi. Oda, karanlık bir mabed gibi duruyordu. Kule saati 00:05'i gösteriyordu. Akrep ve yelkovan, Rıza'nın cansız bedeninin üzerinde asılı kalan birer tanık gibiydi.</p><p>"Kule üç bölümden oluşuyor" dedi Bekçi Bahadır. "Mekanizma Odası, bodrumdaki Tarihi Arşiv, kulenin bitişiğindeki Tamir Atölyesi."</p><p>Saat Odası, kulenin en yüksek noktalarından biriydi. Yaklaşık on metre yükseklikteki bu oda, dar bir merdivenle çıkılan, taş duvarlarla çevrili, mekanizmanın kalbinin attığı bir yerdi. Odanın ortasında devasa bir saat mekanizması duruyordu; dişliler, çarklar, zincirler... Hepsi birbiriyle uyum içinde çalışmak için ustalıkla işlenmişti. Karşıdaki açık bırakılmış pencereden gelen soğuk esinti odayı ölümün soğuk nefesi gibi doldurmuştu.</p><p>Rıza Usta'nın bedeni mekanizmanın hemen yanında yatıyordu. Yüzünde bir şaşkınlık ifadesi vardı; sanki ölmeden önce bir şey görmüş, bir şey anlamıştı. Aziz, Rıza'nın yüzüne baktığında içinden bir ürperti geçti. Bu yüz, yıllardır kuleyi koruyan bir adamın yüzüydü. Şimdi ise ölümün soğuk maskesiyle kaplanmıştı.</p><h2>3. Kurban</h2><p>Rıza Usta, Tophane Kulesi'nin yaşayan ruhuydu. Yıllardır kuleyi kendi namusu gibi koruyan, kimseye güvenmeyen, titiz bir adamdı. Mekanizmayı kurmasına kimseyi yanaştırmazdı. Her gece yarısı mekanizma odasına çıkar, saat mekanizmasını kurardı. Bu, onun ritüeliydi. Zamanı ayakta tutmak, onun görevi değil, onun inancıydı.</p><p>Gençliğinde saat ustalarının yanında çıraklık yapmıştı. Mekanizmalara karşı neredeyse takıntılı bir saygısı vardı. Her dişlinin bir ruhu olduğuna inanırdı. Her çarkın bir hikâyesi olduğuna… Bu yüzden mekanizmayı kimseye emanet etmezdi. Bu yüzden kuleyi bir kutsal emanet gibi korurdu.</p><p>Aziz, Rıza'nın geçmişini iyi bilirdi. Onun gibi adamlar, bu şehirde nadir bulunurdu. Dürüst, çalışkan, inatçı… Ama aynı zamanda ketum, sert ve kimseye güvenmeyen biri. Bu özellikler, ona hem dost hem düşman kazandırmıştı.</p><p>Rıza'nın etrafına saçılmış kırık dişlilere baktığında Aziz'in içi burkuldu. Bu dişliler, Rıza'nın hayatıydı. Şimdi ise ölümünün bir parçası olmuşlardı.</p><h2>4. Şüpheliler</h2><p>Bekçi Bahadır, kulenin gölgesinde durdurduğu üç ismi salona getirdi. Aziz, her birine tek tek baktı. Gece çökmüş, kulenin dar pencerelerinden içeri yalnızca ay ışığı sızmaya başlamıştı. Duvarda yanan birkaç kandilin titrek ışığı, gölgeleri olduğundan daha uzun gösteriyordu. Bu üç kişi, Rıza'nın ölümünün etrafında dolaşan üç gölgeydi. İçlerinden biri bu akşam ne olduğunu biliyordu.</p><p>İlk zanlı, Kalfa Mahir'di.</p><p>Aziz'in karşısında duran yaklaşık 1.60 boyundaki adam, şehirdeki en yetenekli kalfalardan biri olarak tanınıyordu. İnce yapılıydı. Omuzları hafifçe öne eğilmiş, elleri ise sürekli birbirine kenetlenip ayrılıyordu.</p><p>Mahir'in yüzünde garip bir ifade vardı. Hem gurur hem de kırgınlık.</p><p>Rıza'nın onu herkesin içinde azarladığı biliniyordu. Üstelik bu yalnızca bir kez olmamıştı. Rıza, Mahir'in yaptığı işlerde sürekli kusur arıyor, onun yeteneğini küçümsüyordu.</p><p>Bir gün atölyede herkesin önünde, "Hiçbir zaman usta olamayacaksın." demişti.</p><p>Bu söz, Mahir'in kalbine bir hançer gibi saplanmıştı.</p><p>Mahir o gün hiçbir şey söylememişti. Başını eğmiş, aletlerini toplamış ve atölyeden çıkmıştı.</p><p>Ama Aziz, bazı insanların sessizliğinin öfkeden daha tehlikeli olduğunu biliyordu.</p><p>Mahir'in yeşil gözlerinde hâlâ o gurur kırıklığını görmek mümkündü. Rıza'nın adı geçtiğinde bakışları bir anlığına sertleşiyor, sonra hemen başka bir yere kayıyordu.</p><p>Aziz bunu fark etti.</p><p>"Rıza'yı en son ne zaman gördün?" diye sordu.</p><p>Mahir birkaç saniye düşündü. "Akşamüstü."</p><p>"Ne konuştunuz?"</p><p>"Bir şey konuşmadık."</p><p>Aziz kaşlarını hafifçe kaldırdı.</p><p>Bir insanın "hiçbir şey konuşmadık" demesi, çoğu zaman konuşulacak hiçbir şey olmadığı anlamına gelmezdi.</p><p>Aziz bu kez Mahir'in ellerine baktı.</p><p>Küçük, hızlı, maharetli eller… Bir tornavidayı, bir dişliyi ya da karmaşık bir mekanizmayı ustalıkla kullanabilecek ellerdi bunlar.</p><p>Fakat ellerinde Aziz'in dikkatini çeken başka bir şey vardı.</p><p>Sağ elinin işaret parmağında küçük, koyu renkli bir çizik bulunuyordu.</p><p>"Bu nedir?"</p><p>Mahir eline baktı. "Önemli değil."</p><p>"Ben önemli olup olmadığını sormadım."</p><p>Mahir sustu.</p><p>Çiziğin nereden geldiğini açıklamak istemediği belliydi.</p><p>Aziz'in aklına kulenin içindeki mekanizmalar geldi. Rıza'nın ölümünden önce kulede bazı kilitlerin ve dişlilerin değiştirildiği söylenmişti.</p><p>Mahir bunları yapabilecek yeteneğe sahipti. Dahası, Rıza'ya karşı güçlü bir öfkesi vardı.</p><p>İkinci zanlı Halide Hanım'dı. Kütüphaneci.</p><p>Yaklaşık 1.50 boyunda, zarif ve sakin görünüşlü bir kadındı. Ancak Aziz, onun sakinliğine ilk bakışta güvenmedi.</p><p>Halide'nin mavi gözleri sürekli hareket ediyordu. Kandile. Kapıya. Mahir'e. Sonra Aziz'e.</p><p>Sanki odadaki herkesin ne yaptığını, ne düşündüğünü ve hangi ayrıntıyı fark ettiğini anlamaya çalışıyordu.</p><p>Halide, tarihî belgelerin peşinde koşan bir kadındı. Kütüphanedeki eski kayıtların çoğunu herkesten daha iyi biliyordu. Özellikle de yıllardır kimsenin açmasına izin verilmediği söylenen eski arşivlerle ilgileniyordu. Rıza ise bu belgeleri göstermeyi reddediyordu.</p><p>Bu yüzden aralarında uzun süredir bir gerilim vardı. Halide defalarca belgeleri görmek istemişti.</p><p>Rıza ise her defasında aynı cevabı vermişti: "Bunlar senin bilmen gereken şeyler değil."</p><p>Bu cevap Halide'yi çileden çıkarmıştı.</p><p>Bir seferinde tartışmaları öylesine büyümüştü ki Halide'nin öfkeyle, "Belalar seni bulsun. İnşallah geberir gidersin." dediği duyulmuştu.</p><p>O sırada bunu duyan birkaç kişi Halide'nin yalnızca öfkesini dile getirdiğini düşünmüştü.</p><p>Şimdi ise Rıza ölüydü.</p><p>Aziz, Halide'nin karşısına geçti.</p><p>"Rıza'nın ölmesini istediğini söyledin mi?"</p><p>Halide'nin yüzündeki ifade değişmedi. "Öfkeliydim. Herkes beddua eder."</p><p>"Bu bir cevap değil."</p><p>"Evet," dedi Halide. "Söyledim."</p><p>Salonda kısa bir sessizlik oldu.</p><p>Mahir başını kaldırıp Halide'ye baktı. Bahadır ise kıpırdamadan kapının yanında duruyordu.</p><p>Aziz, Halide'nin gözlerinin içine baktı.</p><p>Pişmanlık görmeyi bekliyordu. Ama gördüğü şey pişmanlık değildi. Daha çok korkuya benzeyen bir şeydi.</p><p>"Bu gece Rıza'yı gördün mü?"</p><p>Halide bir an duraksadı. "Hayır."</p><p>Cevap fazla hızlı gelmişti.</p><p>Aziz bunu not etti.</p><p>"Emin misin?"</p><p>"Evet."</p><p>"Peki neden ellerin titriyor?"</p><p>Halide hemen ellerine baktı.</p><p>Gerçekten de parmakları hafifçe titriyordu.</p><p>"Üşüdüm."</p><p>Aziz açık pencereye baktı. Belki de Halide doğruyu söylüyordu.</p><p>Halide'nin yanında küçük, deri kaplı bir çanta vardı. İçinde kütüphaneden çıkardığı bazı belgeler bulunuyordu. Aziz çantaya baktı. Halide çantayı fark ettiği anda elini üzerine koydu. Bu küçük hareket Aziz'in dikkatinden kaçmadı.</p><p>Son zanlı Nuri'ydi. Kulenin kapıcısı.</p><p>Yaklaşık 1.80 boyunda, güçlü ve genç bir adamdı. Geniş omuzları ve kuvvetli elleri, yıllardır ağır kapıları, sandıkları ve kule mekanizmalarını taşıdığını gösteriyordu.</p><p>Nuri kuleyi herkesten iyi bilirdi. Hangi kapının ne zaman kilitlendiğini. Hangi anahtarın hangi kapıya ait olduğunu. Hangi merdivenin nereye çıktığını. Hatta gece boyunca hangi koridordan kimin geçtiğini bile. Kulenin bütün düzeni onun hafızasındaydı. Bu yüzden Aziz için üç zanlı arasında en dikkat edilmesi gereken kişi belki de Nuri'ydi.</p><p>Çünkü Mahir mekanizmaları biliyordu. Halide belgeleri biliyordu. Ama Nuri kuleyi biliyordu.</p><p>Ancak Nuri'nin bir zayıflığı vardı. Yükseklik korkusu.</p><p>Rıza'nın bunu bildiği ve onunla sık sık alay ettiği söyleniyordu.</p><p>"Yükseklik korkusu olan birinin burada çalışması mümkün değil."</p><p>Rıza'nın bu sözleri Nuri'nin gururunu kırmıştı. Üstelik Rıza son günlerde onu işten atmakla tehdit etmişti. Nuri bu işi kaybederse hayatı mahvolacaktı.</p><p>Aziz onun karşısına geçti.</p><p>"Rıza seni işten çıkaracağını söyledi mi?"</p><p>Nuri başını eğdi. "Evet."</p><p>"Ne zaman?"</p><p>"Bugün."</p><p>Aziz sessiz kaldı. "Bugün mü?"</p><p>Nuri başını salladı. "Akşamüstü."</p><p>"Ve sen ne yaptın?"</p><p>"Hiçbir şey."</p><p>Aziz ona biraz daha yaklaştı. "Hiçbir şey mi?"</p><p>"Evet."</p><p>Aziz üç zanlıyı tekrar süzdü.</p><p>Mahir'in ellerinde açıklanamayan bir çizik vardı.</p><p>Halide, çantasındaki şeyin görülmesini istemiyordu.</p><p>Nuri ise panik içinde tutarsız şeyler söylüyordu.</p><p>Üçünün de Rıza için bir nedeni vardı. Üçünün de sakladığı bir şey vardı. Fakat cinayet yalnızca bir kişinin elinden çıkmış olabilirdi.</p><p>Aziz masanın üzerine üç küçük not bıraktı. Birincisinin üzerine <strong>Mahir</strong>, ikincisinin üzerine <strong>Halide</strong>, üçüncüsünün üzerine ise <strong>Nuri</strong> yazdı.</p><p>Sonra sandalyesine oturdu.</p><p>"Şimdi," dedi sakin bir sesle, "hanginizin nerede olduğunu ve ne kullandığını bulacağız."</p><p>O anda saatin kurgusu bir mekanik sesle döndü. Odada bir zil sesi yankılandı. Saatin akrebi bir'i gösteriyordu.</p>
+<h1>Saat Kulesi Vakası</h1><h2>1. Saat Kulesi Vakası</h2><p>Gece, Tophane'nin taşlarına ağır bir kefen gibi çökmüştü. İstanbul'un o kendine has rutubet kokusu, denizden yükselen tuzlu nefesle karışıp sokak aralarına sinmişti. Rıhtım tarafında birkaç geminin ışıkları hâlâ suyun üzerinde titriyordu. Limanın geceye karışan sesleri — halatların gıcırtısı, uzaktan gelen bir gemi düdüğü, sarhoş bir kahkaha — ara sıra sessizliği bölüyordu.</p><p>Tophane Kulesi'nin etrafındaki sarı sokak lambalarının ışığı, şehrin gölgelerini aydınlatmaya yetmiyordu. Bu şehir, geceleri başka bir şeye dönüşürdü; gündüzün kalabalığı, gürültüsü, telaşı yok olur; geriye yalnızca fısıltılar, sırlar ve suç kalırdı.</p><p>Aldanmaz Aziz, paltosunun yakasını kaldırıp adımlarını hızlandırdı. Ayakkabılarının altındaki taşlar ıslaktı; yağmur, ince ince yağıyor, her damla Aziz'in zihnindeki düşüncelere bir ritim tutuyordu.</p><p>"Rıza Usta ölü bulundu… Saat Kulesine acilen gelin."</p><p>Bu cümle, Aziz'in zihninde bir çan gibi çalmıştı. Rıza Usta sıradan biri değildi. Tophane Kulesi'nin yaşayan hafızası, mekanizmanın bekçisi, zamanın muhafızı.</p><p>Aziz, Nöbetçi Amirin telefonundan sonra bir an bile tereddüt etmemişti. Odasından çıkmış, yağmurun altında Karaköy'den Tophane'ya doğru yürümeye başlamıştı. Şehrin gece yarısı sessizliğinde, yalnızca köprüden geçen tramvayın metalik iniltileri ve Kemeraltı'ndaki Fransız barikatındaki dipçik sesleri duyuluyordu. Aziz, bu sesleri yıllardır dinlerdi; İstanbul'un fısıldadığı her sırrı önemle dinlerdi.</p><p>Aziz, kuleye yaklaştıkça içindeki ağırlık artıyordu. Cinayetler, kaybolan insanlar, karanlık işler… Hepsini görmüştü. Ama Tophane Kulesi'nde işlenen bir cinayet, başka bir şeydi. Bu şehirde bazı mekânlar kutsaldı; bazıları ise lanetli. Tophane Kulesi, ikisinin arasında bir yerde dururdu. Tarih boyunca nice coşkuya, nice ihanete, nice aşka tanıklık etmişti. Şimdi de bir cinayete tanıklık ediyordu.</p><p>Aziz, kulenin gölgesine girdiğinde yağmurun sesi bile değişti. Sanki damlalar daha ağır düşüyor, taşlar daha derin bir inilti çıkarıyordu. Aziz, bir an durdu, kulenin karanlık siluetine baktı. Kule, geceye meydan okuyan bir dev gibi yükseliyordu. Aziz, içinden bir sesin fısıldadığını duydu:</p><p>"Bu gece, zaman durdu."</p><h2>2. Olay Yeri</h2><p>Aziz, taş merdivenlere adım attığında yağmurun ince taneleri merdivenlere vuruyor, her damla gecenin ritmine bir nota ekliyordu. Merdivenler, yüzyılların ağırlığını taşıyan taşlardan yapılmıştı; her adımda hafif bir yankı oluşuyor, bu yankı kulenin içindeki sessizliğe karışıyordu. Aziz, merdivenleri tırmanırken kulenin içindeki soğuk hava yüzüne çarpıyor, nemli taş kokusu ciğerlerine doluyordu.</p><p>Saat Odası'nın kapısı içeriden kilitliydi. Bekçi Bahadır, kapıyı zorla açmıştı. Bahadır'ın yüzünde hem korku hem şaşkınlık vardı; böyle bir şeyi daha önce hiç görmemişti. Aziz, kapının önünde bir an durdu. Kapı, içeride yaşananların sessiz bir tanığı gibiydi. Kilidin kırık parçaları yerde duruyor, kapının ahşabı yağmurun nemiyle kabarmış görünüyordu.</p><p>Aziz içeri girdiğinde zamanın kendisi bile nefesini tutmuş gibiydi. Oda, karanlık bir mabed gibi duruyordu. Kule saati 00:05'i gösteriyordu. Akrep ve yelkovan, Rıza'nın cansız bedeninin üzerinde asılı kalan birer tanık gibiydi.</p><p>"Kule üç bölümden oluşuyor" dedi Bekçi Bahadır. "Mekanizma Odası, bodrumdaki Tarihi Arşiv, kulenin bitişiğindeki Tamir Atölyesi."</p><p>Saat Odası, kulenin en yüksek noktalarından biriydi. Yaklaşık on metre yükseklikteki bu oda, dar bir merdivenle çıkılan, taş duvarlarla çevrili, mekanizmanın kalbinin attığı bir yerdi. Odanın ortasında devasa bir saat mekanizması duruyordu; dişliler, çarklar, zincirler... Hepsi birbiriyle uyum içinde çalışmak için ustalıkla işlenmişti. Karşıdaki açık bırakılmış pencereden gelen soğuk esinti odayı ölümün soğuk nefesi gibi doldurmuştu.</p><p>Rıza Usta'nın bedeni mekanizmanın hemen yanında yatıyordu. Yüzünde bir şaşkınlık ifadesi vardı; sanki ölmeden önce bir şey görmüş, bir şey anlamıştı. Aziz, Rıza'nın yüzüne baktığında içinden bir ürperti geçti. Bu yüz, yıllardır kuleyi koruyan bir adamın yüzüydü. Şimdi ise ölümün soğuk maskesiyle kaplanmıştı.</p><h2>3. Kurban</h2><p>Rıza Usta, Tophane Kulesi'nin yaşayan ruhuydu. Yıllardır kuleyi kendi namusu gibi koruyan, kimseye güvenmeyen, titiz bir adamdı. Mekanizmayı kurmasına kimseyi yanaştırmazdı. Her gece yarısı mekanizma odasına çıkar, saat mekanizmasını kurardı. Bu, onun ritüeliydi. Zamanı ayakta tutmak, onun görevi değil, onun inancıydı.</p><p>Gençliğinde saat ustalarının yanında çıraklık yapmıştı. Mekanizmalara karşı neredeyse takıntılı bir saygısı vardı. Her dişlinin bir ruhu olduğuna inanırdı. Her çarkın bir hikâyesi olduğuna… Bu yüzden mekanizmayı kimseye emanet etmezdi. Bu yüzden kuleyi bir kutsal emanet gibi korurdu.</p><p>Aziz, Rıza'nın geçmişini iyi bilirdi. Onun gibi adamlar, bu şehirde nadir bulunurdu. Dürüst, çalışkan, inatçı… Ama aynı zamanda ketum, sert ve kimseye güvenmeyen biri. Bu özellikler, ona hem dost hem düşman kazandırmıştı.</p><h2>4. Şüpheliler</h2><p>Bekçi Bahadır, kulenin gölgesinde durdurduğu üç ismi salona getirdi. Aziz, her birine tek tek baktı. Gece çökmüş, kulenin dar pencerelerinden içeri yalnızca ay ışığı sızmaya başlamıştı. Duvarda yanan birkaç kandilin titrek ışığı, gölgeleri olduğundan daha uzun gösteriyordu. Bu üç kişi, Rıza'nın ölümünün etrafında dolaşan üç gölgeydi. İçlerinden biri bu akşam ne olduğunu biliyordu.</p><p>İlk zanlı, Kalfa Mahir'di.</p><p>Aziz'in karşısında duran yaklaşık 1.60 boyundaki adam, şehirdeki en yetenekli kalfalardan biri olarak tanınıyordu. İnce yapılıydı. Omuzları hafifçe öne eğilmiş, elleri ise sürekli birbirine kenetlenip ayrılıyordu.</p><p>Mahir'in yüzünde garip bir ifade vardı. Hem gurur hem de kırgınlık.</p><p>Rıza'nın onu herkesin içinde azarladığı biliniyordu. Üstelik bu yalnızca bir kez olmamıştı. Rıza, Mahir'in yaptığı işlerde sürekli kusur arıyor, onun yeteneğini küçümsüyordu.</p><p>Bir gün atölyede herkesin önünde, "Hiçbir zaman usta olamayacaksın." demişti.</p><p>Bu söz, Mahir'in kalbine bir hançer gibi saplanmıştı.</p><p>Mahir o gün hiçbir şey söylememişti. Başını eğmiş, aletlerini toplamış ve atölyeden çıkmıştı.</p><p>Ama Aziz, bazı insanların sessizliğinin öfkeden daha tehlikeli olduğunu biliyordu.</p><p>Mahir'in yeşil gözlerinde hâlâ o gurur kırıklığını görmek mümkündü. Rıza'nın adı geçtiğinde bakışları bir anlığına sertleşiyor, sonra hemen başka bir yere kayıyordu.</p><p>Aziz bunu fark etti.</p><p>"Rıza'yı en son ne zaman gördün?" diye sordu.</p><p>Mahir birkaç saniye düşündü. "Akşamüstü."</p><p>"Ne konuştunuz?"</p><p>"Bir şey konuşmadık."</p><p>Aziz kaşlarını hafifçe kaldırdı.</p><p>Bir insanın "hiçbir şey konuşmadık" demesi, çoğu zaman konuşulacak hiçbir şey olmadığı anlamına gelmezdi.</p><p>Aziz bu kez Mahir'in ellerine baktı.</p><p>Küçük, hızlı, maharetli eller… Bir tornavidayı, bir dişliyi ya da karmaşık bir mekanizmayı ustalıkla kullanabilecek ellerdi bunlar.</p><p>Fakat ellerinde Aziz'in dikkatini çeken başka bir şey vardı.</p><p>Sağ elinin işaret parmağında küçük, koyu renkli bir çizik bulunuyordu.</p><p>"Bu nedir?"</p><p>Mahir eline baktı. "Önemli değil."</p><p>"Ben önemli olup olmadığını sormadım."</p><p>Mahir sustu.</p><p>Çiziğin nereden geldiğini açıklamak istemediği belliydi.</p><p>Aziz'in aklına kulenin içindeki mekanizmalar geldi. Rıza'nın ölümünden önce kulede bazı kilitlerin ve dişlilerin değiştirildiği söylenmişti.</p><p>Mahir bunları yapabilecek yeteneğe sahipti. Dahası, Rıza'ya karşı güçlü bir öfkesi vardı.</p><p>İkinci zanlı Halide Hanım'dı. Kütüphaneci.</p><p>Yaklaşık 1.50 boyunda, zarif ve sakin görünüşlü bir kadındı. Ancak Aziz, onun sakinliğine ilk bakışta güvenmedi.</p><p>Halide'nin mavi gözleri sürekli hareket ediyordu. Kandile. Kapıya. Mahir'e. Sonra Aziz'e.</p><p>Sanki odadaki herkesin ne yaptığını, ne düşündüğünü ve hangi ayrıntıyı fark ettiğini anlamaya çalışıyordu.</p><p>Halide, tarihî belgelerin peşinde koşan bir kadındı. Kütüphanedeki eski kayıtların çoğunu herkesten daha iyi biliyordu. Özellikle de yıllardır kimsenin açmasına izin verilmediği söylenen eski arşivlerle ilgileniyordu. Rıza ise bu belgeleri göstermeyi reddediyordu.</p><p>Bu yüzden aralarında uzun süredir bir gerilim vardı. Halide defalarca belgeleri görmek istemişti.</p><p>Rıza ise her defasında aynı cevabı vermişti: "Bunlar senin bilmen gereken şeyler değil."</p><p>Bu cevap Halide'yi çileden çıkarmıştı.</p><p>Bir seferinde tartışmaları öylesine büyümüştü ki Halide'nin öfkeyle, "Belalar seni bulsun. İnşallah geberir gidersin." dediği duyulmuştu.</p><p>O sırada bunu duyan birkaç kişi Halide'nin yalnızca öfkesini dile getirdiğini düşünmüştü.</p><p>Şimdi ise Rıza ölüydü.</p><p>Aziz, Halide'nin karşısına geçti.</p><p>"Rıza'nın ölmesini istediğini söyledin mi?"</p><p>Halide'nin yüzündeki ifade değişmedi. "Öfkeliydim. Herkes beddua eder."</p><p>"Bu bir cevap değil."</p><p>"Evet," dedi Halide. "Söyledim."</p><p>Salonda kısa bir sessizlik oldu.</p><p>Mahir başını kaldırıp Halide'ye baktı. Bahadır ise kıpırdamadan kapının yanında duruyordu.</p><p>Aziz, Halide'nin gözlerinin içine baktı.</p><p>Pişmanlık görmeyi bekliyordu. Ama gördüğü şey pişmanlık değildi. Daha çok korkuya benzeyen bir şeydi.</p><p>"Bu gece Rıza'yı gördün mü?"</p><p>Halide bir an duraksadı. "Hayır."</p><p>Cevap fazla hızlı gelmişti.</p><p>Aziz bunu not etti.</p><p>"Emin misin?"</p><p>"Evet."</p><p>"Peki neden ellerin titriyor?"</p><p>Halide hemen ellerine baktı.</p><p>Gerçekten de parmakları hafifçe titriyordu.</p><p>"Üşüdüm."</p><p>Aziz açık pencereye baktı. Belki de Halide doğruyu söylüyordu.</p><p>Halide'nin yanında küçük, deri kaplı bir çanta vardı. İçinde kütüphaneden çıkardığı bazı belgeler bulunuyordu. Aziz çantaya baktı. Halide çantayı fark ettiği anda elini üzerine koydu. Bu küçük hareket Aziz'in dikkatinden kaçmadı.</p><p>Son zanlı Nuri'ydi. Kulenin kapıcısı.</p><p>Yaklaşık 1.80 boyunda, güçlü ve genç bir adamdı. Geniş omuzları ve kuvvetli elleri, yıllardır ağır kapıları, sandıkları ve kule mekanizmalarını taşıdığını gösteriyordu.</p><p>Nuri kuleyi herkesten iyi bilirdi. Hangi kapının ne zaman kilitlendiğini. Hangi anahtarın hangi kapıya ait olduğunu. Hangi merdivenin nereye çıktığını. Hatta gece boyunca hangi koridordan kimin geçtiğini bile. Kulenin bütün düzeni onun hafızasındaydı. Bu yüzden Aziz için üç zanlı arasında en dikkat edilmesi gereken kişi belki de Nuri'ydi.</p><p>Çünkü Mahir mekanizmaları biliyordu. Halide belgeleri biliyordu. Ama Nuri kuleyi biliyordu.</p><p>Ancak Nuri'nin bir zayıflığı vardı. Yükseklik korkusu.</p><p>Rıza'nın bunu bildiği ve onunla sık sık alay ettiği söyleniyordu.</p><p>"Yükseklik korkusu olan birinin burada çalışması mümkün değil."</p><p>Rıza'nın bu sözleri Nuri'nin gururunu kırmıştı. Üstelik Rıza son günlerde onu işten atmakla tehdit etmişti. Nuri bu işi kaybederse hayatı mahvolacaktı.</p><p>Aziz onun karşısına geçti.</p><p>"Rıza seni işten çıkaracağını söyledi mi?"</p><p>Nuri başını eğdi. "Evet."</p><p>"Ne zaman?"</p><p>"Bugün."</p><p>Aziz sessiz kaldı. "Bugün mü?"</p><p>Nuri başını salladı. "Akşamüstü."</p><p>"Ve sen ne yaptın?"</p><p>"Hiçbir şey."</p><p>Aziz ona biraz daha yaklaştı. "Hiçbir şey mi?"</p><p>"Evet."</p><p>Aziz üç zanlıyı tekrar süzdü.</p><p>Mahir'in ellerinde açıklanamayan bir çizik vardı.</p><p>Halide, çantasındaki şeyin görülmesini istemiyordu.</p><p>Nuri ise panik içinde tutarsız şeyler söylüyordu.</p><p>Üçünün de Rıza için bir nedeni vardı. Üçünün de sakladığı bir şey vardı. Fakat cinayet yalnızca bir kişinin elinden çıkmış olabilirdi.</p><p>Aziz masanın üzerine üç küçük not bıraktı. Birincisinin üzerine <strong>Mahir</strong>, ikincisinin üzerine <strong>Halide</strong>, üçüncüsünün üzerine ise <strong>Nuri</strong> yazdı.</p><p>Sonra sandalyesine oturdu.</p><p>"Şimdi," dedi sakin bir sesle, "hanginizin nerede olduğunu ve ne kullandığını bulacağız."</p><p>O anda saatin kurgusu bir mekanik sesle döndü. Odada bir zil sesi yankılandı. Saatin akrebi bir'i gösteriyordu.</p>
 </section>
 
 <h3>İpuçları</h3>
@@ -231,6 +303,11 @@
       <li>Görgü tanıkları tam gece yarısı birinin saat mekanizma odasına tırmandığını söylediler.</li>
       <li>Bodrumda yakalanan şahsın elinde çekiç vardı.</li>
 </ul>
+
+<div class="hint-box">
+  <button type="button" id="hint-btn" disabled>💡 İpucu İste</button>
+  <p id="hint-display"></p>
+</div>
 
 <!-- ============================================================
      GAME — interactive matrix/dropdowns, driven by the small
@@ -269,11 +346,65 @@
 </form>
 
 <!-- ============================================================
-     SOLUTION — shown after a correct guess. Also real HTML,
-     not fetched, since it's part of the same page content.
+     SUCCESS BANNER — shown only on a correct guess, with share
+     buttons matching the other games' success-page pattern.
+     ============================================================ -->
+<div id="success-banner" class="success-banner" style="display:none;">
+  <span class="success-emoji">🎉</span>
+  <div class="success-title">BRAVO! Vakayı çözdünüz!</div>
+  <div class="mistakes-display" id="mistakes-display"></div>
+
+  <div class="share-box">
+    <p>Arkadaşlarını da davet et — onlar da çözebilir mi?</p>
+    <div class="share-message-preview" id="share-preview">Yükleniyor...</div>
+    <div class="social-icons">
+      <a href="#" onclick="shareToWhatsApp(event)"><img src="https://www.bulmacan.com/icons/whatsap_icon.png" alt="WhatsApp"><span>WhatsApp</span></a>
+      <a href="#" onclick="shareToFacebook(event)"><img src="https://www.bulmacan.com/icons/face_icon.png" alt="Facebook"><span>Facebook</span></a>
+      <a href="#" onclick="shareToX(event)"><img src="https://www.bulmacan.com/icons/x_icon.png" alt="X"><span>X</span></a>
+      <a href="#" onclick="shareToInstagram(event)"><img src="https://www.bulmacan.com/icons/insta_icon.png" alt="Instagram"><span>Instagram</span></a>
+      <a href="#" onclick="copyLink(event)"><img src="https://www.bulmacan.com/icons/link_icon.png" alt="Kopyala"><span>Kopyala</span></a>
+    </div>
+    <div class="copy-confirm" id="copy-confirm">✅ Kopyalandı!</div>
+  </div>
+</div>
+
+<!-- ============================================================
+     SOLUTION — shown after a correct guess, or after the player
+     chooses to reveal it following a failed attempt.
      ============================================================ -->
 <section id="solution-reveal" style="display:none;">
-<h2>Çözüm – Saat Kulesi Vakası</h2><h3>1. Silah – Mekân – Şüpheli Eşleştirmeleri</h3><p><strong>Tornavida:</strong> Bahadır olay yerine geldiğinde yeşil gözlü Mahir'in dış kapıyı tornavida ile açmaya çalıştığı görülmüştü. Tornavida bir tamir aletidir, dolayısıyla Mahir'in yeri <strong>Tamir Atölyesi</strong> olarak belirlenir.</p><p><strong>Çekiç:</strong> Bodrumda — yani Tarihi Arşiv'de — yakalanan şahsın elinde çekiç vardı. Bu, yüksekten kaçınan Kapıcı Nuri'nin konumuyla örtüşür. Böylece Kapıcı Nuri'nin yeri <strong>Tarihi Arşiv</strong>, silahı <strong>Çekiç</strong> olarak belirlenir.</p><p><strong>İpek Atkı:</strong> Geriye kalan tek şüpheli ve silah eşleşmesi Halide Hanım ve İpek Atkı'dır.</p><ul><li><strong>Tamir Atölyesi → Mahir (Tornavida)</strong></li><li><strong>Tarihi Arşiv → Kapıcı Nuri (Çekiç)</strong></li><li><strong>Mekanizma Odası → Halide (İpek Atkı)</strong></li></ul><h3>2. Fırsat — Mekanizma Odası'na Kim Çıkabilirdi?</h3><p>Mekanizma Odası kulenin en yüksek noktalarından biriydi ve yalnızca dar, dik bir merdivenle çıkılabiliyordu. Mahir, cinayet sırasında hâlâ kulenin dışındaydı — dış kapıyı tornavida ile zorlamaya çalışıyor, henüz içeri bile girmemişti. Kapıcı Nuri ise kuleyi herkesten iyi tanısa da, bilinen yükseklik korkusu yüzünden bu kadar yükseğe çıkması mümkün değildi. Geriye, mekanizma odasına tırmanma fırsatına ve cesaretine sahip tek kişi olarak <strong>Halide</strong> kalıyordu — nitekim gece yarısı oraya tırmanan biri görülmüştü.</p><h3>3. Davranış İpuçları</h3><p>Halide'nin Rıza'yı o gece görmediğini söylerken cevabının fazla hızlı gelmesi, ellerinin titremesi ve çantasını korumacı bir refleksle örtmesi, sakin görünümünün ardında bir şey sakladığını gösteriyordu.</p><h3>Sonuç</h3><p><strong>Katil:</strong> Halide Hanım</p><p><strong>Silah:</strong> İpek Atkı</p><p><strong>Yer:</strong> Mekanizma Odası</p><p>Mahir'in dışarıda kilitli kalması, Kapıcı Nuri'nin yükseklik korkusu yüzünden mekanizma odasına çıkamaması ve gece yarısı oraya tırmanan kişinin görülmesi bir araya geldiğinde, Rıza Usta'yı öldüren kişinin Halide Hanım olduğu ortaya çıkar.</p>
+<h2>Çözüm – Saat Kulesi Vakası</h2>
+
+<p><strong>1. İpucu:</strong> Bekçi Bahadır olay yerine geldiğinde, yeşil gözlü kişi kulenin dış kapısını tornavida ile açmaya çalışıyordu. Yeşil gözlü kişi Mahir'dir.<br>→ <strong>Mahir = Tornavida</strong></p>
+
+<p><strong>2. İpucu:</strong> Görgü tanıkları tam gece yarısı birinin saat mekanizma odasına tırmandığını söylediler. Mahir kapının dışındaydı, Nuri ise yükseklikten korkar. Demek ki kuleye tırmanan kişi Halide Hanım olmalı.<br>→ <strong>Halide Hanım = Mekanizma Odası</strong></p>
+
+<p><strong>3. İpucu:</strong> Bodrumda yakalanan şahsın elinde çekiç vardı. Mahir dışarıda, Halide Hanım kulede olduğuna göre, bodrumda olabilecek tek kişi Nuri'dir.<br>→ <strong>Nuri = Tarihi Arşiv = Çekiç</strong></p>
+
+<h3>Şu ana kadarki çözüm:</h3>
+<table class="solution-table">
+  <tr><th>Şüpheli</th><th>Mekân</th><th>Silah</th></tr>
+  <tr><td>Mahir</td><td>?</td><td>Tornavida</td></tr>
+  <tr><td>Halide Hanım</td><td>Mekanizma Odası</td><td>?</td></tr>
+  <tr><td>Nuri</td><td>Tarihi Arşiv</td><td>Çekiç</td></tr>
+</table>
+<p>Kalan tek mekân <strong>Tamir Atölyesi</strong> Mahir'e, kalan tek silah <strong>İpek Atkı</strong> Halide Hanım'a ait olmalı.</p>
+
+<h3>Sonuç Tablosu:</h3>
+<table class="solution-table">
+  <tr><th>Şüpheli</th><th>Mekân</th><th>Silah</th></tr>
+  <tr><td>Mahir</td><td>Tamir Atölyesi</td><td>Tornavida</td></tr>
+  <tr><td>Halide Hanım</td><td>Mekanizma Odası</td><td>İpek Atkı</td></tr>
+  <tr><td>Nuri</td><td>Tarihi Arşiv</td><td>Çekiç</td></tr>
+</table>
+
+<h3>Fırsat</h3>
+<p>Mekanizma odasında olan kişi Halide Hanım'dı.</p>
+
+<h3>Sonuç</h3>
+<p><strong>Katil:</strong> Halide Hanım</p>
+<p><strong>Silah:</strong> İpek Atkı</p>
+<p><strong>Yer:</strong> Mekanizma Odası</p>
 </section>
 
 </div>
@@ -364,9 +495,89 @@ function renderGame(puzzle) {
     puzzle.locations.map(l => `<option>${l}</option>`).join("");
   document.getElementById("method-select").innerHTML =
     puzzle.weapons.map(w => `<option>${w}</option>`).join("");
+
+  document.getElementById("hint-btn").disabled = false;
 }
 
 loadPuzzleData();
+
+/********************************************
+ * HINTS — each hint explains one clue in
+ * Aziz's voice, then places the tile(s) that
+ * deduction points to, directly in the matrix.
+ * Case-specific, lives here alongside the story
+ * (like solution.how) rather than in the JSON.
+ ********************************************/
+const hints = [
+  {
+    text: "Bekçi Bahadır olay yerine geldiğinde, yeşil gözlü kişi kulenin dış kapısını tornavida ile açmaya çalışıyordu: yeşil gözlü kişi Mahir'dir. Dolayısıyla dış kapıyı tornavida ile açmaya çalışan Mahir'dir. Tornavida'yı ve Tamir Atölyesi'ni Mahir'in yanına koyalım.",
+    actions: [
+      { type: "silah", suspect: "Kalfa Mahir", item: "Tornavida" },
+      { type: "mahal", suspect: "Kalfa Mahir", item: "Tamir Atölyesi" }
+    ]
+  },
+  {
+    text: "Bodrumda yakalanan şahsın elinde çekiç vardı. Kuleyi ve gizli geçitleri herkesten iyi bilen kişi Kapıcı Nuri'dir, dolayısıyla bodrumda — yani Tarihi Arşiv'de — yakalanan kişi Nuri'dir. Çekiç'i ve Tarihi Arşiv'i Nuri'nin yanına koyalım.",
+    actions: [
+      { type: "silah", suspect: "Kapıcı Nuri", item: "Çekiç" },
+      { type: "mahal", suspect: "Kapıcı Nuri", item: "Tarihi Arşiv" }
+    ]
+  },
+  {
+    text: "Mahir cinayet sırasında hâlâ dışarıda kilitli kalmıştı, Nuri ise yükseklik korkusu yüzünden mekanizma odasına çıkamazdı. Geriye kalan tek şüpheli Halide Hanım'dır. Mekanizma Odası'nı ve İpek Atkı'yı Halide'nin yanına koyalım.",
+    actions: [
+      { type: "silah", suspect: "Halide Hanım", item: "İpek Atkı" },
+      { type: "mahal", suspect: "Halide Hanım", item: "Mekanizma Odası" }
+    ]
+  }
+];
+
+let hintIndex = 0;
+
+/********************************************
+ * Moves a tile (by its visible text) into a
+ * specific suspect's matrix cell — same click-
+ * to-place logic the player uses, just done
+ * programmatically. Skips silently if the cell
+ * is already filled (e.g. player placed it
+ * correctly themselves already).
+ ********************************************/
+function placeTile(itemText, suspectName, type) {
+  const suspectIndex = activePuzzle.suspects.indexOf(suspectName);
+  if (suspectIndex === -1) return;
+
+  const targetZone = document.getElementById(`zanli${suspectIndex + 1}-${type}`);
+  if (!targetZone || targetZone.children.length > 0) return;
+
+  const dataType = type === "mahal" ? "location" : "weapon";
+  const tiles = document.querySelectorAll(`.draggable[data-type="${dataType}"]`);
+
+  for (const tile of tiles) {
+    if (tile.textContent.trim() === itemText) {
+      if (tile.parentNode) tile.parentNode.removeChild(tile);
+      targetZone.appendChild(tile);
+      break;
+    }
+  }
+}
+
+function requestHint() {
+  if (hintIndex >= hints.length) return;
+
+  const hint = hints[hintIndex];
+  document.getElementById("hint-display").textContent = "🔎 " + hint.text;
+  hint.actions.forEach(a => placeTile(a.item, a.suspect, a.type));
+
+  hintIndex++;
+
+  if (hintIndex >= hints.length) {
+    const btn = document.getElementById("hint-btn");
+    btn.disabled = true;
+    btn.textContent = "Tüm ipuçları kullanıldı";
+  }
+}
+
+document.getElementById("hint-btn").addEventListener("click", requestHint);
 
 /********************************************
  * DRAG & DROP (click-to-place)
@@ -402,6 +613,69 @@ document.addEventListener("change", e => {
 });
 
 /********************************************
+ * SHARE TEXT (used by the success banner's
+ * share buttons once the case is solved)
+ ********************************************/
+const CASE_URL = "https://www.bulmacan.com/dedektiflemece/saat-kulesi-vakasi.html";
+let shareText = `Bugünkü Dedektiflemece vakasını çözdüm! 🔍 Sen de dene! ${CASE_URL}`;
+
+function shareToWhatsApp(e) { e.preventDefault(); window.open("https://wa.me/?text=" + encodeURIComponent(shareText), "_blank"); }
+function shareToFacebook(e) { e.preventDefault(); window.open("https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(CASE_URL), "_blank"); }
+function shareToX(e) { e.preventDefault(); window.open("https://twitter.com/intent/tweet?text=" + encodeURIComponent(shareText), "_blank"); }
+function shareToInstagram(e) { e.preventDefault(); navigator.clipboard.writeText(shareText).then(() => { alert("Mesaj kopyalandı! Instagram'da paylaşabilirsiniz. 📋"); }); }
+function copyLink(e) {
+  e.preventDefault();
+  navigator.clipboard.writeText(shareText).then(() => {
+    const c = document.getElementById("copy-confirm");
+    c.style.display = "block";
+    setTimeout(() => c.style.display = "none", 3000);
+  });
+}
+
+/********************************************
+ * REVEAL SOLUTION — shared by both the
+ * correct-guess path and the "show me the
+ * answer" choice after running out of hearts.
+ ********************************************/
+function revealSolution(won) {
+  document.getElementById("guess-form").style.display = "none";
+
+  if (won) {
+    shareText = errors === 0
+      ? `Bugünkü Dedektiflemece vakasını hiç hata yapmadan çözdüm! 🔍 Sen de dene! ${CASE_URL}`
+      : `Bugünkü Dedektiflemece vakasını ${errors} hatayla çözdüm! 🔍 Sen daha azıyla çözebilir misin? ${CASE_URL}`;
+    document.getElementById("mistakes-display").textContent =
+      errors === 0 ? "🕵️ Hiç hata yapmadan çözdünüz!" : `🕵️ Bu vakayı ${errors} hatayla çözdünüz.`;
+    document.getElementById("share-preview").textContent = shareText;
+    document.getElementById("success-banner").style.display = "block";
+    document.getElementById("solution-reveal").style.display = "block";
+    document.getElementById("success-banner").scrollIntoView({ behavior: "smooth" });
+  } else {
+    document.getElementById("solution-reveal").style.display = "block";
+    document.getElementById("solution-reveal").scrollIntoView({ behavior: "smooth" });
+  }
+}
+
+/********************************************
+ * RETRY — resets hearts, tiles, and the form
+ * so the player can attempt the case again.
+ ********************************************/
+function resetGame() {
+  errors = 0;
+  document.querySelectorAll(".heart").forEach(h => h.style.opacity = "1");
+  document.getElementById("feedback").innerHTML = "";
+  document.getElementById("guess-form").style.display = "block";
+  document.querySelector('#guess-form button[type="submit"]').style.display = "inline-block";
+  renderGame(activePuzzle); // rebuilds tiles/matrix fresh, clearing any placed items
+
+  hintIndex = 0;
+  document.getElementById("hint-display").textContent = "";
+  const hintBtn = document.getElementById("hint-btn");
+  hintBtn.disabled = false;
+  hintBtn.textContent = "💡 İpucu İste";
+}
+
+/********************************************
  * GUESS FORM
  ********************************************/
 document.getElementById("guess-form").addEventListener("submit", function (e) {
@@ -418,9 +692,7 @@ document.getElementById("guess-form").addEventListener("submit", function (e) {
   const isMethodCorrect = method === correct.method;
 
   if (isPersonCorrect && isPlaceCorrect && isMethodCorrect) {
-    document.getElementById("guess-form").style.display = "none";
-    document.getElementById("solution-reveal").style.display = "block";
-    document.getElementById("solution-reveal").scrollIntoView({ behavior: "smooth" });
+    revealSolution(true);
     return;
   }
 
@@ -440,7 +712,16 @@ document.getElementById("guess-form").addEventListener("submit", function (e) {
   }
 
   if (errors === hearts.length) {
-    feedback.innerHTML += `<p style="color:red;">💔 Aziz'in sabrı tükendi. Doğru cevabı görmek için tekrar deneyin.</p>`;
+    document.querySelector('#guess-form button[type="submit"]').style.display = "none";
+    feedback.innerHTML += `
+      <p style="color:red;">💔 Aziz'in sabrı tükendi. Ne yapmak istersiniz?</p>
+      <div class="fail-actions">
+        <button type="button" id="reveal-btn">🔍 Cevabı Göster</button>
+        <button type="button" id="retry-btn">🔄 Tekrar Dene</button>
+      </div>
+    `;
+    document.getElementById("reveal-btn").addEventListener("click", () => revealSolution(false));
+    document.getElementById("retry-btn").addEventListener("click", resetGame);
   }
 });
 </script>
