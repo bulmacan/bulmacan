@@ -114,6 +114,86 @@
     height: 44px;
     margin: 0 auto;
   }
+
+  /* ============================================================
+     Mobile tightening — groups stay side by side, everything
+     shrinks so the 6 tiles + suspect table fit together on screen.
+     ============================================================ */
+  @media screen and (max-width: 480px) {
+    #location-weapon-row {
+      flex-direction: row;
+      flex-wrap: nowrap;
+      gap: 8px;
+      margin: 6px 0 10px 0;
+    }
+
+    .item-group {
+      flex: 1 1 0;
+      min-width: 0;
+      padding: 6px 6px;
+      gap: 4px;
+      border-radius: 8px;
+      box-sizing: border-box;
+    }
+
+    .item-group-label {
+      font-size: 0.68em;
+      margin-bottom: 0;
+      white-space: nowrap;
+    }
+
+    .item-group-tiles {
+      gap: 4px;
+      flex-wrap: nowrap;
+    }
+
+    .item-group .drop-zone {
+      flex: 1 1 0;
+      min-width: 0;
+      width: auto;
+      height: 36px;
+    }
+
+    .item-group .draggable {
+      font-size: 0.62em;
+      padding: 1px;
+      line-height: 1.05;
+      word-break: keep-all;
+    }
+
+    .game-hint {
+      font-size: 0.72em;
+      margin: 2px 0 5px 0;
+    }
+
+    #suspect-matrix {
+      padding: 6px;
+      display: block;
+    }
+
+    #suspect-matrix .matrix-table {
+      width: 100%;
+      table-layout: fixed;
+    }
+
+    #suspect-matrix .matrix-table th,
+    #suspect-matrix .matrix-table td {
+      padding: 4px 3px;
+      font-size: 0.7em;
+    }
+
+    #suspect-matrix .matrix-table td:first-child {
+      font-size: 0.68em;
+      line-height: 1.1;
+    }
+
+    #suspect-matrix .drop-zone {
+      width: 90%;
+      min-width: 0;
+      height: 30px;
+      margin: 0 auto;
+    }
+  }
 </style>
   <link rel="icon" href="../icons/favicon.ico" type="image/x-icon">
   <link rel="manifest" href="../icons/site.webmanifest">
