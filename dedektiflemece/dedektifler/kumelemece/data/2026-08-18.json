@@ -1,0 +1,30 @@
+{
+  "id": "2026-08-18",
+  "date": "2026-08-18",
+  "groups": [
+    {
+      "label": "Kebab için gerekenler",
+      "class": "group-1",
+      "words": ["Kıyma", "Şiş", "Pul biber", "Maydanoz"],
+      "clue": "Kebab için gerekenler"
+    },
+    {
+      "label": "Kağıtdan ürünler",
+      "class": "group-2",
+      "words": ["Helva", "Havlu", "Para", "Mendil"],
+      "clue": "Kağıtdan ürünler"
+    },
+    {
+      "label": "Hane ile bitenler",
+      "class": "group-3",
+      "words": ["Pasta", "Posta", "Kahve", "Mey"],
+      "clue": "Hane ile bitenler"
+    },
+    {
+      "label": "Eğitenler",
+      "class": "group-4",
+      "words": ["Öğretmen", "Hoca", "Okutman", "Muallim"],
+      "clue": "Eğitenler"
+    }
+  ]
+}

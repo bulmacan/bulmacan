@@ -1,0 +1,30 @@
+{
+  "id": "2026-08-11",
+  "date": "2026-08-11",
+  "groups": [
+    {
+      "label": "Evler",
+      "class": "group-1",
+      "words": ["Ev", "Konut", "Mesken", "Hane"],
+      "clue": "Evler"
+    },
+    {
+      "label": "Fırın çeşitleri",
+      "class": "group-2",
+      "words": ["Tandır", "Fırın", "Mikrodalga", "Hava Fritözü"],
+      "clue": "Fırın çeşitleri"
+    },
+    {
+      "label": "Defterler",
+      "class": "group-3",
+      "words": ["Hatıra", "Onur", "Yoklama", "Hesap"],
+      "clue": "Defterler"
+    },
+    {
+      "label": "Adalar",
+      "class": "group-4",
+      "words": ["Büyük", "Kınalı", "Burgaz", "Heybeli"],
+      "clue": "Adalar"
+    }
+  ]
+}

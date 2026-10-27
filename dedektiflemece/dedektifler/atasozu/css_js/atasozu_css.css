@@ -1,0 +1,159 @@
+
+    body {
+      margin: 0;
+      font-family: Arial, "Comic Sans MS", "Trebuchet MS", sans-serif;
+      background-color: white;
+      color: black;
+      text-align: center;
+    }
+
+.share-button {
+      margin-top: 20px;
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #4267B2;
+      color: white;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .emoji-clue {
+      font-size: 2.5rem;
+      margin: 15px 0 5px;
+    }
+
+    .selected-words {
+      margin-top: 10px;
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #6b4226;
+    }
+
+    .legend {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      margin-top: 10px;
+      font-weight: bold;
+      flex-wrap: wrap;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .legend-box {
+      width: 12px;
+      height: 12px;
+      border-radius: 2px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 3px;
+      justify-content: center;
+      margin: 5px auto;
+      padding: 0 0px;
+      max-width: 600px;
+    }
+
+.word {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f0f4f8;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  text-align: center;
+  padding: 2px 2px; /* minimal padding */
+  height: auto;     /* allow height to adjust */
+  line-height: normal; /* prevent vertical stretching */
+}
+
+
+    .word.selected {
+      background-color: #a5d6a7;
+      border-color: #4caf50;
+    }
+
+    .word.wrong-red {
+      background-color: #f44336;
+      border-color: #c62828;
+      color: white;
+    }
+
+    .word.wrong-amber {
+      background-color: #ffb300;
+      border-color: #ffa000;
+      color: black;
+    }
+
+.social-icons {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin: 20px 0;
+}
+
+.social-icons .icon {
+  max-width: 32px;
+  height: auto;
+  border-radius: 8px;
+  transition: transform 0.2s ease;
+}
+
+.social-icons a:hover .icon {
+  transform: scale(1.1);
+}
+
+
+    @media (max-width: 600px) {
+      .grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+
+.word {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f0f4f8;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  text-align: center;
+  padding: 0px 0px; /* minimal padding */
+  height: auto;     /* allow height to adjust */
+  line-height: normal; /* prevent vertical stretching */
+}
+    .emoji-clue {
+      font-size: 1.5rem;
+      margin: 5px 0 5px;
+    }
+    }
+.ad-container {
+  max-width: 960px;
+  margin: 40px auto 20px auto;
+  padding: 16px;
+  text-align: center;
+  border: 1px solid #eee;
+  background: #fafafa;
+  border-radius: 8px;
+  min-height: 300px;
+  }
+
+.ad-slot {
+  width: 100%;
+  height: 250px; /* reserve space */
+}

@@ -1,0 +1,30 @@
+{
+  "id": "2026-08-12",
+  "date": "2026-08-12",
+  "groups": [
+    {
+      "label": "Güzel karakterler",
+      "class": "group-1",
+      "words": ["Güzel", "Alımlı", "Şirin", "Hoş"],
+      "clue": "Güzel karakterler"
+    },
+    {
+      "label": "Akarsular",
+      "class": "group-2",
+      "words": ["Dere", "Nehir", "Çay", "Irmak"],
+      "clue": "Akarsular"
+    },
+    {
+      "label": "Büyük ile başlayanlar",
+      "class": "group-3",
+      "words": ["Ada", "Çekmece", "Baba", "İskender"],
+      "clue": "“Büyük” ile başlayanlar"
+    },
+    {
+      "label": "Yoğurtla pişirilen yemekler",
+      "class": "group-4",
+      "words": ["Şebit", "Mantı", "Cılbır", "İskender"],
+      "clue": "Yoğurtla pişirilen yemekler"
+    }
+  ]
+}

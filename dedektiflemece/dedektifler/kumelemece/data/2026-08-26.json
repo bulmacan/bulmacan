@@ -1,0 +1,30 @@
+{
+  "id": "2026-08-26",
+  "date": "2026-08-26",
+  "groups": [
+    {
+      "label": "Izmiri hatırlatanlar",
+      "class": "group-1",
+      "words": ["35", "Saat Kulesi", "9 Eylül", "ADB"],
+      "clue": "İzmir"
+    },
+    {
+      "label": "Kebablar",
+      "class": "group-2",
+      "words": ["Cağ", "İskender", "Adana", "Urfa"],
+      "clue": "Kebablar"
+    },
+    {
+      "label": "Eski yanar dağlarımız",
+      "class": "group-3",
+      "words": ["Nemrut", "Ağrı", "Erciyes", "Hasan"],
+      "clue": "Yanar dağlar"
+    },
+    {
+      "label": "Futbol pozisyonları",
+      "class": "group-4",
+      "words": ["Bek", "Kanat", "Santrafor", "Forvet"],
+      "clue": "Futbol"
+    }
+  ]
+}

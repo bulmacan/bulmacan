@@ -1,0 +1,138 @@
+/* === SUCCESS PAGE SHARED STYLES === */
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #f8f9fb;
+  color: #333;
+  text-align: center;
+}
+
+.success-container {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 20px 16px 40px;
+}
+
+/* Success banner */
+.success-banner {
+  background: #fff;
+  border-radius: 16px;
+  padding: 24px 20px;
+  box-shadow: 0 8px 26px rgba(0,0,0,0.06);
+  margin-bottom: 20px;
+}
+
+.success-emoji {
+  font-size: 3em;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.success-title {
+  font-size: 1.6em;
+  font-weight: 700;
+  color: #2e7d32;
+  margin: 0 0 8px;
+}
+
+.solve-time {
+  font-size: 1.15em;
+  font-weight: 600;
+  color: #444;
+  margin: 8px 0 4px;
+}
+
+.community-stats {
+  font-size: 0.95em;
+  color: #888;
+  margin: 4px 0 0;
+}
+
+/* Puzzle result box */
+.result-box {
+  background: #fff;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 8px 26px rgba(0,0,0,0.06);
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.result-box h3 {
+  font-size: 1em;
+  color: #888;
+  margin: 0 0 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  text-align: center;
+}
+
+/* Share box */
+.share-box {
+  background: #fff;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 8px 26px rgba(0,0,0,0.06);
+}
+
+.share-box p {
+  font-size: 0.95em;
+  color: #666;
+  margin: 0 0 14px;
+}
+
+.share-message-preview {
+  background: #f0f4ff;
+  border-radius: 10px;
+  padding: 12px 16px;
+  font-size: 0.9em;
+  color: #333;
+  margin-bottom: 16px;
+  text-align: left;
+  line-height: 1.5;
+  border-left: 3px solid #4267B2;
+}
+
+.social-icons {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.social-icons a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  text-decoration: none;
+}
+
+.social-icons img {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  transition: transform 0.2s ease;
+}
+
+.social-icons a:hover img {
+  transform: scale(1.12);
+}
+
+.social-icons span {
+  font-size: 11px;
+  color: #999;
+}
+
+/* Copy confirm */
+.copy-confirm {
+  display: none;
+  font-size: 0.85em;
+  color: #2e7d32;
+  margin-top: 8px;
+}
+
+@media (max-width: 480px) {
+  .social-icons img { width: 36px; height: 36px; }
+  .success-title { font-size: 1.3em; }
+}

@@ -1,0 +1,40 @@
+{
+  "puzzles": [
+    {
+      "date": "2026-01-26",
+      "intro": "<h1>Zeki Paşa Cinayeti – Bölüm I</h1><p>Telefon zili durmaksızın çalıyordu. Masanın üzerindeki çalar saat dokuzu gösteriyordu. Zaten uyumuyordum; pencereden yolu seyrediyordum.</p><p>“Üsküdar,” dedi ses. Ne selam vardı ne açıklama. “Yalı. Zeki Paşa.”</p><p>İsim hâlâ ağırdı. Yıllar geçse de bazı adamlar ölmez, sadece susar. Pardösümü aldım, çıktım. Hava soğuktu; Boğaz yosun ve eski hatıralar kokuyordu.</p><p>Zeki Paşa, yalının üst katında kanlar içinde yatıyordu. Yüzü denize dönüktü; sanki bir şeyin kaçışını izliyormuş gibiydi. Altında, iskeleye vuran suya kayıtsızdı.</p><p>Aşçı yemeği saat altıda servis etmiş. Hizmetçi yemekten sonra kahvesini getirmiş. Saat akşam sekizmiş. Cesedi bulur bulmaz beni aramışlar.</p><p>Zeki Paşa’nın sıradan bir zengin olmadığını herkes bilirdi. Devletin karanlık koridorlarında yürümüş, bir zamanlar tek imzayla kader değiştirmiş bir adamdı. Sesini yükseltmezdi; gerek yoktu. Borç verirdi, söz alırdı, sonra beklerdi. İnsanlar ona bir şey borçlu kalırdı — para, sadakat, sessizlik.</p><p>Ve kimse böyle borçları unutmaz.</p><p>O gün eve gelen üç kişi varmış.</p><p>Eczacı Ahmet, salonun köşesinde duruyordu. Elleri birbirine kenetliydi; yüzünde ilaç kokusuna karışmış bir korku. Aşağı mahalledeki eczaneyi Zeki Paşa’dan aldığı borçlarla açmış. Bitmeyen senetler, kapanmayan defterler… “Hayatımı ona borçluyum,” dedi.</p><p>Ayşe Hanım, siyahlar içinde, divanın ucunda dimdik oturuyordu. Kimse söylemeden yas tutmaya başlamıştı bile. Zeki Paşa’nın yeğeni deniyordu; hakikat mi bilinmez. Altı aydır yalıdaymış. “Bakmak için geldim,” dedi. Nedendir bilinmez, villayı ona bırakacağına söz vermiş. Geçen hafta da vasiyetini değiştirmiş.</p><p>Deli Bekir, cam kapıdan denize bakıyordu ama gördüğü şey su değildi. Eskiden Zeki Paşa’nın pis işlerini temizlerdi. Sonra cezaevi geldi. Zeki Paşa da onu orada unutmuştu. Bekir dün hapisten çıkmış ve ilk ziyaret ettiği kişi Zeki Paşa olmuş.</p><p>Görgü tanıklarını tek tek sorguladım.</p><p>Güneş Boğaz’ın üzerinden yükselirken bir şeyden emindim: Zeki Paşa’yı bir yabancı öldürmemişti. Bu üç kişiden biri gerçeği biliyordu.</p>",
+      "clues": [
+        "- Ahmet, saat altı buçukta eve gelmiş ve doğruca mutfağa gittiği görülmüş. Elinde küçük, yeşil bir şişe varmış. Aşçı yemeği götürdüğü için mutfak boşmuş. Ahmet sonra evden ayrılmış ve bir daha dönmemiş.",
+        "- Saat dokuz buçukta, balkona tırmanırken görülen bir kişi kesinlikle kadın değilmiş.",
+        "- Ayşe Hanım, Galata’da bir hançer alırken görülmüş. Sorduğumda inkâr etmedi. “Hediye içindi,” dedi. “Zeki Paşa’ya doğum gününde verecektim.” Gözleri doldu. “O günü göremedi.”"
+      ],
+      "suspects": ["Eczacı Ahmet", "Ayşe Hanım", "Deli Bekir"],
+      "locations": ["Çalışma Odası", "Balkon", "Mutfak"],
+      "weapons": ["Zehir", "Tabanca", "Hançer"],
+      "solution": {
+        "person": "Ayşe Hanım",
+        "place": "Çalışma Odası",
+        "method": "Hançer",
+        "how": "<h2>Çözüm – Zeki Paşa Cinayeti</h2><h3>1. Silah – Mekân – Şüpheli Eşleşmeleri</h3><p><strong>Hançer:</strong> Ayşe Hanım Galata’da hançer satın alırken görülmüştü ve tabanca kullanan kişinin erkek olduğu doğrulanmıştı.</p><p><strong>Zehir:</strong> Ahmet eve küçük yeşil bir şişe ile gelmiş ve mutfakta yalnız kalmıştı.</p><p><strong>Tabanca:</strong> Geriye kalan tek silah tabancaydı ve 21.30’da tabanca ile tırmanan kişinin erkek olduğu söylenmişti.</p><ul><li><strong>Mutfak → Ahmet</strong></li><li><strong>Balkon → Bekir</strong></li><li><strong>Çalışma Odası → Ayşe</strong></li></ul><h3>2. Ölüm Şekli</h3><p>Ceset “kanlar içinde” bulunduğu için zehir elendi. Tabanca zamanlama nedeniyle mümkün değildi. Geriye yalnızca <strong>hançer</strong> kaldı.</p><h3>3. Zaman Çizelgesi</h3><ul><li><strong>18.30:</strong> Ahmet mutfakta görülüyor, sonra evden ayrılıyor.</li><li><strong>20.00:</strong> Hizmetçi kahveyi getiriyor; Zeki Paşa hayatta.</li><li><strong>21.00:</strong> Ceset bulunuyor.</li><li><strong>21.30:</strong> Tabanca taşıyan kişi tırmanırken görülüyor; olaydan sonra geldiği için katil olamaz.</li></ul><p>Cinayet 20.00–21.00 arasında işlendi. Bu zaman aralığında evde olan tek kişi <strong>Ayşe Hanım</strong>dı.</p><h3>Sonuç</h3><p><strong>Katil:</strong> Ayşe Hanım</p><p><strong>Silah:</strong> Hançer</p><p><strong>Yer:</strong> Çalışma Odası</p><p>Zamanlama, silah eşleşmesi, mekân ve motivasyon birlikte değerlendirildiğinde cinayeti işleyebilecek tek kişi Ayşe Hanım’dı.</p>"
+      }
+    },
+    {
+      "date": "2026-01-21",
+      "intro": "Saraydan gelen haberci geldiğinde Müfettiş Zeki orta şekerli kahvesini yudumluyordu. Birisi hazine odasından Kaşıkçı Elması’nı çalmayı başarmıştı.",
+      "clues": [
+        "Kardinal Karlo’nun cam kesebilen elmas uçlu haçı, pencerelerin yanındaki bahçede bulundu.",
+        "Marangoz Ağa, el aletleri çantasıyla kilitli meşe hazine kapısının önünde yakalandı. Kapı açıldığında elmas zaten yoktu.",
+        "Elmas kutusu kırılmıştı ve isle kaplı bir kaftana sarılmış ağır metal bir cisim yerde yatıyordu."
+      ],
+      "suspects": ["Kardinal Karlo", "Cariye Dilber", "Marangoz Ağa"],
+      "locations": ["Kapı", "Baca", "Pencere"],
+      "weapons": ["Elmas Kesici", "şamdan", "Testere"],
+      "solution": {
+        "person": "Cariye Dilber",
+        "place": "Baca",
+        "method": "şamdan",
+        "how": "This is how it is solved"
+      }
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "id": "2026-08-07",
+  "date": "2026-08-07",
+  "groups": [
+    {
+      "label": "Kara ile başlayanlar",
+      "class": "group-1",
+      "words": ["Biber", "Deniz", "Kış", "Ciğer"],
+      "clue": "Kara ile başlayanlar"
+    },
+    {
+      "label": "Oyunlar",
+      "class": "group-2",
+      "words": ["Satranç", "Domino", "Tavla", "Dama"],
+      "clue": "Oyunlar"
+    },
+    {
+      "label": "Nato alfabesi",
+      "class": "group-3",
+      "words": ["Papa", "Bravo", "Tango", "Delta"],
+      "clue": "Nato alfabesi"
+    },
+    {
+      "label": "Kuru ile başlayanlar",
+      "class": "group-4",
+      "words": ["Yemiş", "Fasulye", "Temizleme", "Dut"],
+      "clue": "Kuru ile başlayanlar"
+    }
+  ]
+}

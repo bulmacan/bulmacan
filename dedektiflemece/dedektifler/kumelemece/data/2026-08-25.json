@@ -1,0 +1,30 @@
+{
+  "id": "2026-08-25",
+  "date": "2026-08-25",
+  "groups": [
+    {
+      "label": "Burçlar",
+      "class": "group-1",
+      "words": ["Koç", "Boğa", "İkizler", "Yengeç"],
+      "clue": "Burçlar"
+    },
+    {
+      "label": "Şehir ile bitenler",
+      "class": "group-2",
+      "words": ["Nev", "Eski", "Gül", "Yeni"],
+      "clue": "Şehir ile bitenler"
+    },
+    {
+      "label": "Sonu hayvan",
+      "class": "group-3",
+      "words": ["Kalabalık", "Dayı", "Binek", "Yokuş"],
+      "clue": "Sonu hayvan"
+    },
+    {
+      "label": "Yağ türleri",
+      "class": "group-4",
+      "words": ["Ayçiçek", "Mısırözü", "Kanola", "Zeytin"],
+      "clue": "Yağ türleri"
+    }
+  ]
+}

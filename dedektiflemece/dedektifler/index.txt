@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <!-- Basic Meta -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>bulmacan</title>
+  <meta name="description" content="bulmacan - Günlük ve haftalık bulmacalar: Gruplamaca, Detektiflemeci, Sembollemece, Kelime Avi.">
+  <meta name="author" content="bulmacan">
+
+  <!-- Open Graph (Facebook, LinkedIn, etc.) -->
+  <meta property="og:title" content="bulmacan">
+  <meta property="og:description" content="Günlük ve haftalık bulmacalar: Gruplamaca, Detektiflemeci, Sembollemece, Kelime Avi.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.bulmacan.com">
+  <meta property="og:image" content="https://www.bulmacan.com/header.png">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="bulmacan">
+  <meta name="twitter:description" content="Günlük ve haftalık bulmacalar: Gruplamaca, Detektiflemeci, Sembollemece, Kelime Avi.">
+  <meta name="twitter:image" content="https://www.bulmacan.com/header.png">
+
+  <!-- Favicons -->
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+  <link rel="manifest" href="site.webmanifest">
+
+  <style>
+  :root {
+    --primary: #2c3e50;
+    --hover: #e0f7e9;
+    --text: #333;
+    --border: #ccc;
+    --bg-light: #f0f0f0;
+    --footer-bg: #E30B17;
+    --footer-text: #808080; /* black */
+    --footer-hover: #444;   /* dark grey hover */
+    --accent: #E30B17; /* Bul Buldur's red */
+  }
+
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: var(--bg-light);
+    color: var(--text);
+  }
+
+  * { box-sizing: border-box; }
+
+
+  /* Header */
+  header {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    padding: 15px;
+    background: #fff;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    z-index: 1000;
+  }
+
+  .center img { height: 65px; }
+  .center { justify-self: center; }
+
+  .right { display: flex; gap: 10px; }
+  .right img { width: 30px; height: 30px; cursor: pointer; }
+
+  .hamburger {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 2000;
+  }
+  .hamburger img { width: 30px; height: 30px; }
+
+  /* Mobile menu */
+  nav.mobile-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #fff;
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.3s ease-out;
+    z-index: 9999;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  nav.mobile-menu.open { max-height: 500px; }
+  nav.mobile-menu a {
+    display: block;
+    padding: 15px;
+    text-decoration: none;
+    color: var(--text);
+    border-bottom: 1px solid #eee;
+  }
+
+  /* Puzzle Grid */
+  .container {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 2fr 2fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 10px;
+    padding: 10px;
+  }
+
+  .zone {
+    background-color: #fff;
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    padding: 5px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    transition: box-shadow 0.3s ease, transform 0.2s ease;
+    min-height: 280px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+
+  .zone h3 {
+    margin: 0.3rem 0;
+    font-size: clamp(0.9rem, 2vw, 1.1rem);
+    text-align: center;
+    font-family: Arial, sans-serif;
+  }
+
+  .zone p { margin-top: 1px; }
+
+  .zone a {
+    display: inline-block;
+    margin: 3px auto;
+    padding: 3px 5px;
+    border-radius: 3px;
+    font-weight: bold;
+    font-size: 0.9rem;
+    text-align: center;
+    text-decoration: none;
+    color: var(--text);
+    background-color: var(--bg-light);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    width: fit-content;
+  }
+
+  .zone a:hover { transform: scale(1.05); }
+
+  .zone img { width: 40%; height: auto; }
+
+  /* Puzzle Color Variants */
+  .zone.col2a { border-color: #E75480; }
+  .zone.col2b { border-color: #B9AEDC; }
+  .zone.col3a { border-color: #B4D330; }
+  .zone.col3b { border-color: #E6c36f; }
+
+  .zone.col2a a { background-color: #E75480; color: #fff; }
+  .zone.col2b a { background-color: #B9AEDC; color: #fff; }
+  .zone.col3a a { background-color: #B4D330; color: #fff; }
+  .zone.col3b a { background-color: #E6c36f; color: #fff; }
+
+  .col1 { grid-column: 1; grid-row: 1 / span 2; }
+  .col4 { grid-column: 4; grid-row: 1 / span 2; }
+
+  /* Footer */
+footer {
+  background-color: #fff;              /* clean white background */
+  color: var(--footer-text);           /* use the variable properly */
+  padding: 15px;                       /* match header padding */
+  border-top: 1px solid var(--border); /* subtle divider like header */
+  position: relative;
+  z-index: 1000;
+}
+
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: auto 1fr auto; /* mirror header’s 3-column layout */
+  align-items: center;
+  max-width: 1000px;
+  margin: 0 auto;
+  gap: 10px;
+}
+
+.footer-left { text-align: left; }
+.footer-center { justify-self: center; }
+.footer-right { text-align: right; display: flex; gap: 10px; }
+
+/* Footer links */
+.footer a {
+  color: var(--footer-text);           /* use variable */
+  text-decoration: none;
+  font-size: 0.95em;
+  transition: color 0.3s ease;
+}
+
+.footer a:hover {
+  color: var(--footer-hover);          /* use variable */
+  text-decoration: underline;
+}
+
+
+/* Optional: footer icons similar to header */
+.footer-right img {
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+}
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .hamburger { display: block; }
+    .right { display: none; }
+  }
+</style>
+
+</head>
+
+<body>
+  <header>
+    <div class="left">
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <img src="hamburger.png" alt="menu">
+      </button>
+    </div>
+
+    <div class="center">
+      <img src="header.png" alt="Logo">
+    </div>
+
+    <div class="right">
+      <a href="#"><img src="facebook.png" alt="Facebook"></a>
+      <a href="#"><img src="instagram.png" alt="Instagram"></a>
+      <a href="#"><img src="pinterest.png" alt="Pinterest"></a>
+    </div>
+  </header>
+
+  <nav class="mobile-menu" id="mobileMenu">
+    <a href="#">Home</a>
+    <a href="#">About</a>
+    <a href="#">Products</a>
+    <a href="#">Contact</a>
+  </nav>
+
+<div class="container">
+
+    <div class="zone col1" data-type="ad">
+      <!-- Google AdSense Ad -->
+ <!-- Google AdSense Ad -->
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-4815717211529031"
+           data-ad-slot="1317202706"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+      <script>
+           (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+
+
+    </div>
+
+    <div class="zone col2a" data-type="puzzle">
+      <h3><img src="kumelemece.png" alt="Kümelemece Görseli" style="width:35%; height:auto;" /><br>
+      <a href="gruplamaca/gruplamaca_today.html" aria-label="Gruplamaca Bulmacası">BUGÜNÜN KÜMELEMECESİ</a><br>
+      <a href="gruplamaca/archive/archives_index.html" aria-label="Gruplamaca Bulmacası">ÖNCEKİ KÜMELEMECESİ</a>
+ </h3>
+    </div>
+
+    <div class="zone col2b" data-type="puzzle">
+      <h3><img src="dedektiflemece.png" alt="Detektif Görseli" style="width:40%; height:auto;" /><br>
+      <a href="detektif/detektif.html" aria-label="Detektiflemece Bulmacası">BU HAFTANIN DETEKTİFLEMECESİ</a><br>
+      <a href="detektif/archive/archives_index.html" aria-label="Detektiflemece Bulmacası">ÖNCEKİ DETEKTİFLEMELER</a><br>
+      <a href="detektif/detektifler.html" aria-label="Dedektiflerimizle Tanışın">Dedektiflerimizle Tanışın</a>
+ </h3>
+    </div>
+
+    <div class="zone col3a" data-type="puzzle">
+      <h3><img src="sembollemece.png" alt="Kelimece Görseli" style="width:40%; height:auto;" /><BR>
+      <a href="atasozu/atasozu.html" aria-label="Sembollemece">BU HAFTANIN SEMBOLLEMECESİ</a><br>
+      <a href="atasozu/archive/archives_index.html" aria-label="Sembollemece Bulmacası">ÖNCEKİ SEMBOLLEMECELER</a>
+      </h3>
+    </div>
+
+    <div class="zone col3b" data-type="puzzle">
+      <h3>KELİME AVI<br>
+        <img src="kelime-avi.png" alt="Kelime Avi Görseli" style="width:30%; height:auto;" /><BR>
+      <a href="kelimeavi/kelimeavi.html" aria-label="Kelime Avi Bulmacası">BUGÜNÜN KELİME AVI</a><br>
+      <a href="kelimeavi/archive/archives_index.html" aria-label="Kelime Avi Bulmacası">ÖNCEKİ KELİME AVLARI</a>
+      </h3>
+    </div>
+
+    <div class="zone col4" data-type="ad">
+      <!-- Google AdSense Ad -->
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-4815717211529031"
+           data-ad-slot="1317202706"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+      <script>
+           (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+  </div>
+<footer class="footer">
+  <div class="footer-grid">
+    
+    <!-- Left: Legal Links -->
+    <div class="footer-left"><strong>
+<lu>
+    <li><a href="documents/hakkimizda.html" aria-label="Hakkımızda">Hakkımızda</a></li>
+    <li><a href="documents/hizmet_sartlari.html" aria-label="Hizmet Şartları">Hizmet Şartları</a></li>
+    <li><a href="documents/gizlilik_politikasi.html" aria-label="Gizlilik Politikası">Gizlilik Politikası</a></li>
+    <li><a href="documents/blogs/blogs_index.html" aria-label="Iletisim">Bloglar</a></li>
+    <li><a href="documents/iletisim.html" aria-label="Iletisim">Bize Ulasin</a></li>
+</lu>
+</strong>
+    </div>
+
+
+<div class="footer-center">
+</div>
+
+    <!-- Right: Copyright -->
+    <div class="footer-right">
+      &copy; 2025 - ©Karakacan<br>
+            <img src="karakacan.png">
+
+    </div>
+
+  </div>
+</footer>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const hamburger = document.getElementById("hamburger");
+      const menu = document.getElementById("mobileMenu");
+
+      if (hamburger && menu) {
+        hamburger.addEventListener("click", () => {
+          menu.classList.toggle("open");
+        });
+      }
+    });
+
+    // 📲 Install prompt logic
+    let deferredPrompt;
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      document.getElementById('installChoice').style.display = 'block';
+    });
+
+    document.getElementById('installBtn')?.addEventListener('click', () => {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then((choiceResult) => {
+          deferredPrompt = null;
+          document.getElementById('installChoice').style.display = 'none';
+        });
+      }
+    });
+
+    // ⚙️ Service worker registration
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/service-worker.js')
+        .then(reg => console.log('Service Worker registered:', reg))
+        .catch(err => console.error('Service Worker registration failed:', err));
+    }
+
+    // 🔔 Notifications
+    async function subscribeUser() {
+      const registration = await navigator.serviceWorker.ready;
+      const subscription = await registration.pushManager.subscribe({
+        userVisibleOnly: true,
+        applicationServerKey: 'YOUR_PUBLIC_KEY'
+      });
+      await fetch('/save-subscription', {
+        method: 'POST',
+        body: JSON.stringify(subscription),
+        headers: { 'Content-Type': 'application/json' }
+      });
+    }
+
+    function showNotificationPrompt() {
+      const userAgrees = confirm("Yeni bulmacalar eklendiğinde haber almak ister misiniz?");
+      if (userAgrees && 'Notification' in window) {
+        Notification.requestPermission().then(permission => {
+          if (permission === 'granted') {
+            subscribeUser();
+            new Notification('Yeni bulmaca hazır!', {
+              body: 'Dokun ve keşfet.',
+              icon: 'brain_red.png'
+            });
+          }
+        });
+      }
+    }
+
+       window.addEventListener('load', () => {
+      if (Notification.permission !== 'granted') {
+        showNotificationPrompt();
+      }
+    });
+  </script>
+
+</body>
+</html>

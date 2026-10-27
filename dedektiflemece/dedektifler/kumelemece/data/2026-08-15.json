@@ -1,0 +1,30 @@
+{
+  "id": "2026-08-15",
+  "date": "2026-08-15",
+  "groups": [
+    {
+      "label": "Deniz ile bitenler",
+      "class": "group-1",
+      "words": ["Ak", "Kara", "Ölü", "Kızıl"],
+      "clue": "Denizler"
+    },
+    {
+      "label": "Müzik türleri",
+      "class": "group-2",
+      "words": ["Disko", "Aranjman", "Arabesk", "Klasik"],
+      "clue": "Müzik türleri"
+    },
+    {
+      "label": "Yaşanan yerler",
+      "class": "group-3",
+      "words": ["Ev", "Hane", "İkamet", "Konut"],
+      "clue": "Yaşanan yerler"
+    },
+    {
+      "label": "Emir verenler",
+      "class": "group-4",
+      "words": ["Komutan", "Komiser", "Amir", "Kumandan"],
+      "clue": "Emir verenler"
+    }
+  ]
+}

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>Kelime Avı – Tebrikler!</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css_js/kelimeavi_css.css">
+  <link rel="stylesheet" href="https://www.bulmacan.com/success_shared.css">
+  <link rel="icon" href="../icons/favicon.ico" type="image/x-icon">
+  <meta property="og:title" content="Kelime Avı'nı tamamladım! 🔤">
+  <meta property="og:description" content="Bugünkü Kelime Avı bulmacasını tamamladım! Sen de dene!">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.bulmacan.com/kelimeavi">
+  <meta property="og:image" content="https://www.bulmacan.com/icons/share_kelimeavi.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://www.bulmacan.com/icons/share_kelimeavi.png">
+</head>
+<body>
+
+<div id="smart-header"></div>
+<script src="https://www.bulmacan.com/header/load_header.js" defer></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => { loadHeader("home"); });
+</script>
+
+<div class="success-container">
+
+  <div class="success-banner">
+    <span class="success-emoji">🎉</span>
+    <div class="success-title">HARİKA! Tüm kelimeleri buldunuz!</div>
+    <div class="solve-time" id="solve-time-display"></div>
+    <div class="community-stats" id="community-stats"></div>
+  </div>
+
+  <div class="result-box">
+    <h3>Bugünkü Kelimeler</h3>
+    <div id="word-list-container"></div>
+  </div>
+
+  <div class="share-box">
+    <p>Arkadaşlarını da davet et — onlar da bulabilir mi?</p>
+    <div class="share-message-preview" id="share-preview">Yükleniyor...</div>
+    <div class="social-icons">
+      <a href="#" onclick="shareToWhatsApp(event)"><img src="https://www.bulmacan.com/icons/whatsap_icon.png" alt="WhatsApp"><span>WhatsApp</span></a>
+      <a href="#" onclick="shareToFacebook(event)"><img src="https://www.bulmacan.com/icons/face_icon.png" alt="Facebook"><span>Facebook</span></a>
+      <a href="#" onclick="shareToX(event)"><img src="https://www.bulmacan.com/icons/x_icon.png" alt="X"><span>X</span></a>
+      <a href="#" onclick="shareToInstagram(event)"><img src="https://www.bulmacan.com/icons/insta_icon.png" alt="Instagram"><span>Instagram</span></a>
+      <a href="#" onclick="copyLink(event)"><img src="https://www.bulmacan.com/icons/link_icon.png" alt="Kopyala"><span>Kopyala</span></a>
+    </div>
+    <div class="copy-confirm" id="copy-confirm">✅ Kopyalandı!</div>
+  </div>
+
+</div>
+
+<div id="smart-footer"></div>
+<link rel="stylesheet" href="https://www.bulmacan.com/footer/footer.css">
+<script src="https://www.bulmacan.com/footer/load_footer.js" defer></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => { loadFooter(); });
+</script>
+
+<script>
+  const SUPABASE_URL = "https://aasreluvawvisaswbtzh.supabase.co";
+  const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFhc3JlbHV2YXd2aXNhc3didHpoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM0NDA0NDgsImV4cCI6MjA4OTAxNjQ0OH0.3WNhNot604dC_hkCbcc6QUapM7qnkHV-Qj3EtJmXxJo";
+  const urlParams = new URLSearchParams(window.location.search);
+  const selectedDate = urlParams.get("date");
+  const solveTime = parseInt(urlParams.get("time") || "0", 10);
+
+  function formatTime(s) {
+    const m = Math.floor(s / 60); const sec = s % 60;
+    return m > 0 ? `${m} dakika ${sec} saniye` : `${sec} saniye`;
+  }
+
+  let shareText = "Bugünkü Bulmacan Kelime Avı'nı tamamladım! 🔤 Sen de dene! https://www.bulmacan.com/kelimeavi/kelimeavi.html";
+  if (solveTime > 0) {
+    shareText = `Bugünkü Kelime Avı'nı ${formatTime(solveTime)} içinde tamamladım! 🔤 Sen bulabilir misin? https://www.bulmacan.com/kelimeavi/kelimeavi.html`;
+    document.getElementById("solve-time-display").textContent = `⏱️ ${formatTime(solveTime)} içinde tamamladınız!`;
+  }
+  document.getElementById("share-preview").textContent = shareText;
+
+  function shareToWhatsApp(e) { e.preventDefault(); window.open("https://wa.me/?text=" + encodeURIComponent(shareText), "_blank"); }
+  function shareToFacebook(e) { e.preventDefault(); window.open("https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent("https://www.bulmacan.com/kelimeavi/kelimeavi.html"), "_blank"); }
+  function shareToX(e) { e.preventDefault(); window.open("https://twitter.com/intent/tweet?text=" + encodeURIComponent(shareText), "_blank"); }
+  function shareToInstagram(e) { e.preventDefault(); navigator.clipboard.writeText(shareText).then(() => { alert("Mesaj kopyalandı! Instagram'da paylaşabilirsiniz. 📋"); }); }
+  function copyLink(e) {
+    e.preventDefault();
+    navigator.clipboard.writeText(shareText).then(() => {
+      const c = document.getElementById("copy-confirm"); c.style.display = "block";
+      setTimeout(() => c.style.display = "none", 3000);
+    });
+  }
+
+  async function init() {
+    if (solveTime > 0 && selectedDate) {
+      const puzzleId = `ka-${selectedDate}`;
+      try {
+        await fetch(`${SUPABASE_URL}/rest/v1/ratings`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json", "apikey": SUPABASE_KEY, "Authorization": `Bearer ${SUPABASE_KEY}` },
+          body: JSON.stringify({ puzzle_id: puzzleId, solve_time: solveTime })
+        });
+        const res = await fetch(`${SUPABASE_URL}/rest/v1/ratings_summary?puzzle_id=eq.${puzzleId}&select=solve_count,avg_solve_time`,
+          { headers: { "apikey": SUPABASE_KEY, "Authorization": `Bearer ${SUPABASE_KEY}` } });
+        const data = await res.json();
+        if (data && data.length > 0) {
+          document.getElementById("community-stats").textContent =
+            `👥 Bugün ${data[0].solve_count} kişi tamamladı — ortalama süre ${formatTime(data[0].avg_solve_time)}`;
+        }
+      } catch(e) {}
+    }
+    if (selectedDate) {
+      try {
+        const res = await fetch(`/kelimeavi/data/${selectedDate}.json`);
+        if (res.ok) {
+          const data = await res.json();
+          document.getElementById("word-list-container").innerHTML =
+            `<p style="text-align:center;">${data.words.join(" · ")}</p>`;
+        }
+      } catch(e) {}
+    }
+  }
+  init();
+</script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+{
+  "id": "2026-08-04",
+  "date": "2026-08-04",
+  "groups": [
+    {
+      "label": "Peynir çeşitleri",
+      "class": "group-1",
+      "words": ["Tulum", "Lor", "Cecil", "Beyaz"],
+      "clue": "Peynir çeşitleri"
+    },
+    {
+      "label": "Menemen malzemeleri",
+      "class": "group-2",
+      "words": ["Yumurta", "Domates", "Soğan", "Biber"],
+      "clue": "Menemen malzemeleri"
+    },
+    {
+      "label": "Anlamak gibi",
+      "class": "group-3",
+      "words": ["Anla", "Kavra", "Çak", "Bil"],
+      "clue": "Anlamak gibi"
+    },
+    {
+      "label": "Yılanlar",
+      "class": "group-4",
+      "words": ["Kobra", "Engerek", "Çıngıraklı", "Boa"],
+      "clue": "Yılanlar"
+    }
+  ]
+}

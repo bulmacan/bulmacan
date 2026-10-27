@@ -1,0 +1,30 @@
+{
+  "id": "2026-08-22",
+  "date": "2026-08-22",
+  "groups": [
+    {
+      "label": "Ayılar",
+      "class": "group-1",
+      "words": ["Boz", "Kutup", "Panda", "Siyah"],
+      "clue": "Ayılar"
+    },
+    {
+      "label": "Çiçek için gerekenler",
+      "class": "group-2",
+      "words": ["Saksı", "Tohum", "Toprak", "Su"],
+      "clue": "Çiçek için gerekenler"
+    },
+    {
+      "label": "Çay türleri",
+      "class": "group-3",
+      "words": ["Siyah", "Yeşil", "Yasemin", "Seylan"],
+      "clue": "Çay türleri"
+    },
+    {
+      "label": "Yağışla başlayanlar",
+      "class": "group-4",
+      "words": ["Karınca", "Dolunay", "Yağmurluk", "Tipik"],
+      "clue": "Yağışla başlayanlar"
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "id": "2026-08-05",
+  "date": "2026-08-05",
+  "groups": [
+    {
+      "label": "Erkek Kardeş",
+      "class": "group-1",
+      "words": ["Ağa", "Abi", "Birader", "Bro"],
+      "clue": "Erkek Kardeş"
+    },
+    {
+      "label": "Pilavlıklar",
+      "class": "group-2",
+      "words": ["Şehriye", "Makarna", "Kuskus", "Bulgur"],
+      "clue": "Pilavlıklar"
+    },
+    {
+      "label": "Saz çeşitleri",
+      "class": "group-3",
+      "words": ["Saz", "Bağlama", "Cura", "Buzuk"],
+      "clue": "Saz çeşitleri"
+    },
+    {
+      "label": "Yol çeşitleri",
+      "class": "group-4",
+      "words": ["Yol", "Sokak", "Bulvar", "Cadde"],
+      "clue": "Yol çeşitleri"
+    }
+  ]
+}

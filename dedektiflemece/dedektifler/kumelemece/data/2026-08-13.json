@@ -1,0 +1,30 @@
+{
+  "id": "2026-08-13",
+  "date": "2026-08-13",
+  "groups": [
+    {
+      "label": "Tarık Akan Filmleri",
+      "class": "group-1",
+      "words": ["Maden", "Sürü", "Yol", "Kanal"],
+      "clue": "Tarık Akan Filmleri"
+    },
+    {
+      "label": "Aldatmalar",
+      "class": "group-2",
+      "words": ["Aldat", "Kazıkla", "Dolandır", "Kandır"],
+      "clue": "Aldatmalar"
+    },
+    {
+      "label": "Arkadaşlar",
+      "class": "group-3",
+      "words": ["Arkadaş", "Dost", "Ahbab", "Kanka"],
+      "clue": "Arkadaşlar"
+    },
+    {
+      "label": "İstanbul'un köyleri",
+      "class": "group-4",
+      "words": ["Kadı", "Bakır", "Orta", "Kara"],
+      "clue": "İstanbul'un köyleri"
+    }
+  ]
+}
